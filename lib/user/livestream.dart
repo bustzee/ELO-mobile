@@ -23,13 +23,13 @@ class LivestreamPageState extends State<LivestreamPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // YoYoPlayer(
-                //   aspectRatio: 16 / 9,
-                //   // url: "https://sfux-ext.sfux.info/hls/chapter/105/1588724110/1588724110.m3u8",
-                //   url: "https://videos.pexels.com/video-files/4247319/4247319-hd_1920_1080_30fps.mp4",
-                //   videoStyle: VideoStyle(),
-                //   videoLoadingStyle: VideoLoadingStyle(),
-                // ),
+                const YoYoPlayer(
+                  aspectRatio: 16 / 9,
+                  // url: "https://sfux-ext.sfux.info/hls/chapter/105/1588724110/1588724110.m3u8",
+                  url: "https://videos.pexels.com/video-files/4247319/4247319-hd_1920_1080_30fps.mp4",
+                  videoStyle: VideoStyle(),
+                  videoLoadingStyle: VideoLoadingStyle(),
+                ),
 
                 const SizedBox(height: 20,),
 
