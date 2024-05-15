@@ -1,4 +1,4 @@
-import 'package:elo_esports/user/landing.dart';
+import 'package:elo_esports/user/user_dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -79,7 +79,7 @@ class _WelcomePageState extends State<WelcomePage> {
                         ),)
                       ),
                     onPressed: () {
-                      Navigator.pushNamed(context, LandingPage.id);
+                      Navigator.pushNamed(context, UserDashboardPage.id);
                     },
                     child: const Text(
                       'Sign in',

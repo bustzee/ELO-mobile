@@ -1,4 +1,4 @@
-import 'package:elo_esports/user/landing.dart';
+import 'package:elo_esports/user/user_dashboard.dart';
 import 'package:elo_esports/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -24,11 +24,7 @@ class MyApp extends StatelessWidget {
       initialRoute: WelcomePage.id,
       routes: {
         WelcomePage.id: (context) => const WelcomePage(),
-        LandingPage.id: (context) => const LandingPage(),
-        // LoginPage.id: (context) => const LoginPage(),
-        // ScannerPage.id: (context) => const ScannerPage(),
-        // FilesPage.id: (context) => const FilesPage(),
-        // DashboardPage.id: (context) => const DashboardPage()
+        UserDashboardPage.id: (context) => const UserDashboardPage()
       },
     );
   }
