@@ -1,3 +1,4 @@
+import 'package:elo_esports/user/landing.dart';
 import 'package:elo_esports/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,12 +18,13 @@ class MyApp extends StatelessWidget {
       title: 'ELO ESports',
       theme: ThemeData(
         textTheme: GoogleFonts.poppinsTextTheme(),
-        colorScheme: ColorScheme.fromSeed(seedColor: Color(int.parse('#0F50A6'.substring(1, 7), radix: 16) + 0xFF000000)),
+        colorScheme: ColorScheme.fromSeed(seedColor: Color(int.parse('#0F50A6'.substring(1, 7), radix: 16) + 0xFF000000), brightness: Brightness.dark),
         useMaterial3: true,
       ),
       initialRoute: WelcomePage.id,
       routes: {
         WelcomePage.id: (context) => const WelcomePage(),
+        LandingPage.id: (context) => const LandingPage(),
         // LoginPage.id: (context) => const LoginPage(),
         // ScannerPage.id: (context) => const ScannerPage(),
         // FilesPage.id: (context) => const FilesPage(),

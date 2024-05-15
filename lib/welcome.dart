@@ -1,3 +1,4 @@
+import 'package:elo_esports/user/landing.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -33,7 +34,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 Container(
                   padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
                   child: Text(
-                    'Level up your gaming thrills',
+                    'Level up your\ngaming thrills',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.getFont(
                       'Open Sans',
@@ -52,48 +53,40 @@ class _WelcomePageState extends State<WelcomePage> {
                     style: GoogleFonts.getFont(
                       'Open Sans',
                       fontWeight: FontWeight.w400,
-                      fontSize: 12,
+                      fontSize: 16,
                       letterSpacing: -0.4,
                        color: Colors.white,
                     ),
                   ),
                 ),
-                ElevatedButton(
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          Theme.of(context).colorScheme.primary),
-                      foregroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
-                      minimumSize:
-                          MaterialStateProperty.all(const Size.fromHeight(50)),
-                      padding:
-                          MaterialStateProperty.all(const EdgeInsets.all(20)),
-                      elevation: MaterialStateProperty.all(20),
-                      overlayColor:
-                          MaterialStateProperty.all(Colors.blue.shade900)),
-                  onPressed: () {
-                    // Navigator.pushNamed(context, DashboardPage.id);
-                    // if (_formKey.currentState!.validate()) {
-                    //   if (emailController.text == "amit@cyberscriptit.com" &&
-                    //       passwordController.text == "Cyber@123") {
-                    //     Navigator.pushNamed(context, DashboardPage.id);
-                    //   } else {
-                    //     ScaffoldMessenger.of(context).showSnackBar(
-                    //       const SnackBar(content: Text('Invalid Credentials')),
-                    //     );
-                    //   }
-                    // } else {
-                    //   ScaffoldMessenger.of(context).showSnackBar(
-                    //     const SnackBar(
-                    //         content: Text('Please fill all details')),
-                    //   );
-                    // }
-                  },
-                  child: const Text(
-                    'Sign in',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
+                Container(
+                  margin: const EdgeInsets.only(left: 100.0, right: 100.0, top: 10, bottom: 10),
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white),
+                        minimumSize:
+                            MaterialStateProperty.all(const Size.fromHeight(50)),
+                        padding:
+                            MaterialStateProperty.all(const EdgeInsets.fromLTRB(20, 10, 20, 10)),
+                        elevation: MaterialStateProperty.all(20),
+                        overlayColor:
+                            MaterialStateProperty.all(Colors.blue.shade900),
+                        side:  MaterialStateProperty.all(const BorderSide(
+                          width: 3.0,
+                          color: Colors.red,
+                        ),)
+                      ),
+                    onPressed: () {
+                      Navigator.pushNamed(context, LandingPage.id);
+                    },
+                    child: const Text(
+                      'Sign in',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                 ),
@@ -104,7 +97,7 @@ class _WelcomePageState extends State<WelcomePage> {
                     style: GoogleFonts.getFont(
                       'Open Sans',
                       fontWeight: FontWeight.w400,
-                      fontSize: 14,
+                      fontSize: 16,
                       letterSpacing: -0.4,
                       color: Colors.white,
                       decoration: TextDecoration.underline
