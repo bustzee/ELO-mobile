@@ -27,10 +27,7 @@ class UserDashboardPageState extends State<UserDashboardPage> {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
     return Scaffold(
-        key: _scaffoldKey,
         backgroundColor: const Color(0xff160E42),
         body: SafeArea(
           child: _tabs[_selectedIndex],

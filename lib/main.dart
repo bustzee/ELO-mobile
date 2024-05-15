@@ -1,3 +1,4 @@
+import 'package:elo_esports/user/livestream.dart';
 import 'package:elo_esports/user/user_dashboard.dart';
 import 'package:elo_esports/welcome.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,8 @@ class MyApp extends StatelessWidget {
       initialRoute: WelcomePage.id,
       routes: {
         WelcomePage.id: (context) => const WelcomePage(),
-        UserDashboardPage.id: (context) => const UserDashboardPage()
+        UserDashboardPage.id: (context) => const UserDashboardPage(),
+        LivestreamPage.id: (context) => const LivestreamPage(),
       },
     );
   }
