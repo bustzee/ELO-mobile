@@ -1,4 +1,6 @@
 import 'package:elo_esports/user/landing.dart';
+import 'package:elo_esports/user/menu.dart';
+import 'package:elo_esports/user/my_bets.dart';
 import 'package:elo_esports/user/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -18,12 +20,17 @@ class UserDashboardPageState extends State<UserDashboardPage> {
 
   final List<Widget> _tabs = [
     const LandingPage(),
+    const MyBetsPage(),
     const ProfilePage(),
+    const MenuPage(),
   ];
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
     return Scaffold(
+        key: _scaffoldKey,
         backgroundColor: const Color(0xff160E42),
         body: SafeArea(
           child: _tabs[_selectedIndex],
@@ -55,7 +62,7 @@ class UserDashboardPageState extends State<UserDashboardPage> {
           selectedIndex: _selectedIndex,
               onTabChange: (index) {
                 setState(() {
-                  _selectedIndex = index;
+                 _selectedIndex = index;
                 });
           },
         ),
