@@ -29,8 +29,7 @@ class _WelcomePageState extends State<WelcomePage> {
           child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Image(
-                    image: AssetImage('assets/images/splash_banner.png')),
+                const Image(image: AssetImage('assets/images/splash_banner.png')),
                 Container(
                   padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
                   child: Text(
