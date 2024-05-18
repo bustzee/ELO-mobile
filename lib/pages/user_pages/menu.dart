@@ -1,3 +1,4 @@
+import 'package:elo_esports/pages/user_pages/create_stream.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icons.dart';
@@ -124,6 +125,33 @@ class MenuPageState extends State<MenuPage> {
                         maxLines: 2,
                       ),
                     ],
+                  ),
+                ),
+             
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, CreateStreamPage.id);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Row(
+                      children: [
+                        const Icon(LineIcons.userCircle),
+                        const SizedBox(width: 20,),
+                         Text(
+                          'Create stream',
+                          style: GoogleFonts.getFont(
+                            'Open Sans',
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                            letterSpacing: -0.4,
+                            color: Colors.white,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
 

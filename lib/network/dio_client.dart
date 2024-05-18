@@ -24,9 +24,9 @@ class DioClient {
 
   late final Dio _dio;
 
-  Future<Livestream?> getLiveStreams({required int id}) async {
+  Future<Livestream?> getLiveStreams() async {
     try {
-      final response = await _dio.get('${Endpoints.getLiveStreams}/$id');
+      final response = await _dio.get('${Endpoints.getLiveStreams}');
       return Livestream.fromJson(response.data);
     } on DioException catch (err) {
       final errorMessage = DioExceptionHandler.fromDioError(err).toString();

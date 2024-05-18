@@ -1,6 +1,7 @@
-import 'package:elo_esports/user/livestream.dart';
-import 'package:elo_esports/user/user_dashboard.dart';
-import 'package:elo_esports/welcome.dart';
+import 'package:elo_esports/pages/user_pages/create_stream.dart';
+import 'package:elo_esports/pages/user_pages/livestream.dart';
+import 'package:elo_esports/pages/user_pages/user_dashboard.dart';
+import 'package:elo_esports/pages/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
         WelcomePage.id: (context) => const WelcomePage(),
         UserDashboardPage.id: (context) => const UserDashboardPage(),
         LivestreamPage.id: (context) => const LivestreamPage(),
+        CreateStreamPage.id: (context) => const CreateStreamPage(),
       },
     );
   }

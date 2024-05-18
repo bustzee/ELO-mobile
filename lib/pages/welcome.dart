@@ -1,4 +1,4 @@
-import 'package:elo_esports/user/user_dashboard.dart';
+import 'package:elo_esports/pages/user_pages/user_dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

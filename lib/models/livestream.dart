@@ -6,8 +6,8 @@ part 'livestream.g.dart';
 @JsonSerializable()
 class Livestream extends Equatable {
     Livestream({
-        required this.status,
-        required this.livestreams,
+        this.status,
+        this.livestreams,
     });
 
     final String? status;
@@ -127,7 +127,7 @@ class LivestreamElement extends Equatable {
         String? description,
         String? delayTime,
         int? viewCounter,
-        dynamic? type,
+        dynamic type,
         bool? fileLink,
         User? user,
     }) {
@@ -289,20 +289,20 @@ class User extends Equatable {
         String? lastName,
         String? username,
         String? phone,
-        dynamic? businessInfo,
+        dynamic businessInfo,
         String? profile,
         String? address,
-        dynamic? rememberToken,
+        dynamic rememberToken,
         int? eloBalance,
         DateTime? createdAt,
         DateTime? updatedAt,
-        dynamic? userType,
+        dynamic userType,
         int? status,
-        dynamic? paypalEmail,
+        dynamic paypalEmail,
         String? streamKey,
-        dynamic? dateOfBirth,
+        dynamic dateOfBirth,
         String? userAge,
-        dynamic? agree,
+        dynamic agree,
         String? imageLink,
         String? name,
     }) {
