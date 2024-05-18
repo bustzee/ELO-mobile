@@ -1,4 +1,4 @@
-import 'package:elo_esports/pages/user_pages/user_dashboard.dart';
+import 'package:elo_esports/pages/login.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -12,13 +12,6 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomePageState extends State<WelcomePage> {
-
-   @override
-    void didChangeDependencies() {
-      // Adjust the provider based on the image type
-      // precacheImage(const AssetImage('assets/images/login_banner.jpg'), context);
-      super.didChangeDependencies();
-    }
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +71,7 @@ class _WelcomePageState extends State<WelcomePage> {
                         ),)
                       ),
                     onPressed: () {
-                      Navigator.pushNamed(context, UserDashboardPage.id);
+                      Navigator.pushNamed(context, LoginPage.id);
                     },
                     child: const Text(
                       'Sign in',

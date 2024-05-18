@@ -8,4 +8,5 @@ class Endpoints {
   static const int connectionTimeout = 3000;
 
   static const String getLiveStreams = 'GetLiveStreams';
+  static const String getUserDetails = 'GetUserDetails';
 }

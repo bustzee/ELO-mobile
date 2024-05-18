@@ -1,10 +1,13 @@
 import 'package:dio/dio.dart';
-import 'package:elo_esports/models/models.dart';
+import 'package:elo_esports/models/user_details.dart';
 import 'package:elo_esports/network/dio_exception_handler.dart';
 import 'package:elo_esports/network/endpoints.dart';
 import 'package:elo_esports/network/interceptors/authorization_interceptor.dart';
 import 'package:elo_esports/network/interceptors/logger_interceptor.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+
+import '../models/livestream.dart';
 
 class DioClient {
   DioClient()
@@ -26,7 +29,7 @@ class DioClient {
 
   Future<Livestream?> getLiveStreams() async {
     try {
-      final response = await _dio.get('${Endpoints.getLiveStreams}');
+      final response = await _dio.get(Endpoints.getLiveStreams);
       return Livestream.fromJson(response.data);
     } on DioException catch (err) {
       final errorMessage = DioExceptionHandler.fromDioError(err).toString();
@@ -38,18 +41,22 @@ class DioClient {
   }
 
 
-  // Future<User?> createUser({required User user}) async {
-  //   try {
-  //     final response = await _dio.post(Endpoints.users, data: user.toJson());
-  //     return User.fromJson(response.data);
-  //   } on DioError catch (err) {
-  //     final errorMessage = DioException.fromDioError(err).toString();
-  //     throw errorMessage;
-  //   } catch (e) {
-  //     if (kDebugMode) print(e);
-  //     throw e.toString();
-  //   }
-  // }
+  Future<UserDetails?> getUserDetails(BuildContext? context, String username, String password) async {
+    try {
+      final response = await _dio.post(Endpoints.getUserDetails, data: {'username': username, 'password': password});
+      return UserDetails.fromJson(response.data);
+    } on DioException catch (err) {
+      final errorMessage = DioExceptionHandler.fromDioError(err).toString();
+      if(context != null) {
+        final snackBar = SnackBar(content: Text(errorMessage.toString()));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
+      throw errorMessage;
+    } catch (e) {
+      if (kDebugMode) print(e);
+      throw e.toString();
+    }
+  }
 
   // Future<void> deleteUser({required int id}) async {
   //   try {

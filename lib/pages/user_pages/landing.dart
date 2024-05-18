@@ -1,4 +1,4 @@
-import 'package:elo_esports/models/models.dart';
+import 'package:elo_esports/models/livestream.dart';
 import 'package:elo_esports/network/dio_client.dart';
 import 'package:elo_esports/pages/widgets/livestream_card_listview.dart';
 import 'package:elo_esports/pages/widgets/loader.dart';
