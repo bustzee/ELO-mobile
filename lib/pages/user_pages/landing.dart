@@ -1,7 +1,12 @@
 import 'package:elo_esports/models/livestream.dart';
+import 'package:elo_esports/models/twitchstream.dart';
+import 'package:elo_esports/models/user_details.dart';
 import 'package:elo_esports/network/dio_client.dart';
+import 'package:elo_esports/pages/login.dart';
 import 'package:elo_esports/pages/widgets/livestream_card_listview.dart';
 import 'package:elo_esports/pages/widgets/loader.dart';
+import 'package:elo_esports/pages/widgets/twitchstream_card_listview.dart';
+import 'package:elo_esports/utilities/shared_preferences_utility.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -16,11 +21,18 @@ class LandingPage extends StatefulWidget {
 }
 
 class _LandingPageState extends State<LandingPage> {
+
+  UserDetails? _userDetails;
+
   @override
-  void didChangeDependencies() {
-    // Adjust the provider based on the image type
-    // precacheImage(const AssetImage('assets/images/login_banner.jpg'), context);
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
+    getUser();
+  }
+
+  getUser() async {
+    _userDetails = await SharedPreferencesService.getUserDetails();
+    setState(() {});
   }
 
   @override
@@ -33,7 +45,7 @@ class _LandingPageState extends State<LandingPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
+                (_userDetails == null || _userDetails?.data?.token == null)? Container(
                   decoration: BoxDecoration(
                     color: const Color(0xFF322B59),
                     borderRadius: BorderRadius.circular(5),
@@ -44,7 +56,7 @@ class _LandingPageState extends State<LandingPage> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Container(
+                         Container(
                           margin: const EdgeInsets.fromLTRB(0, 0, 5.4, 4),
                           child: Text(
                             'Login now to follow streams and interact with other viewers',
@@ -85,7 +97,9 @@ class _LandingPageState extends State<LandingPage> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(5)),
                                     ))),
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.pushNamed(context, LoginPage.id);
+                                },
                                 child: const Text(
                                   'Login',
                                   style: TextStyle(
@@ -137,7 +151,7 @@ class _LandingPageState extends State<LandingPage> {
                       ],
                     ),
                   ),
-                ),
+                ) : const SizedBox(height: 0,),
                 const SizedBox(
                   height: 20,
                 ),
@@ -173,12 +187,12 @@ class _LandingPageState extends State<LandingPage> {
                   });
                 }),
                 
-                // LEADERBOARDS SECTION
+                // LIVESTREAMS SECTION
                 const SizedBox(
                   height: 20,
                 ),
                 Text(
-                  'Streams leaderboard',
+                  'Livestreams',
                   style: GoogleFonts.getFont(
                     'Open Sans',
                     fontWeight: FontWeight.w600,
@@ -196,6 +210,34 @@ class _LandingPageState extends State<LandingPage> {
                         return const Loader();
                       } else {
                         return LivestreamCardListview(livestreams: snapshot.data);
+                      }
+                    },
+                  ),
+                ),
+
+                // TWITCHSTREAMS SECTION
+                const SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  'Twitch streams',
+                  style: GoogleFonts.getFont(
+                    'Open Sans',
+                    fontWeight: FontWeight.w600,
+                    fontSize: 20,
+                    height: 2,
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(
+                  height: 180,
+                  child: FutureBuilder<Twitchstream?>(
+                    future: widget.dioClient.getTwitchStreams(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Loader();
+                      } else {
+                        return TwitchstreamCardListview(twitchstreams: snapshot.data);
                       }
                     },
                   ),

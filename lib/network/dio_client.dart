@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:elo_esports/models/twitchstream.dart';
 import 'package:elo_esports/models/user_details.dart';
 import 'package:elo_esports/network/dio_exception_handler.dart';
 import 'package:elo_esports/network/endpoints.dart';
@@ -31,6 +32,19 @@ class DioClient {
     try {
       final response = await _dio.get(Endpoints.getLiveStreams);
       return Livestream.fromJson(response.data);
+    } on DioException catch (err) {
+      final errorMessage = DioExceptionHandler.fromDioError(err).toString();
+      throw errorMessage;
+    } catch (e) {
+      if (kDebugMode) print(e);
+      throw e.toString();
+    }
+  }
+
+  Future<Twitchstream?> getTwitchStreams() async {
+    try {
+      final response = await _dio.get(Endpoints.getTwitchStreams);
+      return Twitchstream.fromJson(response.data);
     } on DioException catch (err) {
       final errorMessage = DioExceptionHandler.fromDioError(err).toString();
       throw errorMessage;

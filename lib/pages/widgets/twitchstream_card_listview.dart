@@ -1,25 +1,31 @@
-import 'package:elo_esports/models/livestream.dart';
-import 'package:elo_esports/network/endpoints.dart';
+import 'package:elo_esports/models/twitchstream.dart';
+import 'package:elo_esports/pages/user_pages/twitchstream.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // ignore: must_be_immutable
-class LivestreamCardListview extends StatelessWidget {
-  LivestreamCardListview({super.key, this.livestreams});
+class TwitchstreamCardListview extends StatelessWidget {
+  TwitchstreamCardListview({super.key, this.twitchstreams});
 
-  Livestream? livestreams;
+  Twitchstream? twitchstreams;
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: livestreams?.livestreams?.length,
+        itemCount: twitchstreams?.twitchLivestreams?.length,
         itemBuilder: (BuildContext context, int index) {
           return SizedBox(
             width: 150,
             child: InkWell(
               onTap: () {
-                // Navigator.pushNamed(context, LivestreamPage.id);
+                if(twitchstreams?.twitchLivestreams?[index] != null)
+                {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => TwitchstreamPage()),
+                  );
+                }
               },
               child: Card(
                 color: const Color(0xFF322B59),
@@ -31,27 +37,14 @@ class LivestreamCardListview extends StatelessWidget {
                       width: 150,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: NetworkImage(
-                            Endpoints.baseURL + (livestreams?.livestreams?[index].image ?? '--'),
-                          ),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      child: Image.network(
-                        Endpoints.baseURL + (livestreams?.livestreams?[index].image ?? '--'),
-                        fit: BoxFit.cover,
-                        errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                          return Image.asset(
-                            'assets/images/game_thumbnail_dummy.png',
-                            fit: BoxFit.cover,
-                          );
-                        },
+                            image: NetworkImage(twitchstreams?.twitchLivestreams?[index].thumbnailUrl?.replaceAll('{width}', '150').replaceAll('{height}', '150') ?? '--'),
+                            fit: BoxFit.cover),
                       ),
                     ),
                     Container(
                       padding: const EdgeInsets.all(5),
                       child: Text(
-                        livestreams?.livestreams?[index].name ?? '--',
+                        twitchstreams?.twitchLivestreams?[index].title ?? '--',
                         style: GoogleFonts.getFont(
                           'Open Sans',
                           fontWeight: FontWeight.w400,

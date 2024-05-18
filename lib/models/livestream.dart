@@ -6,8 +6,8 @@ part 'livestream.g.dart';
 @JsonSerializable()
 class Livestream extends Equatable {
     Livestream({
-        this.status,
-        this.livestreams,
+        required this.status,
+        required this.livestreams,
     });
 
     final String? status;

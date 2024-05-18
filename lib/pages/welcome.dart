@@ -1,4 +1,5 @@
 import 'package:elo_esports/pages/login.dart';
+import 'package:elo_esports/pages/user_pages/user_dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -82,17 +83,22 @@ class _WelcomePageState extends State<WelcomePage> {
                     ),
                   ),
                 ),
-                Container(
-                  padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
-                  child: Text(
-                    'Skip and visit livestreams',
-                    style: GoogleFonts.getFont(
-                      'Open Sans',
-                      fontWeight: FontWeight.w400,
-                      fontSize: 16,
-                      letterSpacing: -0.4,
-                      color: Colors.white,
-                      decoration: TextDecoration.underline
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, UserDashboardPage.id);
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
+                    child: Text(
+                      'Skip and visit livestreams',
+                      style: GoogleFonts.getFont(
+                        'Open Sans',
+                        fontWeight: FontWeight.w400,
+                        fontSize: 16,
+                        letterSpacing: -0.4,
+                        color: Colors.white,
+                        decoration: TextDecoration.underline
+                      ),
                     ),
                   ),
                 ),
