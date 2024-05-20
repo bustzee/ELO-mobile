@@ -51,7 +51,10 @@ class AdminLivestream extends StatelessWidget {
                                   child: Padding(
                                       padding: const EdgeInsets.fromLTRB(
                                           15, 2, 15, 2),
-                                      child: PrintValue(printtext: 'ELO')),
+                                      child: PrintValue(
+                                          printtext: snapshot.data
+                                                  ?.livestreams?[index].type ??
+                                              '--')),
                                 ),
                               ),
                             ],
@@ -61,21 +64,30 @@ class AdminLivestream extends StatelessWidget {
                               child: TitleText(printtext: 'Stream Name')),
                           Padding(
                             padding: const EdgeInsets.fromLTRB(15, 0, 15, 5),
-                            child: PrintValue(printtext: snapshot.data?.livestreams?[index].name ?? '--'),
+                            child: PrintValue(
+                                printtext:
+                                    snapshot.data?.livestreams?[index].name ??
+                                        '--'),
                           ),
                           Padding(
                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                               child: TitleText(printtext: 'Email')),
                           Padding(
                             padding: const EdgeInsets.fromLTRB(15, 0, 15, 5),
-                            child: PrintValue(printtext: 'abcd@gmail.com'),
+                            child: PrintValue(
+                                printtext: snapshot.data?.livestreams?[index]
+                                        .user?.email ??
+                                    '--'),
                           ),
                           Padding(
                               padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                               child: TitleText(printtext: 'Username')),
                           Padding(
                             padding: const EdgeInsets.fromLTRB(15, 0, 15, 5),
-                            child: PrintValue(printtext: 'Swappy9997'),
+                            child: PrintValue(
+                                printtext: snapshot.data?.livestreams?[index]
+                                        .user?.username ??
+                                    '--'),
                           ),
                           Row(
                             children: [
