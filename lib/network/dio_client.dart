@@ -41,6 +41,19 @@ class DioClient {
     }
   }
 
+  Future<Livestream?> getCompletedStreams() async {
+    try {
+      final response = await _dio.get(Endpoints.getCompletedStreams);
+      return Livestream.fromJson(response.data);
+    } on DioException catch (err) {
+      final errorMessage = DioExceptionHandler.fromDioError(err).toString();
+      throw errorMessage;
+    } catch (e) {
+      if (kDebugMode) print(e);
+      throw e.toString();
+    }
+  }
+
   Future<Twitchstream?> getTwitchStreams() async {
     try {
       final response = await _dio.get(Endpoints.getTwitchStreams);
@@ -54,14 +67,15 @@ class DioClient {
     }
   }
 
-
-  Future<UserDetails?> getUserDetails(BuildContext? context, String username, String password) async {
+  Future<UserDetails?> getUserDetails(
+      BuildContext? context, String username, String password) async {
     try {
-      final response = await _dio.post(Endpoints.getUserDetails, data: {'username': username, 'password': password});
+      final response = await _dio.post(Endpoints.getUserDetails,
+          data: {'username': username, 'password': password});
       return UserDetails.fromJson(response.data);
     } on DioException catch (err) {
       final errorMessage = DioExceptionHandler.fromDioError(err).toString();
-      if(context != null) {
+      if (context != null) {
         final snackBar = SnackBar(content: Text(errorMessage.toString()));
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
       }

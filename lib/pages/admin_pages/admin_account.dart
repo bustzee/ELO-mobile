@@ -1,5 +1,6 @@
+import 'package:elo_esports/pages/admin_pages/admin_completed_stream.dart';
 import 'package:elo_esports/pages/admin_pages/admin_dashboard.dart';
-import 'package:elo_esports/pages/admin_pages/admin_livestream.dart';
+import 'package:elo_esports/pages/admin_pages/admin_inprogress_stream.dart';
 import 'package:elo_esports/pages/user_pages/user_dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,7 +18,8 @@ class _AdminAccountState extends State<AdminAccount> {
 
   final List<Widget> _widgetList = [
     AdminDashboard(),
-    AdminLivestream(),
+    AdminInprogressStream(),
+    AdminCompletedStream(),
     // const MyBetsPage(),
     // const ProfilePage(),
     // const MenuPage(),
@@ -25,7 +27,7 @@ class _AdminAccountState extends State<AdminAccount> {
 
   NavigateToTapMenu(int TapIndex) {
     _selectedIndex = TapIndex;
-    print(_selectedIndex);
+    setState(() {});
   }
 
   @override
@@ -40,7 +42,7 @@ class _AdminAccountState extends State<AdminAccount> {
           title: SizedBox(
               height: 50,
               width: 100,
-              child: Image.asset('assets/images/elo_logo.png')),
+              child: Image.asset('assets/images/logo.png')),
         ),
         drawer: Drawer(
           backgroundColor: const Color(0xFF322B59),
@@ -105,24 +107,30 @@ class _AdminAccountState extends State<AdminAccount> {
                 child: (Column(
                   children: <Widget>[
                     ExpansionTile(
+                      onExpansionChanged: (bool isExpanded) {
+                        Navigator.pushNamed(context, UserDashboardPage.id);
+                      },
                       collapsedIconColor: Colors.white,
                       title: const Text(
                         'Home',
                         style: TextStyle(color: Colors.white),
                       ),
-                      leading: Icon(Icons.home, color: Colors.white), // Ensure icon color is set here
+                      leading: Icon(Icons.home,
+                          color: Colors.white), // Ensure icon color is set here
                       iconColor: Colors.white,
-                      textColor: Colors.white, // You can directly use Colors.white here
+                      textColor: Colors
+                          .white, // You can directly use Colors.white here
                       trailing: SizedBox.shrink(), // Remove trailing widget
-                       onExpansionChanged: (bool isExpanded) {
-                            Navigator.pushNamed(context, UserDashboardPage.id);
-                          },
                     ),
                     Theme(
                       data: Theme.of(context).copyWith(
                         dividerColor: Colors.transparent, // Remove the border
                       ),
                       child: ExpansionTile(
+                        onExpansionChanged: (bool isExpanded) {
+                          NavigateToTapMenu(0);
+                          Navigator.pop(context);
+                        },
                         collapsedIconColor: Colors.white,
                         title: const Text(
                           'Dashboard',
@@ -132,9 +140,6 @@ class _AdminAccountState extends State<AdminAccount> {
                         iconColor: Colors.white,
                         textColor: Color.fromARGB(255, 255, 255, 255),
                         trailing: SizedBox.shrink(),
-                        onExpansionChanged: (bool isExpanded) {
-                          NavigateToTapMenu(0);
-                        }
                       ),
                     ),
                     Theme(
@@ -152,18 +157,19 @@ class _AdminAccountState extends State<AdminAccount> {
                         textColor: const Color.fromARGB(255, 255, 255, 255),
                         // trailing: Icon(Icons.arrow_drop_down),
                         children: <Widget>[
-                          InkWell(
+                          ListTile(
+                            title: const Text('In Progress'),
                             onTap: () {
                               NavigateToTapMenu(1);
+                              Navigator.pop(context);
                             },
-                            child: ListTile(
-                              title: const Text('In Progress'),
-                              onTap: () {},
-                            ),
                           ),
                           ListTile(
                             title: const Text('Completed'),
-                            onTap: () {},
+                            onTap: () {
+                              NavigateToTapMenu(2);
+                              Navigator.pop(context);
+                            },
                           ),
                         ],
                       ),
