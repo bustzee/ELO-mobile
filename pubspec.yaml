@@ -47,6 +47,7 @@ dependencies:
   loading_animation_widget: ^1.2.1
   simple_animations: ^5.0.2
   shared_preferences: ^2.2.3
+  webview_flutter: ^4.7.0
 
 dev_dependencies:
   flutter_test:

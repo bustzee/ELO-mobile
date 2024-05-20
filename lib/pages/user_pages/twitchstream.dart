@@ -17,6 +17,22 @@ class TwitchstreamPage extends StatefulWidget {
 
 class TwitchstreamPageState extends State<TwitchstreamPage> {
 
+  // final webViewController = WebViewController()
+  //   ..setJavaScriptMode(JavaScriptMode.unrestricted)
+  //   ..setBackgroundColor(const Color(0x00000000))
+  //   ..setNavigationDelegate(
+  //       NavigationDelegate(
+  //         onProgress: (int progress) {},
+  //         onPageStarted: (String url) {},
+  //         onPageFinished: (String url) {},
+  //         onWebResourceError: (WebResourceError error) {},
+  //         onNavigationRequest: (NavigationRequest request) {
+  //           return NavigationDecision.navigate;
+  //         },
+  //       ),
+  //     )
+  //   ..loadRequest(Uri.parse('https://player.twitch.tv?channel=qckval&height=380&parent=uat.elo-esports.com&referrer=https%3A%2F%2Fuat.elo-esports.com%2Fstreams%2F525102978&width=100%25'));
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +55,7 @@ class TwitchstreamPageState extends State<TwitchstreamPage> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                   child: Text(
-                    'Metal Gear Solid V: The Phantom Pain by Amit',
+                    widget.twitchlivestream?.title ?? '--',
                     style: GoogleFonts.getFont(
                       'Open Sans',
                       fontWeight: FontWeight.w600,
@@ -53,7 +69,7 @@ class TwitchstreamPageState extends State<TwitchstreamPage> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                   child: Text(
-                    '298K views',
+                    '${widget.twitchlivestream?.viewerCount.toString() ?? '--'} views',
                     style: GoogleFonts.getFont(
                       'Open Sans',
                       fontWeight: FontWeight.w600,
