@@ -1,3 +1,4 @@
+import 'package:elo_esports/pages/admin_pages/admin_account.dart';
 import 'package:elo_esports/pages/admin_pages/admin_dashboard.dart';
 import 'package:elo_esports/pages/login.dart';
 import 'package:elo_esports/pages/user_pages/create_stream.dart';
@@ -22,14 +23,17 @@ class MyApp extends StatelessWidget {
       title: 'ELO ESports',
       theme: ThemeData(
         textTheme: GoogleFonts.poppinsTextTheme(),
-        colorScheme: ColorScheme.fromSeed(seedColor: Color(int.parse('#0F50A6'.substring(1, 7), radix: 16) + 0xFF000000), brightness: Brightness.dark),
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: Color(
+                int.parse('#0F50A6'.substring(1, 7), radix: 16) + 0xFF000000),
+            brightness: Brightness.dark),
         useMaterial3: true,
       ),
       initialRoute: WelcomePage.id,
       routes: {
         WelcomePage.id: (context) => const WelcomePage(),
         LoginPage.id: (context) => LoginPage(),
-        AdminDashboard.id: (context) => const AdminDashboard(),
+        AdminAccount.id: (context) => const AdminAccount(),
         UserDashboardPage.id: (context) => const UserDashboardPage(),
         LivestreamPage.id: (context) => const LivestreamPage(),
         CreateStreamPage.id: (context) => const CreateStreamPage(),
