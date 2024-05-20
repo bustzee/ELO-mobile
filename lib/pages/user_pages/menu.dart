@@ -1,5 +1,7 @@
+import 'package:elo_esports/models/user_details.dart';
 import 'package:elo_esports/pages/admin_pages/admin_account.dart';
 import 'package:elo_esports/pages/user_pages/create_stream.dart';
+import 'package:elo_esports/utilities/shared_preferences_utility.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icons.dart';
@@ -13,6 +15,20 @@ class MenuPage extends StatefulWidget {
 }
 
 class MenuPageState extends State<MenuPage> {
+
+  UserDetails? _userDetails;
+
+  @override
+  void initState() {
+    super.initState();
+    getUser();
+  }
+
+  getUser() async {
+    _userDetails = await SharedPreferencesService.getUserDetails();
+    setState(() {});
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,11 +50,10 @@ class MenuPageState extends State<MenuPage> {
                         Container(
                           height: 100,
                           width: 100,
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                             image: DecorationImage(
-                                image: AssetImage(
-                                    'assets/images/profile_dummy.png'),
-                                fit: BoxFit.cover),
+                                image: NetworkImage(_userDetails?.data?.user?.imageLink ?? '--'), fit: BoxFit.cover),
+                                borderRadius: BorderRadius.circular(5)
                           ),
                         ),
                         const SizedBox(
@@ -49,7 +64,7 @@ class MenuPageState extends State<MenuPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Amit Bodke',
+                              _userDetails?.data?.user?.name ?? '--',
                               style: GoogleFonts.getFont(
                                 'Open Sans',
                                 fontWeight: FontWeight.w600,
@@ -64,7 +79,7 @@ class MenuPageState extends State<MenuPage> {
                               height: 10,
                             ),
                             Text(
-                              'Stream key :\n12313465467894545131346',
+                              'Stream key :\n${_userDetails?.data?.user?.streamKey ?? '--'}',
                               style: GoogleFonts.getFont(
                                 'Open Sans',
                                 fontWeight: FontWeight.w400,
@@ -107,7 +122,7 @@ class MenuPageState extends State<MenuPage> {
                     ],
                   ),
                 ),
-                InkWell(
+                if(_userDetails != null && _userDetails?.data?.token != null) InkWell(
                   onTap: () {
                     Navigator.pushNamed(context, AdminAccount.id);
                   },
@@ -135,7 +150,7 @@ class MenuPageState extends State<MenuPage> {
                     ),
                   ),
                 ),
-                Padding(
+                if(_userDetails != null && _userDetails?.data?.token != null) Padding(
                   padding: const EdgeInsets.all(20),
                   child: Row(
                     children: [
@@ -158,7 +173,7 @@ class MenuPageState extends State<MenuPage> {
                     ],
                   ),
                 ),
-                InkWell(
+                if(_userDetails != null && _userDetails?.data?.token != null) InkWell(
                   onTap: () {
                     Navigator.pushNamed(context, CreateStreamPage.id);
                   },
@@ -186,7 +201,7 @@ class MenuPageState extends State<MenuPage> {
                     ),
                   ),
                 ),
-                Padding(
+                if(_userDetails != null && _userDetails?.data?.token != null) Padding(
                   padding: const EdgeInsets.all(20),
                   child: Row(
                     children: [
@@ -232,7 +247,7 @@ class MenuPageState extends State<MenuPage> {
                     ],
                   ),
                 ),
-                Padding(
+                if(_userDetails != null && _userDetails?.data?.token != null) Padding(
                   padding: const EdgeInsets.all(20),
                   child: Row(
                     children: [

@@ -1,3 +1,5 @@
+import 'package:elo_esports/models/user_details.dart';
+import 'package:elo_esports/utilities/shared_preferences_utility.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -10,8 +12,28 @@ class ProfilePage extends StatefulWidget {
 }
 
 class ProfilePageState extends State<ProfilePage> {
+
+  UserDetails? _userDetails;
+
+  @override
+  void initState() {
+    super.initState();
+    getUser();
+  }
+
+  getUser() async {
+    _userDetails = await SharedPreferencesService.getUserDetails();
+    setState(() {});
+  }
+  
   @override
   Widget build(BuildContext context) {
+
+    TextEditingController bankNameController = TextEditingController();
+    TextEditingController accountNumberController = TextEditingController();
+    TextEditingController branchNameController = TextEditingController();
+    TextEditingController ifscCodeController = TextEditingController();
+
     return Scaffold(
       backgroundColor: const Color(0xff160E42),
       body: SingleChildScrollView(
@@ -216,7 +238,7 @@ class ProfilePageState extends State<ProfilePage> {
                    SizedBox(
                       width: 100,
                       child: Text(
-                        'AmitBodke',
+                        _userDetails?.data?.user?.username ?? '--',
                         style: GoogleFonts.getFont(
                            'Open Sans',
                           fontWeight: FontWeight.w600,
@@ -251,7 +273,7 @@ class ProfilePageState extends State<ProfilePage> {
                     SizedBox(
                       width: 200,
                       child: Text(
-                        'amit.bodke@cyberscriptit.com',
+                        _userDetails?.data?.user?.email ?? '--',
                         style: GoogleFonts.getFont(
                            'Open Sans',
                           fontWeight: FontWeight.w600,
@@ -291,7 +313,7 @@ class ProfilePageState extends State<ProfilePage> {
                    SizedBox(
                       width: 100,
                       child: Text(
-                        '+17845674567',
+                        _userDetails?.data?.user?.phone ?? '--',
                         style: GoogleFonts.getFont(
                            'Open Sans',
                           fontWeight: FontWeight.w600,
@@ -326,7 +348,7 @@ class ProfilePageState extends State<ProfilePage> {
                     SizedBox(
                       width: 200,
                       child: Text(
-                        'Address will be shown here on this line',
+                        _userDetails?.data?.user?.address ?? '--',
                         style: GoogleFonts.getFont(
                            'Open Sans',
                           fontWeight: FontWeight.w600,
