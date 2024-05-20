@@ -104,46 +104,37 @@ class _AdminAccountState extends State<AdminAccount> {
               Container(
                 child: (Column(
                   children: <Widget>[
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, UserDashboardPage.id);
-                      },
-                      child: Theme(
-                        data: Theme.of(context).copyWith(
-                          dividerColor: Colors.transparent, // Remove the border
-                        ),
-                        child: const ExpansionTile(
-                          collapsedIconColor: Colors.white,
-                          title: Text(
-                            'Home',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          leading: Icon(Icons.home),
-                          iconColor: Colors.white,
-                          textColor: Color.fromARGB(255, 255, 255, 255),
-                          trailing: SizedBox.shrink(),
-                        ),
+                    ExpansionTile(
+                      collapsedIconColor: Colors.white,
+                      title: const Text(
+                        'Home',
+                        style: TextStyle(color: Colors.white),
                       ),
+                      leading: Icon(Icons.home, color: Colors.white), // Ensure icon color is set here
+                      iconColor: Colors.white,
+                      textColor: Colors.white, // You can directly use Colors.white here
+                      trailing: SizedBox.shrink(), // Remove trailing widget
+                       onExpansionChanged: (bool isExpanded) {
+                            Navigator.pushNamed(context, UserDashboardPage.id);
+                          },
                     ),
                     Theme(
                       data: Theme.of(context).copyWith(
                         dividerColor: Colors.transparent, // Remove the border
                       ),
-                      child: InkWell(
-                        onTap: () {
-                          NavigateToTapMenu(0);
-                        },
-                        child: const ExpansionTile(
-                          collapsedIconColor: Colors.white,
-                          title: Text(
-                            'Dashboard',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          leading: Icon(Icons.dashboard),
-                          iconColor: Colors.white,
-                          textColor: Color.fromARGB(255, 255, 255, 255),
-                          trailing: SizedBox.shrink(),
+                      child: ExpansionTile(
+                        collapsedIconColor: Colors.white,
+                        title: const Text(
+                          'Dashboard',
+                          style: TextStyle(color: Colors.white),
                         ),
+                        leading: const Icon(Icons.dashboard),
+                        iconColor: Colors.white,
+                        textColor: Color.fromARGB(255, 255, 255, 255),
+                        trailing: SizedBox.shrink(),
+                        onExpansionChanged: (bool isExpanded) {
+                          NavigateToTapMenu(0);
+                        }
                       ),
                     ),
                     Theme(
