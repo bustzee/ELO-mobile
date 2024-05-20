@@ -19,13 +19,10 @@ class TwitchstreamCardListview extends StatelessWidget {
             width: 150,
             child: InkWell(
               onTap: () {
-                if(twitchstreams?.twitchLivestreams?[index] != null)
-                {
-                  Navigator.push(
+                Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => TwitchstreamPage()),
+                    MaterialPageRoute(builder: (context) => TwitchstreamPage(twitchlivestream: twitchstreams?.twitchLivestreams?[index])),
                   );
-                }
               },
               child: Card(
                 color: const Color(0xFF322B59),

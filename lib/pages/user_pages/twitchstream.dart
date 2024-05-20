@@ -4,9 +4,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lecle_yoyo_player/lecle_yoyo_player.dart';
 import 'package:line_icons/line_icons.dart';
 
+// ignore: must_be_immutable
 class TwitchstreamPage extends StatefulWidget {
-  TwitchstreamPage({super.key});
+  TwitchstreamPage({super.key, this.twitchlivestream});
   static String id = '/TwitchstreamPage';
+
+  TwitchLivestream? twitchlivestream;
 
   @override
   State<TwitchstreamPage> createState() => TwitchstreamPageState();

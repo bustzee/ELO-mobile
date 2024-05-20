@@ -71,16 +71,4 @@ class DioClient {
       throw e.toString();
     }
   }
-
-  // Future<void> deleteUser({required int id}) async {
-  //   try {
-  //     await _dio.delete('${Endpoints.users}/$id');
-  //   } on DioError catch (err) {
-  //     final errorMessage = DioException.fromDioError(err).toString();
-  //     throw errorMessage;
-  //   } catch (e) {
-  //     if (kDebugMode) print(e);
-  //     throw e.toString();
-  //   }
-  // }
 }
