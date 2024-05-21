@@ -1,5 +1,6 @@
 import 'package:elo_esports/models/livestream.dart';
 import 'package:elo_esports/network/endpoints.dart';
+import 'package:elo_esports/pages/user_pages/livestream.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -19,7 +20,10 @@ class LivestreamCardListview extends StatelessWidget {
             width: 150,
             child: InkWell(
               onTap: () {
-                // Navigator.pushNamed(context, LivestreamPage.id);
+                   Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LivestreamPage(livestream: livestreams?.livestreams?[index])),
+                  );
               },
               child: Card(
                 color: const Color(0xFF322B59),

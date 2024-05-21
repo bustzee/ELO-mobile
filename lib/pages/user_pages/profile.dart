@@ -1,4 +1,5 @@
 import 'package:elo_esports/models/user_details.dart';
+import 'package:elo_esports/network/dio_client.dart';
 import 'package:elo_esports/utilities/shared_preferences_utility.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -29,10 +30,57 @@ class ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
 
+    final DioClient dioClient = DioClient();
+
+    // Controller for each text field
     TextEditingController bankNameController = TextEditingController();
     TextEditingController accountNumberController = TextEditingController();
     TextEditingController branchNameController = TextEditingController();
     TextEditingController ifscCodeController = TextEditingController();
+    TextEditingController micrCodeController = TextEditingController();
+    TextEditingController swiftCodeController = TextEditingController();
+    TextEditingController routingNumberController = TextEditingController();
+
+    bankNameController.text = _userDetails?.data?.bankDetails?.bankName ?? '';
+    accountNumberController.text = _userDetails?.data?.bankDetails?.accountNumber ?? '';
+    branchNameController.text = _userDetails?.data?.bankDetails?.branchName ?? '';
+    ifscCodeController.text = _userDetails?.data?.bankDetails?.ifscCode ?? '';
+    micrCodeController.text = _userDetails?.data?.bankDetails?.micrCode ?? '';
+    swiftCodeController.text = _userDetails?.data?.bankDetails?.swiftCode ?? '';
+    routingNumberController.text = _userDetails?.data?.bankDetails?.routingNumber ?? '';
+
+    bool validate() {
+      return bankNameController.text.isNotEmpty &&
+          accountNumberController.text.isNotEmpty &&
+          branchNameController.text.isNotEmpty &&
+          ifscCodeController.text.isNotEmpty &&
+          micrCodeController.text.isNotEmpty &&
+          swiftCodeController.text.isNotEmpty &&
+          routingNumberController.text.isNotEmpty;
+    }
+
+    updateBankDetails() async {
+      BankDetails bankDetails = BankDetails(
+        bankName: bankNameController.text,
+        accountNumber: accountNumberController.text,
+        branchName: branchNameController.text,
+        ifscCode: ifscCodeController.text,
+        micrCode: micrCodeController.text,
+        swiftCode: swiftCodeController.text,
+        routingNumber: routingNumberController.text, id: null, userId: null, createdAt: null, updatedAt: null,
+      );
+      await dioClient.updateBankDetails(context, bankDetails);
+
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Bank details updated successfully'),
+      ));
+
+      _userDetails!.data?.copyWith(
+        bankDetails: bankDetails
+      );
+
+      SharedPreferencesService.setUserDetails(_userDetails!);
+    }
 
     return Scaffold(
       backgroundColor: const Color(0xff160E42),
@@ -61,7 +109,7 @@ class ProfilePageState extends State<ProfilePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Amit Bodke',
+                      _userDetails?.data?.user?.username ?? '--',
                       style: GoogleFonts.getFont(
                         'Open Sans',
                         fontWeight: FontWeight.w600,
@@ -76,7 +124,7 @@ class ProfilePageState extends State<ProfilePage> {
                       height: 10,
                     ),
                     Text(
-                      'Stream key :\n12313465467894545131346',
+                      'Stream key :\n${_userDetails?.data?.user?.streamKey ?? '--'}',
                       style: GoogleFonts.getFont(
                         'Open Sans',
                         fontWeight: FontWeight.w400,
@@ -382,295 +430,55 @@ class ProfilePageState extends State<ProfilePage> {
 
             const SizedBox(height: 10,),
 
+           Row(
+            children: [
+              BankField(
+                label: 'Bank Name',
+                controller: bankNameController,
+              ),
+              const SizedBox(width: 10),
+              BankField(
+                label: 'Account Number',
+                controller: accountNumberController,
+              ),
+            ],
+           ),
+            const SizedBox(height: 10),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Bank name',
-                      style: GoogleFonts.getFont(
-                        'Open Sans',
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12,
-                        letterSpacing: -0.4,
-                        color: Colors.white,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                    ),
-                    const SizedBox(
-                      width: 150,
-                      height: 60,
-                      child: TextField(
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12
-                        ),
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                          fillColor: Color(0xff262657),
-                          filled: true,
-                          hintText: 'Central bank',
-                          hintStyle: TextStyle(
-                            fontSize: 10,
-                          )
-                        ),
-                      ),
-                    )
-                  ],
+                BankField(
+                  label: 'Branch Name',
+                  controller: branchNameController,
                 ),
-
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Account number',
-                      style: GoogleFonts.getFont(
-                        'Open Sans',
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12,
-                        letterSpacing: -0.4,
-                        color: Colors.white,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                    ),
-                    const SizedBox(
-                      width: 150,
-                      height: 60,
-                      child: TextField(
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12
-                        ),
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                          fillColor: Color(0xff262657),
-                          filled: true,
-                          hintText: '1324561231234',
-                          hintStyle: TextStyle(
-                            fontSize: 10,
-                          )
-                        ),
-                      ),
-                    )
-                  ],
+                const SizedBox(width: 10),
+                BankField(
+                  label: 'IFSC Code',
+                  controller: ifscCodeController,
                 ),
               ],
             ),
-
-            const SizedBox(height: 10,),
-
+            const SizedBox(height: 10),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Branch name',
-                      style: GoogleFonts.getFont(
-                        'Open Sans',
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12,
-                        letterSpacing: -0.4,
-                        color: Colors.white,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                    ),
-                    const SizedBox(
-                      width: 150,
-                      height: 60,
-                      child: TextField(
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12
-                        ),
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                          fillColor: Color(0xff262657),
-                          filled: true,
-                          hintText: 'Central bank',
-                          hintStyle: TextStyle(
-                            fontSize: 10,
-                          )
-                        ),
-                      ),
-                    )
-                  ],
+                BankField(
+                  label: 'MICR Code',
+                  controller: micrCodeController,
                 ),
-
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'IFSC code',
-                      style: GoogleFonts.getFont(
-                        'Open Sans',
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12,
-                        letterSpacing: -0.4,
-                        color: Colors.white,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                    ),
-                    const SizedBox(
-                      width: 150,
-                      height: 60,
-                      child: TextField(
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12
-                        ),
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                          fillColor: Color(0xff262657),
-                          filled: true,
-                          hintText: '1324561231234',
-                          hintStyle: TextStyle(
-                            fontSize: 10,
-                          )
-                        ),
-                      ),
-                    )
-                  ],
+                const SizedBox(width: 10),
+                BankField(
+                  label: 'SWIFT Code',
+                  controller: swiftCodeController,
                 ),
               ],
             ),
-
-            const SizedBox(height: 10,),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'MICR Code',
-                      style: GoogleFonts.getFont(
-                        'Open Sans',
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12,
-                        letterSpacing: -0.4,
-                        color: Colors.white,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                    ),
-                    const SizedBox(
-                      width: 150,
-                      height: 60,
-                      child: TextField(
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12
-                        ),
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                          fillColor: Color(0xff262657),
-                          filled: true,
-                          hintText: 'Central bank',
-                          hintStyle: TextStyle(
-                            fontSize: 10,
-                          )
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'SWIFT Code',
-                      style: GoogleFonts.getFont(
-                        'Open Sans',
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12,
-                        letterSpacing: -0.4,
-                        color: Colors.white,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                    ),
-                    const SizedBox(
-                      width: 150,
-                      height: 60,
-                      child: TextField(
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12
-                        ),
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                          fillColor: Color(0xff262657),
-                          filled: true,
-                          hintText: '1324561231234',
-                          hintStyle: TextStyle(
-                            fontSize: 10,
-                          )
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ],
+            const SizedBox(height: 10),
+            BankField(
+              label: 'Routing Number',
+              controller: routingNumberController,
             ),
-
-            const SizedBox(height: 10,),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Routing Number',
-                      style: GoogleFonts.getFont(
-                        'Open Sans',
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12,
-                        letterSpacing: -0.4,
-                        color: Colors.white,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                    ),
-                    const SizedBox(
-                      width: 150,
-                      height: 60,
-                      child: TextField(
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12
-                        ),
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                          fillColor: Color(0xff262657),
-                          filled: true,
-                          hintText: 'Central bank',
-                          hintStyle: TextStyle(
-                            fontSize: 10,
-                          )
-                        ),
-                      ),
-                    )
-                  ],
-                )
-              ],
-            ),
-          
-            const SizedBox(height: 10,),
-
+            const SizedBox(height: 20),
             ElevatedButton(
-                    style: ButtonStyle(
+              style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(const Color(0xff0F38CD)),
                         foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
                         minimumSize: MaterialStateProperty.all(const Size.fromHeight(50)),
@@ -683,18 +491,87 @@ class ProfilePageState extends State<ProfilePage> {
                           )
                         )
                       ),
-                    onPressed: () {},
-                    child: const Text(
-                      'Save details',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
+              onPressed: () {
+                // Save button logic
+                if (validate()) {
+                  updateBankDetails();
+                } else {
+                  // Show error message
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('Error', style: TextStyle(color: Colors.white),),
+                        content: const Text('Please fill all fields.', style: TextStyle(color: Colors.white)),
+                        actions: <Widget>[
+                          TextButton(
+                            child: const Text('OK', style: TextStyle(color: Colors.white)),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
+              },
+              child: const Text('Save Details'),
+            ),
           ]),
         ),
       ),
+    );
+  }
+}
+
+class BankField extends StatelessWidget {
+  final String label;
+  final TextEditingController controller;
+
+  const BankField({
+    super.key,
+    required this.label,
+    required this.controller,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: GoogleFonts.getFont(
+            'Open Sans',
+            fontWeight: FontWeight.w500,
+            fontSize: 12,
+            letterSpacing: -0.4,
+            color: Colors.white,
+          ),
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
+        ),
+        SizedBox(
+          width: 150,
+          height: 60,
+          child: TextField(
+            controller: controller,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 12,
+            ),
+            decoration: const InputDecoration(
+              contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+              fillColor: Color(0xff262657),
+              filled: true,
+              hintStyle: TextStyle(
+                fontSize: 10,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

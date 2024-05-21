@@ -53,6 +53,7 @@ class Data extends Equatable {
         required this.user,
         required this.token,
         required this.tokenType,
+        required this.bankDetails,
     });
 
     final User? user;
@@ -67,15 +68,22 @@ class Data extends Equatable {
     static const String tokenTypeKey = "token_type";
     
 
+    @JsonKey(name: 'bank_details') 
+    final BankDetails? bankDetails;
+    static const String bankDetailsKey = "bank_details";
+    
+
     Data copyWith({
         User? user,
         String? token,
         String? tokenType,
+        BankDetails? bankDetails,
     }) {
         return Data(
             user: user ?? this.user,
             token: token ?? this.token,
             tokenType: tokenType ?? this.tokenType,
+            bankDetails: bankDetails ?? this.bankDetails,
         );
     }
 
@@ -85,12 +93,124 @@ class Data extends Equatable {
 
     @override
     String toString(){
-        return "$user, $token, $tokenType, ";
+        return "$user, $token, $tokenType, $bankDetails, ";
     }
 
     @override
     List<Object?> get props => [
-    user, token, tokenType, ];
+    user, token, tokenType, bankDetails, ];
+}
+
+@JsonSerializable()
+class BankDetails extends Equatable {
+    BankDetails({
+        required this.id,
+        required this.userId,
+        required this.bankName,
+        required this.accountNumber,
+        required this.branchName,
+        required this.ifscCode,
+        required this.micrCode,
+        required this.swiftCode,
+        required this.createdAt,
+        required this.updatedAt,
+        required this.routingNumber,
+    });
+
+    final int? id;
+    static const String idKey = "id";
+    
+
+    @JsonKey(name: 'user_id') 
+    final int? userId;
+    static const String userIdKey = "user_id";
+    
+
+    @JsonKey(name: 'bank_name') 
+    final String? bankName;
+    static const String bankNameKey = "bank_name";
+    
+
+    @JsonKey(name: 'account_number') 
+    final String? accountNumber;
+    static const String accountNumberKey = "account_number";
+    
+
+    @JsonKey(name: 'branch_name') 
+    final String? branchName;
+    static const String branchNameKey = "branch_name";
+    
+
+    @JsonKey(name: 'ifsc_code') 
+    final String? ifscCode;
+    static const String ifscCodeKey = "ifsc_code";
+    
+
+    @JsonKey(name: 'micr_code') 
+    final String? micrCode;
+    static const String micrCodeKey = "micr_code";
+    
+
+    @JsonKey(name: 'swift_code') 
+    final String? swiftCode;
+    static const String swiftCodeKey = "swift_code";
+    
+
+    @JsonKey(name: 'created_at') 
+    final DateTime? createdAt;
+    static const String createdAtKey = "created_at";
+    
+
+    @JsonKey(name: 'updated_at') 
+    final DateTime? updatedAt;
+    static const String updatedAtKey = "updated_at";
+    
+
+    @JsonKey(name: 'routing_number') 
+    final String? routingNumber;
+    static const String routingNumberKey = "routing_number";
+    
+
+    BankDetails copyWith({
+        int? id,
+        int? userId,
+        String? bankName,
+        String? accountNumber,
+        String? branchName,
+        String? ifscCode,
+        String? micrCode,
+        String? swiftCode,
+        DateTime? createdAt,
+        DateTime? updatedAt,
+        String? routingNumber,
+    }) {
+        return BankDetails(
+            id: id ?? this.id,
+            userId: userId ?? this.userId,
+            bankName: bankName ?? this.bankName,
+            accountNumber: accountNumber ?? this.accountNumber,
+            branchName: branchName ?? this.branchName,
+            ifscCode: ifscCode ?? this.ifscCode,
+            micrCode: micrCode ?? this.micrCode,
+            swiftCode: swiftCode ?? this.swiftCode,
+            createdAt: createdAt ?? this.createdAt,
+            updatedAt: updatedAt ?? this.updatedAt,
+            routingNumber: routingNumber ?? this.routingNumber,
+        );
+    }
+
+    factory BankDetails.fromJson(Map<String, dynamic> json) => _$BankDetailsFromJson(json);
+
+    Map<String, dynamic> toJson() => _$BankDetailsToJson(this);
+
+    @override
+    String toString(){
+        return "$id, $userId, $bankName, $accountNumber, $branchName, $ifscCode, $micrCode, $swiftCode, $createdAt, $updatedAt, $routingNumber, ";
+    }
+
+    @override
+    List<Object?> get props => [
+    id, userId, bankName, accountNumber, branchName, ifscCode, micrCode, swiftCode, createdAt, updatedAt, routingNumber, ];
 }
 
 @JsonSerializable()
@@ -144,7 +264,7 @@ class User extends Equatable {
     
 
     @JsonKey(name: 'business_info') 
-    final String? businessInfo;
+    final dynamic businessInfo;
     static const String businessInfoKey = "business_info";
     
     final String? profile;
@@ -201,7 +321,7 @@ class User extends Equatable {
     final String? userAge;
     static const String userAgeKey = "user_age";
     
-    final String? agree;
+    final dynamic agree;
     static const String agreeKey = "agree";
     
     final String? imageLink;
@@ -219,7 +339,7 @@ class User extends Equatable {
         String? lastName,
         String? username,
         String? phone,
-        String? businessInfo,
+        dynamic businessInfo,
         String? profile,
         String? address,
         dynamic rememberToken,
@@ -232,7 +352,7 @@ class User extends Equatable {
         String? streamKey,
         DateTime? dateOfBirth,
         String? userAge,
-        String? agree,
+        dynamic agree,
         String? imageLink,
         String? name,
     }) {

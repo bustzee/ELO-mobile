@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lecle_yoyo_player/lecle_yoyo_player.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 // ignore: must_be_immutable
 class TwitchstreamPage extends StatefulWidget {
@@ -17,24 +18,25 @@ class TwitchstreamPage extends StatefulWidget {
 
 class TwitchstreamPageState extends State<TwitchstreamPage> {
 
-  // final webViewController = WebViewController()
-  //   ..setJavaScriptMode(JavaScriptMode.unrestricted)
-  //   ..setBackgroundColor(const Color(0x00000000))
-  //   ..setNavigationDelegate(
-  //       NavigationDelegate(
-  //         onProgress: (int progress) {},
-  //         onPageStarted: (String url) {},
-  //         onPageFinished: (String url) {},
-  //         onWebResourceError: (WebResourceError error) {},
-  //         onNavigationRequest: (NavigationRequest request) {
-  //           return NavigationDecision.navigate;
-  //         },
-  //       ),
-  //     )
-  //   ..loadRequest(Uri.parse('https://player.twitch.tv?channel=qckval&height=380&parent=uat.elo-esports.com&referrer=https%3A%2F%2Fuat.elo-esports.com%2Fstreams%2F525102978&width=100%25'));
-
   @override
   Widget build(BuildContext context) {
+    WebViewController webViewController = WebViewController()
+    ..setJavaScriptMode(JavaScriptMode.unrestricted)
+    ..setBackgroundColor(const Color(0x00000000))
+    ..setNavigationDelegate(
+        NavigationDelegate(
+          onProgress: (int progress) {},
+          onPageStarted: (String url) {},
+          onPageFinished: (String url) {},
+          onWebResourceError: (WebResourceError error) {},
+          onNavigationRequest: (NavigationRequest request) {
+            return NavigationDecision.navigate;
+          },
+        ),
+      )
+    ..loadRequest(Uri.parse('https://player.twitch.tv/?channel=${widget.twitchlivestream?.userLogin}&height=1000&parent=uat.elo-esports.com&referrer=https://uat.elo-esports.com/streams/525102978&width=100%'));
+  print('https://player.twitch.tv/?channel=${widget.twitchlivestream?.userLogin}&height=1000&parent=uat.elo-esports.com&referrer=https://uat.elo-esports.com/streams/525102978&width=100%');
+
     return Scaffold(
         backgroundColor: const Color(0xff160E42),
         body: SafeArea(
@@ -42,12 +44,8 @@ class TwitchstreamPageState extends State<TwitchstreamPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const YoYoPlayer(
-                  aspectRatio: 16 / 9,
-                  // url: "https://sfux-ext.sfux.info/hls/chapter/105/1588724110/1588724110.m3u8",
-                  url: "https://videos.pexels.com/video-files/4247319/4247319-hd_1920_1080_30fps.mp4",
-                  videoStyle: VideoStyle(),
-                  videoLoadingStyle: VideoLoadingStyle(),
+                SizedBox(height: 300,
+                  child: WebViewWidget(controller: webViewController),
                 ),
 
                 const SizedBox(height: 20,),

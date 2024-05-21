@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
         LoginPage.id: (context) => LoginPage(),
         AdminAccount.id: (context) => const AdminAccount(),
         UserDashboardPage.id: (context) => const UserDashboardPage(),
-        LivestreamPage.id: (context) => const LivestreamPage(),
+        LivestreamPage.id: (context) => LivestreamPage(),
         CreateStreamPage.id: (context) => const CreateStreamPage(),
       },
     );
