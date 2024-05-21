@@ -122,7 +122,7 @@ class MenuPageState extends State<MenuPage> {
                     ],
                   ),
                 ),
-                if(_userDetails != null && _userDetails?.data?.token != null) InkWell(
+                if(_userDetails != null && _userDetails?.data?.token != null && _userDetails?.data?.user?.userType == 'admin') InkWell(
                   onTap: () {
                     Navigator.pushNamed(context, AdminAccount.id);
                   },
