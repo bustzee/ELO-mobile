@@ -1,23 +1,28 @@
 import 'package:dio/dio.dart';
+import 'package:elo_esports/models/user_details.dart';
+import 'package:elo_esports/utilities/shared_preferences_utility.dart';
 
-// ignore: constant_identifier_names
-const String API_KEY =
-    'cdc9a8ca8aa17b6bed3aa3611a835105bbb4632514d7ca8cf55dbbc5966a7cae';
+
+
+
 
 //* Request methods PUT, POST, PATCH, DELETE needs access token,
 //* which needs to be passed with "Authorization" header as Bearer token.
 class AuthorizationInterceptor extends Interceptor {
   @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
+      UserDetails? user = await  SharedPreferencesService.getUserDetails();
+      String apiKey = user?.data?.token ?? 'NA';
+      
     if (_needAuthorizationHeader(options)) {
-      options.headers['Authorization'] = 'Bearer $API_KEY';
+      options.headers['Authorization'] = 'Bearer $apiKey';
     }
     super.onRequest(options, handler);
   }
 
   bool _needAuthorizationHeader(RequestOptions options) {
     if (options.method == 'GET') {
-      return false;
+      return true;
     } else {
       return true;
     }
