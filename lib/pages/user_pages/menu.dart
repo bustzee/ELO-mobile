@@ -64,7 +64,7 @@ class MenuPageState extends State<MenuPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              _userDetails?.data?.user?.name ?? '--',
+                              _userDetails?.data?.user?.username ?? '--',
                               style: GoogleFonts.getFont(
                                 'Open Sans',
                                 fontWeight: FontWeight.w600,

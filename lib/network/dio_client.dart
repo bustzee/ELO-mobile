@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:elo_esports/models/common_response.dart';
+import 'package:elo_esports/models/create_stream_request.dart';
+import 'package:elo_esports/models/create_stream_response.dart';
 import 'package:elo_esports/models/twitchstream.dart';
 import 'package:elo_esports/models/user_details.dart';
 import 'package:elo_esports/network/dio_exception_handler.dart';
@@ -93,6 +95,25 @@ class DioClient {
       final response =
           await _dio.post(Endpoints.updateBankDetails, data: bankDetails.toJson());
       return CommonResponse.fromJson(response.data);
+    } on DioException catch (err) {
+      final errorMessage = DioExceptionHandler.fromDioError(err).toString();
+      if (context != null) {
+        final snackBar = SnackBar(content: Text(errorMessage.toString()));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
+      throw errorMessage;
+    } catch (e) {
+      if (kDebugMode) print(e);
+      throw e.toString();
+    }
+  }
+
+  Future<CreateStreamResponse?> createStream(
+      BuildContext? context, CreateStreamRequest createStreamRequest) async {
+    try {
+      final response =
+          await _dio.post(Endpoints.createStream, data: createStreamRequest.toJson());
+      return CreateStreamResponse.fromJson(response.data);
     } on DioException catch (err) {
       final errorMessage = DioExceptionHandler.fromDioError(err).toString();
       if (context != null) {

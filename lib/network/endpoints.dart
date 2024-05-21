@@ -13,4 +13,5 @@ class Endpoints {
   static const String getUserDetails = 'GetUserDetails';
   static const String getUsersList = 'getUsersList';
   static const String updateBankDetails = 'UpdateBankDetails';
+  static const String createStream = 'CreateStream';
 }

@@ -1,12 +1,15 @@
+import 'package:elo_esports/models/livestream.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lecle_yoyo_player/lecle_yoyo_player.dart';
 import 'package:line_icons/line_icons.dart';
 
+// ignore: must_be_immutable
 class LivestreamPage extends StatefulWidget {
-  const LivestreamPage({super.key});
+  LivestreamPage({super.key, this.livestream});
   static String id = '/LivestreamPage';
+
+  LivestreamElement? livestream;
 
   @override
   State<LivestreamPage> createState() => LivestreamPageState();
@@ -23,12 +26,13 @@ class LivestreamPageState extends State<LivestreamPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const YoYoPlayer(
+                YoYoPlayer(
                   aspectRatio: 16 / 9,
                   // url: "https://sfux-ext.sfux.info/hls/chapter/105/1588724110/1588724110.m3u8",
-                  url: "https://videos.pexels.com/video-files/4247319/4247319-hd_1920_1080_30fps.mp4",
-                  videoStyle: VideoStyle(),
-                  videoLoadingStyle: VideoLoadingStyle(),
+                  // url: "https://videos.pexels.com/video-files/4247319/4247319-hd_1920_1080_30fps.mp4",
+                  url: 'https://live-streaming.elo-esports.com:8080/hls/${widget.livestream?.streamId ?? '--'}.m3u8',
+                  videoStyle: const VideoStyle(),
+                  videoLoadingStyle: const VideoLoadingStyle(),
                 ),
 
                 const SizedBox(height: 20,),
@@ -36,7 +40,7 @@ class LivestreamPageState extends State<LivestreamPage> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                   child: Text(
-                    'Metal Gear Solid V: The Phantom Pain by Amit',
+                    widget.livestream?.name ?? '--',
                     style: GoogleFonts.getFont(
                       'Open Sans',
                       fontWeight: FontWeight.w600,

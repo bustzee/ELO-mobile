@@ -109,7 +109,7 @@ class ProfilePageState extends State<ProfilePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Amit Bodke',
+                      _userDetails?.data?.user?.username ?? '--',
                       style: GoogleFonts.getFont(
                         'Open Sans',
                         fontWeight: FontWeight.w600,
@@ -124,7 +124,7 @@ class ProfilePageState extends State<ProfilePage> {
                       height: 10,
                     ),
                     Text(
-                      'Stream key :\n12313465467894545131346',
+                      'Stream key :\n${_userDetails?.data?.user?.streamKey ?? '--'}',
                       style: GoogleFonts.getFont(
                         'Open Sans',
                         fontWeight: FontWeight.w400,
