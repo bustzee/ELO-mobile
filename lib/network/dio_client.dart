@@ -85,4 +85,17 @@ class DioClient {
       throw e.toString();
     }
   }
+
+  Future<UserDetails?> getUsersList() async {
+    try {
+      final response = await _dio.get(Endpoints.getUsersList);
+      return UserDetails.fromJson(response.data);
+    } on DioException catch (err) {
+      final errorMessage = DioExceptionHandler.fromDioError(err).toString();
+      throw errorMessage;
+    } catch (e) {
+      if (kDebugMode) print(e);
+      throw e.toString();
+    }
+  }
 }

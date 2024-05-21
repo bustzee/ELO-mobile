@@ -1,6 +1,7 @@
 import 'package:elo_esports/pages/admin_pages/admin_completed_stream.dart';
 import 'package:elo_esports/pages/admin_pages/admin_dashboard.dart';
 import 'package:elo_esports/pages/admin_pages/admin_inprogress_stream.dart';
+import 'package:elo_esports/pages/admin_pages/admin_users_list.dart';
 import 'package:elo_esports/pages/user_pages/user_dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,7 +21,7 @@ class _AdminAccountState extends State<AdminAccount> {
     AdminDashboard(),
     AdminInprogressStream(),
     AdminCompletedStream(),
-    // const MyBetsPage(),
+    // AdminUsersList(),
     // const ProfilePage(),
     // const MenuPage(),
   ];
@@ -191,7 +192,10 @@ class _AdminAccountState extends State<AdminAccount> {
                         children: <Widget>[
                           ListTile(
                             title: const Text('Users'),
-                            onTap: () {},
+                            onTap: () {
+                              NavigateToTapMenu(3);
+                              Navigator.pop(context);
+                            },
                           ),
                           ListTile(
                             title: const Text('Admin Lists'),

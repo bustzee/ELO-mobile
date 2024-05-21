@@ -36,7 +36,7 @@ class AdminInprogressStream extends StatelessWidget {
                     return const Loader();
                   } else {
                     return ListView.builder(
-                      itemCount: 6,
+                      itemCount: snapshot.data?.livestreams?.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Padding(
                           padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
