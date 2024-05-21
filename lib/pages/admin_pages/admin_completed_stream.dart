@@ -33,7 +33,7 @@ class _AdminCompletedStreamState extends State<AdminCompletedStream> {
             ),
             Expanded(
               child: FutureBuilder<Livestream?>(
-                future: dioClient.getLiveStreams(),
+                future: dioClient.getCompletedStreams(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Loader();

@@ -1,20 +1,18 @@
 import 'package:elo_esports/models/admin_userdetails.dart';
-import 'package:elo_esports/models/user_details.dart';
 import 'package:elo_esports/pages/admin_widgets/common_btn.dart';
 import 'package:elo_esports/pages/admin_widgets/print_value.dart';
 import 'package:elo_esports/pages/admin_widgets/title_text.dart';
 import 'package:elo_esports/pages/user_widgets/loader.dart';
 import 'package:flutter/material.dart';
-import 'package:elo_esports/network/dio_client.dart';
 
-class AdminUsersList extends StatefulWidget {
-  AdminUsersList({super.key});
+import '../../network/dio_client.dart';
 
+class AdminAdminList extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _AdminUsersListState();
+  State<StatefulWidget> createState() => _AdminAdminListState();
 }
 
-class _AdminUsersListState extends State<AdminUsersList> {
+class _AdminAdminListState extends State<AdminAdminList> {
   final DioClient dioClient = DioClient();
 
   @override
@@ -27,7 +25,7 @@ class _AdminUsersListState extends State<AdminUsersList> {
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
             child: Text(
-              'Users List',
+              'Admin List',
               style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w700,
@@ -137,6 +135,30 @@ class _AdminUsersListState extends State<AdminUsersList> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      0, 0, 15, 0),
+                                              child:
+                                                  TitleText(printtext: 'Role')),
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                0, 0, 15, 5),
+                                            child: PrintValue(
+                                                printtext: snapshot
+                                                        .data
+                                                        ?.users?[index]
+                                                        ?.userType ??
+                                                    '--'),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                     Expanded(
                                       child: Column(
                                         crossAxisAlignment:

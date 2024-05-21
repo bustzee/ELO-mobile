@@ -7,7 +7,7 @@ class CommonBtn extends StatelessWidget {
 
   CommonBtn(
       {required this.btnName,
-      this.backgroundColor = Colors.green,
+      this.backgroundColor = const Color.fromARGB(255, 14, 136, 18),
       this.callback});
 
   @override

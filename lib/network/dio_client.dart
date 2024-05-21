@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:elo_esports/models/admin_userdetails.dart';
 import 'package:elo_esports/models/twitchstream.dart';
 import 'package:elo_esports/models/user_details.dart';
 import 'package:elo_esports/network/dio_exception_handler.dart';
@@ -86,10 +87,10 @@ class DioClient {
     }
   }
 
-  Future<UserDetails?> getUsersList() async {
+  Future<AdminUserdetails?> getUsersList() async {
     try {
       final response = await _dio.get(Endpoints.getUsersList);
-      return UserDetails.fromJson(response.data);
+      return AdminUserdetails.fromJson(response.data);
     } on DioException catch (err) {
       final errorMessage = DioExceptionHandler.fromDioError(err).toString();
       throw errorMessage;

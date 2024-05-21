@@ -1,6 +1,8 @@
+import 'package:elo_esports/pages/admin_pages/admin_admin_list.dart';
 import 'package:elo_esports/pages/admin_pages/admin_completed_stream.dart';
 import 'package:elo_esports/pages/admin_pages/admin_dashboard.dart';
 import 'package:elo_esports/pages/admin_pages/admin_inprogress_stream.dart';
+import 'package:elo_esports/pages/admin_pages/admin_role_list.dart';
 import 'package:elo_esports/pages/admin_pages/admin_users_list.dart';
 import 'package:elo_esports/pages/user_pages/user_dashboard.dart';
 import 'package:flutter/material.dart';
@@ -15,14 +17,15 @@ class AdminAccount extends StatefulWidget {
 }
 
 class _AdminAccountState extends State<AdminAccount> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 5;
 
   final List<Widget> _widgetList = [
     AdminDashboard(),
     AdminInprogressStream(),
     AdminCompletedStream(),
-    // AdminUsersList(),
-    // const ProfilePage(),
+    AdminUsersList(),
+    AdminAdminList(),
+    AdminRoleList(),
     // const MenuPage(),
   ];
 
@@ -199,11 +202,17 @@ class _AdminAccountState extends State<AdminAccount> {
                           ),
                           ListTile(
                             title: const Text('Admin Lists'),
-                            onTap: () {},
+                            onTap: () {
+                              NavigateToTapMenu(4);
+                              Navigator.pop(context);
+                            },
                           ),
                           ListTile(
                             title: const Text('Role'),
-                            onTap: () {},
+                            onTap: () {
+                              NavigateToTapMenu(5);
+                              Navigator.pop(context);
+                            },
                           ),
                         ],
                       ),
