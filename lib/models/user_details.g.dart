@@ -27,12 +27,49 @@ Data _$DataFromJson(Map<String, dynamic> json) => Data(
           : User.fromJson(json['user'] as Map<String, dynamic>),
       token: json['token'] as String?,
       tokenType: json['token_type'] as String?,
+      bankDetails: json['bank_details'] == null
+          ? null
+          : BankDetails.fromJson(json['bank_details'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{
       'user': instance.user,
       'token': instance.token,
       'token_type': instance.tokenType,
+      'bank_details': instance.bankDetails,
+    };
+
+BankDetails _$BankDetailsFromJson(Map<String, dynamic> json) => BankDetails(
+      id: (json['id'] as num?)?.toInt(),
+      userId: (json['user_id'] as num?)?.toInt(),
+      bankName: json['bank_name'] as String?,
+      accountNumber: json['account_number'] as String?,
+      branchName: json['branch_name'] as String?,
+      ifscCode: json['ifsc_code'] as String?,
+      micrCode: json['micr_code'] as String?,
+      swiftCode: json['swift_code'] as String?,
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
+      updatedAt: json['updated_at'] == null
+          ? null
+          : DateTime.parse(json['updated_at'] as String),
+      routingNumber: json['routing_number'] as String?,
+    );
+
+Map<String, dynamic> _$BankDetailsToJson(BankDetails instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'user_id': instance.userId,
+      'bank_name': instance.bankName,
+      'account_number': instance.accountNumber,
+      'branch_name': instance.branchName,
+      'ifsc_code': instance.ifscCode,
+      'micr_code': instance.micrCode,
+      'swift_code': instance.swiftCode,
+      'created_at': instance.createdAt?.toIso8601String(),
+      'updated_at': instance.updatedAt?.toIso8601String(),
+      'routing_number': instance.routingNumber,
     };
 
 User _$UserFromJson(Map<String, dynamic> json) => User(
@@ -43,7 +80,7 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       lastName: json['lastName'] as String?,
       username: json['username'] as String?,
       phone: json['phone'] as String?,
-      businessInfo: json['business_info'] as String?,
+      businessInfo: json['business_info'],
       profile: json['profile'] as String?,
       address: json['address'] as String?,
       rememberToken: json['remember_token'],
@@ -62,7 +99,7 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
           ? null
           : DateTime.parse(json['date_of_birth'] as String),
       userAge: json['user_age'] as String?,
-      agree: json['agree'] as String?,
+      agree: json['agree'],
       imageLink: json['imageLink'] as String?,
       name: json['name'] as String?,
     );

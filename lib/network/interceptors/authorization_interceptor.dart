@@ -2,10 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:elo_esports/models/user_details.dart';
 import 'package:elo_esports/utilities/shared_preferences_utility.dart';
 
-
-
-
-
 //* Request methods PUT, POST, PATCH, DELETE needs access token,
 //* which needs to be passed with "Authorization" header as Bearer token.
 class AuthorizationInterceptor extends Interceptor {
