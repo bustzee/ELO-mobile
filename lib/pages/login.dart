@@ -59,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
                         style: GoogleFonts.getFont(
                           'Open Sans',
                           fontWeight: FontWeight.w500,
-                          fontSize: 12,
+                          fontSize: 14,
                           letterSpacing: -0.4,
                           color: Colors.white,
                         ),
@@ -96,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                         style: GoogleFonts.getFont(
                           'Open Sans',
                           fontWeight: FontWeight.w500,
-                          fontSize: 12,
+                          fontSize: 14,
                           letterSpacing: -0.4,
                           color: Colors.white,
                         ),

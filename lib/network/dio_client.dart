@@ -4,6 +4,7 @@ import 'package:elo_esports/models/create_stream_request.dart';
 import 'package:elo_esports/models/create_stream_response.dart';
 import 'package:elo_esports/models/admin_userdetails.dart';
 import 'package:elo_esports/models/create_user.dart';
+import 'package:elo_esports/models/tutorial.dart';
 import 'package:elo_esports/models/twitchstream.dart';
 import 'package:elo_esports/models/user_details.dart';
 import 'package:elo_esports/network/dio_exception_handler.dart';
@@ -133,6 +134,19 @@ class DioClient {
     try {
       final response = await _dio.get(Endpoints.getUsersList);
       return AdminUserdetails.fromJson(response.data);
+    } on DioException catch (err) {
+      final errorMessage = DioExceptionHandler.fromDioError(err).toString();
+      throw errorMessage;
+    } catch (e) {
+      if (kDebugMode) print(e);
+      throw e.toString();
+    }
+  }
+
+  Future<Tutorial?> getTutorial() async {
+    try {
+      final response = await _dio.get(Endpoints.getTutorial);
+      return Tutorial.fromJson(response.data);
     } on DioException catch (err) {
       final errorMessage = DioExceptionHandler.fromDioError(err).toString();
       throw errorMessage;

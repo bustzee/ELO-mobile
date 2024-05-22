@@ -50,6 +50,7 @@ dependencies:
   webview_flutter: ^4.7.0
   image_picker: ^1.1.1
   date_field: ^5.0.1
+  url_launcher: ^6.2.6
 
 dev_dependencies:
   flutter_test:
