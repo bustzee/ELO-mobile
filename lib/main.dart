@@ -1,5 +1,6 @@
 import 'package:elo_esports/pages/admin_pages/admin_account_page.dart';
 import 'package:elo_esports/pages/login.dart';
+import 'package:elo_esports/pages/register.dart';
 import 'package:elo_esports/pages/user_pages/create_stream.dart';
 import 'package:elo_esports/pages/user_pages/livestream.dart';
 import 'package:elo_esports/pages/user_pages/user_dashboard.dart';
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
       routes: {
         WelcomePage.id: (context) => const WelcomePage(),
         LoginPage.id: (context) => LoginPage(),
+        RegisterPage.id: (context) => RegisterPage(),
         AdminAccount.id: (context) => const AdminAccount(),
         UserDashboardPage.id: (context) => const UserDashboardPage(),
         LivestreamPage.id: (context) => LivestreamPage(),

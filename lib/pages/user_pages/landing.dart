@@ -1,10 +1,12 @@
 import 'package:elo_esports/models/livestream.dart';
+import 'package:elo_esports/models/tutorial.dart';
 import 'package:elo_esports/models/twitchstream.dart';
 import 'package:elo_esports/models/user_details.dart';
 import 'package:elo_esports/network/dio_client.dart';
 import 'package:elo_esports/pages/login.dart';
 import 'package:elo_esports/pages/user_widgets/livestream_card_listview.dart';
 import 'package:elo_esports/pages/user_widgets/loader.dart';
+import 'package:elo_esports/pages/user_widgets/tutorial_card_listview.dart';
 import 'package:elo_esports/pages/user_widgets/twitchstream_card_listview.dart';
 import 'package:elo_esports/utilities/shared_preferences_utility.dart';
 import 'package:flutter/material.dart';
@@ -259,47 +261,16 @@ class _LandingPageState extends State<LandingPage> {
                 ),
                 SizedBox(
                   height: 180,
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 5,
-                      itemBuilder: (BuildContext context, int index) {
-                        return SizedBox(
-                          width: 150,
-                          child: Card(
-                            color: const Color(0xFF322B59),
-                            shape: const RoundedRectangleBorder(),
-                            child: Column(
-                              children: [
-                                Container(
-                                  height: 110,
-                                  width: 150,
-                                  decoration: const BoxDecoration(
-                                    image: DecorationImage(
-                                        image: AssetImage(
-                                            'assets/images/tutorial_thumbnail_dummy.png'),
-                                        fit: BoxFit.cover),
-                                  ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.all(5),
-                                  child: Text(
-                                    'How to start livestreaming using OBS',
-                                    style: GoogleFonts.getFont(
-                                      'Open Sans',
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 12,
-                                      letterSpacing: -0.4,
-                                      color: Colors.white,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 3,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      }),
+                  child: FutureBuilder<Tutorial?>(
+                    future: widget.dioClient.getTutorial(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Loader();
+                      } else {
+                        return TutorialCardListview(tutorial: snapshot.data);
+                      }
+                    },
+                  ),
                 ),
               ],
             ),

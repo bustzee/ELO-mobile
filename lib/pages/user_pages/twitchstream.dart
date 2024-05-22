@@ -1,7 +1,6 @@
 import 'package:elo_esports/models/twitchstream.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lecle_yoyo_player/lecle_yoyo_player.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -35,8 +34,6 @@ class TwitchstreamPageState extends State<TwitchstreamPage> {
         ),
       )
     ..loadRequest(Uri.parse('https://player.twitch.tv/?channel=${widget.twitchlivestream?.userLogin}&height=1000&parent=uat.elo-esports.com&referrer=https://uat.elo-esports.com/streams/525102978&width=100%'));
-  print('https://player.twitch.tv/?channel=${widget.twitchlivestream?.userLogin}&height=1000&parent=uat.elo-esports.com&referrer=https://uat.elo-esports.com/streams/525102978&width=100%');
-
     return Scaffold(
         backgroundColor: const Color(0xff160E42),
         body: SafeArea(

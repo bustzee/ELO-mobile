@@ -11,6 +11,7 @@ class AdminSettingsPage extends StatefulWidget {
 
 class _AdminSettingPage extends State<AdminSettingsPage> {
   final TextEditingController _vig = TextEditingController();
+
   bool light = true;
   @override
   Widget build(BuildContext context) {
