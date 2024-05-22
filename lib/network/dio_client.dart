@@ -3,6 +3,7 @@ import 'package:elo_esports/models/common_response.dart';
 import 'package:elo_esports/models/create_stream_request.dart';
 import 'package:elo_esports/models/create_stream_response.dart';
 import 'package:elo_esports/models/admin_userdetails.dart';
+import 'package:elo_esports/models/create_user.dart';
 import 'package:elo_esports/models/twitchstream.dart';
 import 'package:elo_esports/models/user_details.dart';
 import 'package:elo_esports/network/dio_exception_handler.dart';
@@ -135,6 +136,25 @@ class DioClient {
     } on DioException catch (err) {
       final errorMessage = DioExceptionHandler.fromDioError(err).toString();
       throw errorMessage;
+    } catch (e) {
+      if (kDebugMode) print(e);
+      throw e.toString();
+    }
+  }
+
+  Future<CommonResponse?> createUser(
+      BuildContext? context, CreateUser createUser) async {
+    try {
+      final response = await _dio.post(Endpoints.createUser,
+          data: createUser.toJson());
+     return CommonResponse.fromJson(response.data);
+    } on DioException catch (err) {
+      // final errorMessage = DioExceptionHandler.fromDioError(err).toString();
+      if (context != null) {
+        final snackBar = SnackBar(content: Text(err.response?.data['message'].toString() ?? 'Please try again with different credentials'));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
+      throw err.message ?? 'Something went wrong';
     } catch (e) {
       if (kDebugMode) print(e);
       throw e.toString();

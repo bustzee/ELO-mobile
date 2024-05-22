@@ -1,5 +1,6 @@
 import 'package:elo_esports/models/user_details.dart';
 import 'package:elo_esports/network/dio_client.dart';
+import 'package:elo_esports/pages/register.dart';
 import 'package:elo_esports/pages/user_pages/user_dashboard.dart';
 import 'package:elo_esports/utilities/shared_preferences_utility.dart';
 import 'package:flutter/material.dart';
@@ -173,18 +174,23 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 const SizedBox(height: 30,),
-                Container(
-                  padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
-                  child: Text(
-                    'Do not have an account yet ?\nRegister now',
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.getFont(
-                      'Open Sans',
-                      fontWeight: FontWeight.w400,
-                      fontSize: 16,
-                      letterSpacing: -0.4,
-                      color: Colors.white,
-                      decoration: TextDecoration.underline
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, RegisterPage.id);
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
+                    child: Text(
+                      'Do not have an account yet ?\nRegister now',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.getFont(
+                        'Open Sans',
+                        fontWeight: FontWeight.w400,
+                        fontSize: 16,
+                        letterSpacing: -0.4,
+                        color: Colors.white,
+                        decoration: TextDecoration.underline
+                      ),
                     ),
                   ),
                 ),
