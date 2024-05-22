@@ -6,7 +6,9 @@ part of 'create_stream_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CreateStreamResponse _$CreateStreamResponseFromJson(Map<String, dynamic> json) => CreateStreamResponse(
+CreateStreamResponse _$CreateStreamResponseFromJson(
+        Map<String, dynamic> json) =>
+    CreateStreamResponse(
       status: json['status'] as String?,
       message: json['message'] as String?,
       stream: json['stream'] == null
@@ -14,7 +16,8 @@ CreateStreamResponse _$CreateStreamResponseFromJson(Map<String, dynamic> json) =
           : Stream.fromJson(json['stream'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$CreateStreamResponseToJson(CreateStreamResponse instance) =>
+Map<String, dynamic> _$CreateStreamResponseToJson(
+        CreateStreamResponse instance) =>
     <String, dynamic>{
       'status': instance.status,
       'message': instance.message,

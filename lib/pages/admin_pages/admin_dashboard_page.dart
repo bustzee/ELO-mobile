@@ -1,4 +1,4 @@
-import 'package:elo_esports/pages/admin_pages/admin_inprogress_stream.dart';
+import 'package:elo_esports/pages/admin_pages/admin_inprogress_stream_page.dart';
 import 'package:elo_esports/pages/admin_widgets/print_value.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

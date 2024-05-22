@@ -1,5 +1,5 @@
 import 'package:elo_esports/models/user_details.dart';
-import 'package:elo_esports/pages/admin_pages/admin_account.dart';
+import 'package:elo_esports/pages/admin_pages/admin_account_page.dart';
 import 'package:elo_esports/pages/user_pages/create_stream.dart';
 import 'package:elo_esports/utilities/shared_preferences_utility.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +15,6 @@ class MenuPage extends StatefulWidget {
 }
 
 class MenuPageState extends State<MenuPage> {
-
   UserDetails? _userDetails;
 
   @override
@@ -28,7 +27,7 @@ class MenuPageState extends State<MenuPage> {
     _userDetails = await SharedPreferencesService.getUserDetails();
     setState(() {});
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,10 +50,12 @@ class MenuPageState extends State<MenuPage> {
                           height: 100,
                           width: 100,
                           decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: NetworkImage(_userDetails?.data?.user?.imageLink ?? '--'), fit: BoxFit.cover),
-                                borderRadius: BorderRadius.circular(5)
-                          ),
+                              image: DecorationImage(
+                                  image: NetworkImage(
+                                      _userDetails?.data?.user?.imageLink ??
+                                          '--'),
+                                  fit: BoxFit.cover),
+                              borderRadius: BorderRadius.circular(5)),
                         ),
                         const SizedBox(
                           width: 20,
@@ -122,62 +123,39 @@ class MenuPageState extends State<MenuPage> {
                     ],
                   ),
                 ),
-                if(_userDetails != null && _userDetails?.data?.token != null && _userDetails?.data?.user?.userType == 'admin') InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, AdminAccount.id);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Row(
-                      children: [
-                        const Icon(LineIcons.home),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        Text(
-                          'Admin panel',
-                          style: GoogleFonts.getFont(
-                            'Open Sans',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
-                            letterSpacing: -0.4,
-                            color: Colors.white,
+                if (_userDetails != null &&
+                    _userDetails?.data?.token != null &&
+                    _userDetails?.data?.user?.userType == 'admin')
+                  InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, AdminAccount.id);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Row(
+                        children: [
+                          const Icon(LineIcons.home),
+                          const SizedBox(
+                            width: 20,
                           ),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                        ),
-                      ],
+                          Text(
+                            'Admin panel',
+                            style: GoogleFonts.getFont(
+                              'Open Sans',
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
+                              letterSpacing: -0.4,
+                              color: Colors.white,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                if(_userDetails != null && _userDetails?.data?.token != null) Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Row(
-                    children: [
-                      const Icon(LineIcons.userCircle),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      Text(
-                        'My profile',
-                        style: GoogleFonts.getFont(
-                          'Open Sans',
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
-                          letterSpacing: -0.4,
-                          color: Colors.white,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
-                      ),
-                    ],
-                  ),
-                ),
-                if(_userDetails != null && _userDetails?.data?.token != null) InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, CreateStreamPage.id);
-                  },
-                  child: Padding(
+                if (_userDetails != null && _userDetails?.data?.token != null)
+                  Padding(
                     padding: const EdgeInsets.all(20),
                     child: Row(
                       children: [
@@ -186,7 +164,7 @@ class MenuPageState extends State<MenuPage> {
                           width: 20,
                         ),
                         Text(
-                          'Create stream',
+                          'My profile',
                           style: GoogleFonts.getFont(
                             'Open Sans',
                             fontWeight: FontWeight.w600,
@@ -200,30 +178,59 @@ class MenuPageState extends State<MenuPage> {
                       ],
                     ),
                   ),
-                ),
-                if(_userDetails != null && _userDetails?.data?.token != null) Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Row(
-                    children: [
-                      const Icon(LineIcons.gavel),
-                      const SizedBox(
-                        width: 20,
+                if (_userDetails != null && _userDetails?.data?.token != null)
+                  InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, CreateStreamPage.id);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Row(
+                        children: [
+                          const Icon(LineIcons.userCircle),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          Text(
+                            'Create stream',
+                            style: GoogleFonts.getFont(
+                              'Open Sans',
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
+                              letterSpacing: -0.4,
+                              color: Colors.white,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                          ),
+                        ],
                       ),
-                      Text(
-                        'Betting history',
-                        style: GoogleFonts.getFont(
-                          'Open Sans',
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
-                          letterSpacing: -0.4,
-                          color: Colors.white,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
-                      ),
-                    ],
+                    ),
                   ),
-                ),
+                if (_userDetails != null && _userDetails?.data?.token != null)
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Row(
+                      children: [
+                        const Icon(LineIcons.gavel),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Text(
+                          'Betting history',
+                          style: GoogleFonts.getFont(
+                            'Open Sans',
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                            letterSpacing: -0.4,
+                            color: Colors.white,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                        ),
+                      ],
+                    ),
+                  ),
                 Padding(
                   padding: const EdgeInsets.all(20),
                   child: Row(
@@ -247,29 +254,30 @@ class MenuPageState extends State<MenuPage> {
                     ],
                   ),
                 ),
-                if(_userDetails != null && _userDetails?.data?.token != null) Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Row(
-                    children: [
-                      const Icon(LineIcons.wallet),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      Text(
-                        'Deposits and withdrawals',
-                        style: GoogleFonts.getFont(
-                          'Open Sans',
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
-                          letterSpacing: -0.4,
-                          color: Colors.white,
+                if (_userDetails != null && _userDetails?.data?.token != null)
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Row(
+                      children: [
+                        const Icon(LineIcons.wallet),
+                        const SizedBox(
+                          width: 20,
                         ),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
-                      ),
-                    ],
+                        Text(
+                          'Deposits and withdrawals',
+                          style: GoogleFonts.getFont(
+                            'Open Sans',
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                            letterSpacing: -0.4,
+                            color: Colors.white,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
                 Padding(
                   padding: const EdgeInsets.all(20),
                   child: Row(
