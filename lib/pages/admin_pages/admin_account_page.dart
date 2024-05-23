@@ -6,6 +6,7 @@ import 'package:elo_esports/pages/admin_pages/admin_betting_master_page.dart';
 import 'package:elo_esports/pages/admin_pages/admin_betting_view_master_page.dart';
 import 'package:elo_esports/pages/admin_pages/admin_completed_stream_page.dart';
 import 'package:elo_esports/pages/admin_pages/admin_dashboard_page.dart';
+import 'package:elo_esports/pages/admin_pages/admin_disputes_betting_stream_page.dart';
 import 'package:elo_esports/pages/admin_pages/admin_inprogress_stream_page.dart';
 import 'package:elo_esports/pages/admin_pages/admin_reported_stream_page.dart';
 import 'package:elo_esports/pages/admin_pages/admin_role_list_page.dart';
@@ -13,6 +14,7 @@ import 'package:elo_esports/pages/admin_pages/admin_settings_page.dart';
 import 'package:elo_esports/pages/admin_pages/admin_tutorials_page.dart';
 import 'package:elo_esports/pages/admin_pages/admin_users_list_page.dart';
 import 'package:elo_esports/pages/user_pages/user_dashboard.dart';
+import 'package:elo_esports/pages/welcome.dart';
 import 'package:elo_esports/utilities/shared_preferences_utility.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -53,7 +55,8 @@ class _AdminAccountState extends State<AdminAccount> {
     AdminCreateBettingViewMasterPage(),
     AdminBettingViewMasterPage(),
     AdminTutorialsPage(),
-    AdminReportedStreamPage()
+    AdminReportedStreamPage(),
+    AdminDisputesBettingStreamPage()
     // const MenuPage(),
   ];
 
@@ -393,7 +396,10 @@ class _AdminAccountState extends State<AdminAccount> {
                           ),
                           ListTile(
                             title: const Text('Betting Disputes'),
-                            onTap: () {},
+                            onTap: () {
+                              NavigateToTapMenu(13);
+                              Navigator.pop(context);
+                            },
                           ),
                         ],
                       ),
@@ -402,7 +408,13 @@ class _AdminAccountState extends State<AdminAccount> {
                       data: Theme.of(context).copyWith(
                         dividerColor: Colors.transparent, // Remove the border
                       ),
-                      child: const ExpansionTile(
+                      child: ExpansionTile(
+                        onExpansionChanged: (bool isExpanded) {
+                          UserDetails? resetUserModel;
+                          SharedPreferencesService.setUserDetails(
+                              resetUserModel!);
+                          Navigator.pushNamed(context, WelcomePage.id);
+                        },
                         collapsedIconColor: Colors.white,
                         title: Text(
                           'Logout',
