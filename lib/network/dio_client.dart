@@ -3,6 +3,7 @@ import 'package:elo_esports/models/admin_betting_master_list.dart';
 import 'package:elo_esports/models/admin_role.dart';
 import 'package:elo_esports/models/admin_role_permission.dart';
 import 'package:elo_esports/models/admin_update_settings.dart';
+import 'package:elo_esports/models/bet_details.dart';
 import 'package:elo_esports/models/betting_disputes.dart';
 import 'package:elo_esports/models/betting_view_master.dart';
 import 'package:elo_esports/models/common_response.dart';
@@ -13,11 +14,15 @@ import 'package:elo_esports/models/create_stream_request.dart';
 import 'package:elo_esports/models/create_stream_response.dart';
 import 'package:elo_esports/models/admin_userdetails.dart';
 import 'package:elo_esports/models/create_tutorial.dart';
+
 import 'package:elo_esports/models/create_user.dart';
 import 'package:elo_esports/models/dashboard_info.dart';
+import 'package:elo_esports/models/deposit.dart';
 import 'package:elo_esports/models/get_setting.dart';
+
 import 'package:elo_esports/models/leaderboard.dart';
 import 'package:elo_esports/models/reported_streams.dart';
+
 import 'package:elo_esports/models/stream_details.dart' as stream_details;
 import 'package:elo_esports/models/tutorial.dart';
 import 'package:elo_esports/models/twitch_leaderboard.dart';
@@ -203,6 +208,19 @@ class DioClient {
     try {
       final response = await _dio.get(Endpoints.getListOfWithdrawals);
       return Withdrawal.fromJson(response.data);
+    } on DioException catch (err) {
+      final errorMessage = DioExceptionHandler.fromDioError(err).toString();
+      throw errorMessage;
+    } catch (e) {
+      if (kDebugMode) print(e);
+      throw e.toString();
+    }
+  }
+
+  Future<Deposit?> getListOfDeposits() async {
+    try {
+      final response = await _dio.get(Endpoints.getListOfDeposits);
+      return Deposit.fromJson(response.data);
     } on DioException catch (err) {
       final errorMessage = DioExceptionHandler.fromDioError(err).toString();
       throw errorMessage;
@@ -542,6 +560,24 @@ class DioClient {
       return GetSetting.fromJson(response.data);
     } on DioException catch (err) {
       final errorMessage = DioExceptionHandler.fromDioError(err).toString();
+      throw errorMessage;
+    } catch (e) {
+      if (kDebugMode) print(e);
+      throw e.toString();
+    }
+  }
+
+  Future<BetDetails?> getBetDetails(BuildContext? context, int id) async {
+    try {
+      final response =
+          await _dio.post(Endpoints.getBetDetails, data: {'livestream_id': id});
+      return BetDetails.fromJson(response.data);
+    } on DioException catch (err) {
+      final errorMessage = DioExceptionHandler.fromDioError(err).toString();
+      if (context != null) {
+        final snackBar = SnackBar(content: Text(errorMessage.toString()));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
       throw errorMessage;
     } catch (e) {
       if (kDebugMode) print(e);

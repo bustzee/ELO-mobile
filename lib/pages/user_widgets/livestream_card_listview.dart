@@ -37,13 +37,13 @@ class LivestreamCardListview extends StatelessWidget {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image: NetworkImage(
-                            Endpoints.baseURL + (livestreams?.livestreams?[index].image ?? '--'),
+                            '${Endpoints.domain}/images/${(livestreams?.livestreams?[index].image ?? '--')}',
                           ),
                           fit: BoxFit.cover,
                         ),
                       ),
                       child: Image.network(
-                        Endpoints.baseURL + (livestreams?.livestreams?[index].image ?? '--'),
+                        '${Endpoints.domain}/images/${(livestreams?.livestreams?[index].image ?? '--')}',
                         fit: BoxFit.cover,
                         errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
                           return Image.asset(

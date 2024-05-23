@@ -1,6 +1,8 @@
+import 'package:elo_esports/models/bet_details.dart';
 import 'package:elo_esports/models/livestream.dart';
 import 'package:elo_esports/models/stream_details.dart';
 import 'package:elo_esports/network/dio_client.dart';
+import 'package:elo_esports/pages/user_widgets/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lecle_yoyo_player/lecle_yoyo_player.dart';
@@ -192,216 +194,289 @@ class LivestreamPageState extends State<LivestreamPage> {
                   )
                 ),
 
-                const SizedBox(height: 20,),
 
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  child: ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                          itemCount: 5,
-                          itemBuilder: (BuildContext context, int index) {
-                            return SizedBox(
-                              width: 150,
-                              child: Card(
-                                color: const Color(0xFF322B59),
-                                shape: const RoundedRectangleBorder(),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(15),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Basic',
-                                        style: GoogleFonts.getFont(
-                                          'Open Sans',
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 12,
-                                          letterSpacing: -0.4,
-                                          color: Colors.white,
-                                        ),
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1,
-                                      ),
-                                      Text(
-                                        'Team A to win: 2.00',
-                                        style: GoogleFonts.getFont(
-                                          'Open Sans',
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 14,
-                                          letterSpacing: -0.4,
-                                          color: Colors.white,
-                                        ),
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1,
-                                      ),
-                  
-                                      const SizedBox(height: 10,),
-                  
-                                      Text(
-                                        'For',
-                                        style: GoogleFonts.getFont(
-                                          'Open Sans',
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 12,
-                                          letterSpacing: -0.4,
-                                          color: Colors.white,
-                                        ),
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1,
-                                      ),
-                                      Text(
-                                        'Virat will score Century in the second inning itself',
-                                        style: GoogleFonts.getFont(
-                                          'Open Sans',
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 14,
-                                          letterSpacing: -0.4,
-                                          color: Colors.white,
-                                        ),
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1,
-                                      ),
-                  
-                                      const SizedBox(height: 10,),
-                  
-                                      Text(
-                                        'Against',
-                                        style: GoogleFonts.getFont(
-                                          'Open Sans',
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 12,
-                                          letterSpacing: -0.4,
-                                          color: Colors.white,
-                                        ),
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1,
-                                      ),
-                                      Text(
-                                        'Virat will be ducked in the second inning itself',
-                                        style: GoogleFonts.getFont(
-                                          'Open Sans',
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 14,
-                                          letterSpacing: -0.4,
-                                          color: Colors.white,
-                                        ),
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1,
-                                      ),
-                  
-                                      const SizedBox(height: 15,),
-                  
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                'Winning Amount',
-                                                style: GoogleFonts.getFont(
-                                                  'Open Sans',
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 12,
-                                                  letterSpacing: -0.4,
-                                                  color: Colors.white,
-                                                ),
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 1,
-                                              ),
-                                              Text(
-                                                '1000K',
-                                                style: GoogleFonts.getFont(
-                                                  'Open Sans',
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 14,
-                                                  letterSpacing: -0.4,
-                                                  color: Colors.white,
-                                                ),
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 1,
-                                              ),
-                                            ],
-                                          ),
-                  
-                                          Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                'Active Hours',
-                                                style: GoogleFonts.getFont(
-                                                  'Open Sans',
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 12,
-                                                  letterSpacing: -0.4,
-                                                  color: Colors.white,
-                                                ),
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 1,
-                                              ),
-                                              Text(
-                                                '603:13:00',
-                                                style: GoogleFonts.getFont(
-                                                  'Open Sans',
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 14,
-                                                  letterSpacing: -0.4,
-                                                  color: Colors.white,
-                                                ),
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 1,
-                                              ),
-                                            ],
-                                          ),
-                  
-                                          SizedBox(
-                                                width: 100,
-                                                height: 40,
-                                                child: ElevatedButton(
-                                                  style: ButtonStyle(
-                                                      backgroundColor:
-                                                          MaterialStateProperty.all<Color>(
-                                                              const Color(0xff125900)),
-                                                      foregroundColor:
-                                                          MaterialStateProperty.all<Color>(
-                                                              Colors.white),
-                                                      minimumSize: MaterialStateProperty.all(
-                                                          const Size.fromHeight(50)),
-                                                      padding: MaterialStateProperty.all(
-                                                          const EdgeInsets.all(0)),
-                                                      elevation: MaterialStateProperty.all(20),
-                                                      overlayColor: MaterialStateProperty.all(
-                                                          Colors.blue.shade900),
-                                                      shape: MaterialStateProperty.all<
-                                                              RoundedRectangleBorder>(
-                                                          const RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius.all(Radius.circular(5)),
-                                                      ))),
-                                                  onPressed: () {},
-                                                  child: const Text(
-                                                    'Claim bet',
-                                                    style: TextStyle(
-                                                      fontSize: 12,
-                                                      fontWeight: FontWeight.w500,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            );
-                          }),
+                  padding: EdgeInsets.all(15),
+                  child: SizedBox(
+                    width: 110,
+                    height: 30,
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              const Color(0xffB70018)),
+                          foregroundColor:
+                              MaterialStateProperty.all<Color>(Colors.white),
+                          minimumSize:
+                              MaterialStateProperty.all(const Size.fromHeight(50)),
+                          padding: MaterialStateProperty.all(const EdgeInsets.all(0)),
+                          elevation: MaterialStateProperty.all(20),
+                          overlayColor:
+                              MaterialStateProperty.all(Colors.blue.shade900),
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                              const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                          ))),
+                      onPressed: () => showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => const Dialog(
+                          child: AddBetPage()
+                        ),
+                      ),
+                      child: const Text(
+                        'Create bet',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
+
+
+                // BETS
+                FutureBuilder<BetDetails?>(
+                    future: dioClient.getBetDetails(context, widget.livestream?.id ?? 0),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Loader();
+                      } else {
+                        return BetList(bets: snapshot.data);
+                      }
+                    },
+                  ),
               ]
             ),
           ),
         ),
       );
   }
+}
+
+class BetList extends StatelessWidget {
+  BetList({super.key, this.bets});
+
+  BetDetails? bets;
+  
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+      child: ListView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: bets?.data?.bets?.length,
+          itemBuilder: (BuildContext context, int index) {
+            return SizedBox(
+              width: 150,
+              child: Card(
+                color: const Color(0xFF322B59),
+                shape: const RoundedRectangleBorder(),
+                child: Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        bets?.data?.bets?[index].betType ?? '',
+                        style: GoogleFonts.getFont(
+                          'Open Sans',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                          letterSpacing: -0.4,
+                          color: Colors.white,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'For',
+                        style: GoogleFonts.getFont(
+                          'Open Sans',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12,
+                          letterSpacing: -0.4,
+                          color: Colors.white,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                      Text(
+                        bets?.data?.bets?[index].betFor ?? '',
+                        style: GoogleFonts.getFont(
+                          'Open Sans',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14,
+                          letterSpacing: -0.4,
+                          color: Colors.white,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'Against',
+                        style: GoogleFonts.getFont(
+                          'Open Sans',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12,
+                          letterSpacing: -0.4,
+                          color: Colors.white,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                      Text(
+                        bets?.data?.bets?[index].betAgainst ?? '',
+                        style: GoogleFonts.getFont(
+                          'Open Sans',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14,
+                          letterSpacing: -0.4,
+                          color: Colors.white,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Active Hours',
+                                style: GoogleFonts.getFont(
+                                  'Open Sans',
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 12,
+                                  letterSpacing: -0.4,
+                                  color: Colors.white,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              ),
+                              Text(
+                                bets?.data?.bets?[index].activeHours ?? '',
+                                style: GoogleFonts.getFont(
+                                  'Open Sans',
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14,
+                                  letterSpacing: -0.4,
+                                  color: Colors.white,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              ),
+                            ],
+                          ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Winning Amount',
+                                style: GoogleFonts.getFont(
+                                  'Open Sans',
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 12,
+                                  letterSpacing: -0.4,
+                                  color: Colors.white,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              ),
+                              Text(
+                                bets?.data?.bets?[index].winningAmount ?? '',
+                                style: GoogleFonts.getFont(
+                                  'Open Sans',
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14,
+                                  letterSpacing: -0.4,
+                                  color: Colors.white,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              ),
+                            ],
+                          ),
+                          
+                          SizedBox(
+                            width: 100,
+                            height: 40,
+                            child: ElevatedButton(
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          const Color(0xff125900)),
+                                  foregroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Colors.white),
+                                  minimumSize: MaterialStateProperty.all(
+                                      const Size.fromHeight(50)),
+                                  padding: MaterialStateProperty.all(
+                                      const EdgeInsets.all(0)),
+                                  elevation: MaterialStateProperty.all(20),
+                                  overlayColor: MaterialStateProperty.all(
+                                      Colors.blue.shade900),
+                                  shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                      const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5)),
+                                  ))),
+                              onPressed: () {},
+                              child: const Text(
+                                'Claim bet',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            );
+          }),
+    );
+  }
+}
+
+class AddBetPage extends StatelessWidget {
+  const AddBetPage({super.key});
+  
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(15),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('Close'),
+          ),
+        ],
+      ),
+    );
+  }
+
+
 }

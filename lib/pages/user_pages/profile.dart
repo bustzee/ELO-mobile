@@ -92,15 +92,17 @@ class ProfilePageState extends State<ProfilePage> {
             children: [
             Row(
               children: [
-                Container(
-                  height: 100,
-                  width: 100,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage('assets/images/profile_dummy.png'),
-                        fit: BoxFit.cover),
-                  ),
-                ),
+               Container(
+                          height: 100,
+                          width: 100,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: NetworkImage(
+                                      _userDetails?.data?.user?.imageLink ??
+                                          '--'),
+                                  fit: BoxFit.cover),
+                              borderRadius: BorderRadius.circular(5)),
+                        ),
                 const SizedBox(
                   width: 20,
                 ),
