@@ -152,7 +152,7 @@ class _AdminBettingViewMasterState extends State<AdminBettingViewMasterPage> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Color(0xFF322B59),
-          title: PrintValue(printtext: 'Delete Betting View Detail'),
+          title: PrintValue(printtext: 'Delete Betting View Details'),
           content: Container(
             height: 20,
             child: Column(

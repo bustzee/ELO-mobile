@@ -5,6 +5,7 @@ import 'package:elo_esports/models/admin_role.dart';
 import 'package:elo_esports/models/admin_role_permission.dart';
 import 'package:elo_esports/models/admin_update_settings.dart';
 import 'package:elo_esports/models/bet_details.dart';
+import 'package:elo_esports/models/betting_disputes.dart';
 import 'package:elo_esports/models/betting_view_master.dart';
 import 'package:elo_esports/models/common_response.dart';
 import 'package:elo_esports/models/create_betting_master.dart';
@@ -13,9 +14,16 @@ import 'package:elo_esports/models/create_betting_view_master.dart';
 import 'package:elo_esports/models/create_stream_request.dart';
 import 'package:elo_esports/models/create_stream_response.dart';
 import 'package:elo_esports/models/admin_userdetails.dart';
+import 'package:elo_esports/models/create_tutorial.dart';
+
 import 'package:elo_esports/models/create_user.dart';
+import 'package:elo_esports/models/dashboard_info.dart';
 import 'package:elo_esports/models/deposit.dart';
+import 'package:elo_esports/models/get_setting.dart';
+
 import 'package:elo_esports/models/leaderboard.dart';
+import 'package:elo_esports/models/reported_streams.dart';
+
 import 'package:elo_esports/models/stream_details.dart' as stream_details;
 import 'package:elo_esports/models/tutorial.dart';
 import 'package:elo_esports/models/twitch_leaderboard.dart';
@@ -471,11 +479,99 @@ class DioClient {
     }
   }
 
-  Future<BetDetails?> getBetDetails(
-      BuildContext? context, int id) async {
+  Future<DashboardInfo?> GetDashboardInfo() async {
     try {
-      final response = await _dio
-          .post(Endpoints.getBetDetails, data: {'livestream_id': id});
+      final response = await _dio.get(Endpoints.getDashboardInfo);
+      return DashboardInfo.fromJson(response.data);
+    } on DioException catch (err) {
+      final errorMessage = DioExceptionHandler.fromDioError(err).toString();
+      throw errorMessage;
+    } catch (e) {
+      if (kDebugMode) print(e);
+      throw e.toString();
+    }
+  }
+
+  Future<CommonResponse?> deleteTutorial(BuildContext? context, int id) async {
+    try {
+      final response =
+          await _dio.delete(Endpoints.deleteTutorial, data: {'id': id});
+      return CommonResponse.fromJson(response.data);
+    } on DioException catch (err) {
+      final errorMessage = DioExceptionHandler.fromDioError(err).toString();
+      if (context != null) {
+        final snackBar = SnackBar(content: Text(errorMessage.toString()));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
+      throw errorMessage;
+    } catch (e) {
+      if (kDebugMode) print(e);
+      throw e.toString();
+    }
+  }
+
+  Future<CommonResponse?> createTutorial(
+      BuildContext? context, CreateTutorial createTutorial) async {
+    try {
+      final response = await _dio.post(Endpoints.createTutorial,
+          data: createTutorial.toJson());
+      return CommonResponse.fromJson(response.data);
+    } on DioException catch (err) {
+      final errorMessage = DioExceptionHandler.fromDioError(err).toString();
+      if (context != null) {
+        final snackBar = SnackBar(content: Text(errorMessage.toString()));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
+      throw errorMessage;
+    } catch (e) {
+      if (kDebugMode) print(e);
+      throw e.toString();
+    }
+  }
+
+  Future<ReportedStreams?> GetReportedStreams() async {
+    try {
+      final response = await _dio.get(Endpoints.getReportedStreams);
+      return ReportedStreams.fromJson(response.data);
+    } on DioException catch (err) {
+      final errorMessage = DioExceptionHandler.fromDioError(err).toString();
+      throw errorMessage;
+    } catch (e) {
+      if (kDebugMode) print(e);
+      throw e.toString();
+    }
+  }
+
+  Future<BettingDisputes?> GetBettingDisputes() async {
+    try {
+      final response = await _dio.get(Endpoints.getBettingDisputes);
+      return BettingDisputes.fromJson(response.data);
+    } on DioException catch (err) {
+      final errorMessage = DioExceptionHandler.fromDioError(err).toString();
+      throw errorMessage;
+    } catch (e) {
+      if (kDebugMode) print(e);
+      throw e.toString();
+    }
+  }
+
+  Future<GetSetting?> GetAdminSetting() async {
+    try {
+      final response = await _dio.get(Endpoints.getSetting);
+      return GetSetting.fromJson(response.data);
+    } on DioException catch (err) {
+      final errorMessage = DioExceptionHandler.fromDioError(err).toString();
+      throw errorMessage;
+    } catch (e) {
+      if (kDebugMode) print(e);
+      throw e.toString();
+    }
+  }
+
+  Future<BetDetails?> getBetDetails(BuildContext? context, int id) async {
+    try {
+      final response =
+          await _dio.post(Endpoints.getBetDetails, data: {'livestream_id': id});
       return BetDetails.fromJson(response.data);
     } on DioException catch (err) {
       final errorMessage = DioExceptionHandler.fromDioError(err).toString();

@@ -1,7 +1,9 @@
 import 'package:elo_esports/models/admin_update_settings.dart';
+import 'package:elo_esports/models/get_setting.dart';
 import 'package:elo_esports/network/dio_client.dart';
 import 'package:elo_esports/pages/admin_widgets/common_btn.dart';
 import 'package:elo_esports/pages/admin_widgets/common_text_filed.dart';
+import 'package:elo_esports/pages/admin_widgets/obscure_text_field.dart';
 import 'package:elo_esports/pages/admin_widgets/print_value.dart';
 import 'package:elo_esports/pages/admin_widgets/title_text.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +14,15 @@ class AdminSettingsPage extends StatefulWidget {
 }
 
 class _AdminSettingPageState extends State<AdminSettingsPage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    GetAdminSetting();
+  }
+
+  GetSetting? _getSetting;
+  List<String> list = <String>['Live', 'Sandbox'];
   final DioClient dioClient = DioClient();
 
   final TextEditingController _vig = TextEditingController();
@@ -24,7 +35,7 @@ class _AdminSettingPageState extends State<AdminSettingsPage> {
   final TextEditingController _apiUsername = TextEditingController();
   final TextEditingController _apiPassword = TextEditingController();
   final TextEditingController _apiSignature = TextEditingController();
-  final TextEditingController _environment = TextEditingController();
+  String _environment = '';
 
   bool validate() {
     return _vig.text.isNotEmpty &&
@@ -36,11 +47,30 @@ class _AdminSettingPageState extends State<AdminSettingsPage> {
         _apiUsername.text.isNotEmpty &&
         _apiPassword.text.isNotEmpty &&
         _apiSignature.text.isNotEmpty &&
-        _environment.text.isNotEmpty;
+        _environment.isNotEmpty;
   }
 
   int? parseToInt(String value) {
     return int.tryParse(value);
+  }
+
+  GetAdminSetting() async {
+    _getSetting = await dioClient.GetAdminSetting();
+
+    _vig.text = _getSetting?.data?.vig ?? '';
+    _extraVigDivisionFactor.text =
+        _getSetting?.data?.extraVigDivisionFactor.toString() ?? '';
+    _streamerPer.text = _getSetting?.data?.streamerPer.toString() ?? '';
+    _noOfUserCanBet.text = _getSetting?.data?.noOfUserCanBet.toString() ?? '';
+    _minWalletTrasferAmount.text =
+        _getSetting?.data?.minWalletTrasferAmount ?? '';
+    _clientId.text = _getSetting?.data?.clientId ?? '';
+    _apiUsername.text = _getSetting?.data?.apiUsername ?? '';
+    _apiPassword.text = _getSetting?.data?.apiPassword ?? '';
+    _apiSignature.text = _getSetting?.data?.apiSignature ?? '';
+    _environment = _getSetting?.data?.environment ?? '';
+    _hideTwitchStream = (_getSetting?.data?.hideTwitchStream ?? 0) as bool;
+    setState(() {});
   }
 
   updateSettings() async {
@@ -54,7 +84,7 @@ class _AdminSettingPageState extends State<AdminSettingsPage> {
       apiUsername: _apiUsername.text,
       apiPassword: _apiPassword.text,
       apiSignature: _apiSignature.text,
-      environment: _environment.text,
+      environment: _environment,
       hideTwitchStream: _hideTwitchStream,
     );
     await dioClient.updateSettings(context, adminUpdateSettings);
@@ -214,7 +244,7 @@ class _AdminSettingPageState extends State<AdminSettingsPage> {
                         Container(
                           height: 5,
                         ),
-                        CommonTextFiled(
+                        ObscureTextField(
                           controller: _clientId,
                           hintText: 'Enter Client Id',
                         ),
@@ -225,7 +255,7 @@ class _AdminSettingPageState extends State<AdminSettingsPage> {
                         Container(
                           height: 5,
                         ),
-                        CommonTextFiled(
+                        ObscureTextField(
                           controller: _apiUsername,
                           hintText: 'Enter API User Name',
                         ),
@@ -236,7 +266,7 @@ class _AdminSettingPageState extends State<AdminSettingsPage> {
                         Container(
                           height: 5,
                         ),
-                        CommonTextFiled(
+                        ObscureTextField(
                           controller: _apiPassword,
                           hintText: 'Enter API Password',
                         ),
@@ -247,7 +277,7 @@ class _AdminSettingPageState extends State<AdminSettingsPage> {
                         Container(
                           height: 5,
                         ),
-                        CommonTextFiled(
+                        ObscureTextField(
                           controller: _apiSignature,
                           hintText: 'Enter API Signature',
                         ),
@@ -258,14 +288,27 @@ class _AdminSettingPageState extends State<AdminSettingsPage> {
                         Container(
                           height: 5,
                         ),
-                        CommonTextFiled(
-                          controller: _environment,
-                          hintText: 'Enter Environment',
+                        DropdownMenu<String>(
+                          textStyle: TextStyle(color: Colors.white),
+                          initialSelection: '',
+                          onSelected: (String? value) {
+                            setState(() {
+                              _environment = value!;
+                            });
+                          },
+                          dropdownMenuEntries: list
+                              .map<DropdownMenuEntry<String>>((String value) {
+                            return DropdownMenuEntry<String>(
+                              value: _environment,
+                              label: value,
+                            );
+                          }).toList(),
                         ),
                         Container(
                           height: 15,
                         ),
                         CommonBtn(
+                          icon: Icon(Icons.save, color: Colors.white),
                           btnName: 'Save Paypal Setting',
                           callback: () {
                             if (validate()) {
