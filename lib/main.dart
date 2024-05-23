@@ -2,8 +2,10 @@ import 'package:elo_esports/pages/admin_pages/admin_account_page.dart';
 import 'package:elo_esports/pages/login.dart';
 import 'package:elo_esports/pages/register.dart';
 import 'package:elo_esports/pages/user_pages/create_stream.dart';
+import 'package:elo_esports/pages/user_pages/landing.dart';
 import 'package:elo_esports/pages/user_pages/leaderboard.dart';
 import 'package:elo_esports/pages/user_pages/livestream.dart';
+import 'package:elo_esports/pages/user_pages/profile.dart';
 import 'package:elo_esports/pages/user_pages/user_dashboard.dart';
 import 'package:elo_esports/pages/user_pages/withdraw_deposit.dart';
 import 'package:elo_esports/pages/welcome.dart';
@@ -42,6 +44,8 @@ class MyApp extends StatelessWidget {
         CreateStreamPage.id: (context) => const CreateStreamPage(),
         WithdrawDepositPage.id: (context) => const WithdrawDepositPage(),
         LeaderboardPage.id: (context) => const LeaderboardPage(),
+        ProfilePage.id: (context) => const ProfilePage(),
+        LandingPage.id: (context) => LandingPage(),
       },
     );
   }

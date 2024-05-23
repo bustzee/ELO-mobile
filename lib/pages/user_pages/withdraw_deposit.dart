@@ -9,6 +9,7 @@ import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icon.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:intl/intl.dart';
 
 class WithdrawDepositPage extends StatefulWidget {
   const WithdrawDepositPage({super.key});
@@ -61,13 +62,13 @@ class WithdrawDepositPageState extends State<WithdrawDepositPage> {
         ),
         body: SafeArea(
           child: TabBarView(children: [
-            FutureBuilder<Withdrawal?>(
-                future: dioClient.getListOfWithdrawals(),
+            FutureBuilder<Deposit?>(
+                future: dioClient.getListOfDeposits(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Loader();
                   } else {
-                    return WithdrawList(withdraws: snapshot.data);
+                    return DepositList(deposit: snapshot.data);
                   }
                 }),
 
@@ -312,7 +313,7 @@ class DepositList extends StatelessWidget {
                                 maxLines: 1,
                               ),
                               Text(
-                                (deposit?.deposits?[index].date.toString() ?? '--'),
+                                (DateFormat('yyyy-MM-dd').format(deposit?.deposits?[index].date?? DateTime.now()) ?? '--'),
                                 style: GoogleFonts.getFont(
                                   'Open Sans',
                                   fontWeight: FontWeight.w400,

@@ -158,7 +158,7 @@ class ProfilePageState extends State<ProfilePage> {
                     Container(
                       margin: const EdgeInsets.fromLTRB(0, 0, 5.4, 4),
                       child: Text(
-                        'ELO Balance : 7000',
+                        'ELO Balance : ${_userDetails?.data?.user?.eloBalance ?? 'NA'}',
                         style: GoogleFonts.getFont(
                           'Open Sans',
                           fontWeight: FontWeight.w600,

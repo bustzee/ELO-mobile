@@ -4,8 +4,8 @@ import 'package:json_annotation/json_annotation.dart';
 part 'add_bet.g.dart';
 
 @JsonSerializable()
-class BetDetails extends Equatable {
-    BetDetails({
+class AddBet extends Equatable {
+    AddBet({
         required this.gameId,
         required this.bettingId,
         required this.customAmount,
@@ -42,7 +42,7 @@ class BetDetails extends Equatable {
     static const String descriptionKey = "description";
     
 
-    BetDetails copyWith({
+    AddBet copyWith({
         int? gameId,
         String? bettingId,
         int? customAmount,
@@ -50,7 +50,7 @@ class BetDetails extends Equatable {
         String? againstText,
         String? description,
     }) {
-        return BetDetails(
+        return AddBet(
             gameId: gameId ?? this.gameId,
             bettingId: bettingId ?? this.bettingId,
             customAmount: customAmount ?? this.customAmount,
@@ -60,9 +60,9 @@ class BetDetails extends Equatable {
         );
     }
 
-    factory BetDetails.fromJson(Map<String, dynamic> json) => _$BetDetailsFromJson(json);
+    factory AddBet.fromJson(Map<String, dynamic> json) => _$AddBetFromJson(json);
 
-    Map<String, dynamic> toJson() => _$BetDetailsToJson(this);
+    Map<String, dynamic> toJson() => _$AddBetToJson(this);
 
     @override
     String toString(){

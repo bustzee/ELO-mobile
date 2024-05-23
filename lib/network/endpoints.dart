@@ -35,4 +35,5 @@ class Endpoints {
   static const String getListOfBettingViewMaster = 'getListOfBettingViewMaster';
   static const String deleteBettingViewMasterRecord = 'deleteBettingViewMasterRecord';
   static const String getBetDetails = 'GetBetDetails';
+  static const String addBet = 'AddBet';
 }

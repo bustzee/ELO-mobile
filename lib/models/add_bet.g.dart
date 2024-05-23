@@ -6,7 +6,7 @@ part of 'add_bet.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-BetDetails _$BetDetailsFromJson(Map<String, dynamic> json) => BetDetails(
+AddBet _$AddBetFromJson(Map<String, dynamic> json) => AddBet(
       gameId: (json['game_id'] as num?)?.toInt(),
       bettingId: json['betting_id'] as String?,
       customAmount: (json['custom_amount'] as num?)?.toInt(),
@@ -15,8 +15,7 @@ BetDetails _$BetDetailsFromJson(Map<String, dynamic> json) => BetDetails(
       description: json['description'] as String?,
     );
 
-Map<String, dynamic> _$BetDetailsToJson(BetDetails instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$AddBetToJson(AddBet instance) => <String, dynamic>{
       'game_id': instance.gameId,
       'betting_id': instance.bettingId,
       'custom_amount': instance.customAmount,

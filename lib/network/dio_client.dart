@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:elo_esports/models/add_bet.dart';
 import 'package:elo_esports/models/admin_betting_master_list.dart';
 import 'package:elo_esports/models/admin_role.dart';
 import 'package:elo_esports/models/admin_role_permission.dart';
@@ -476,6 +477,23 @@ class DioClient {
       final response = await _dio
           .post(Endpoints.getBetDetails, data: {'livestream_id': id});
       return BetDetails.fromJson(response.data);
+    } on DioException catch (err) {
+      final errorMessage = DioExceptionHandler.fromDioError(err).toString();
+      if (context != null) {
+        final snackBar = SnackBar(content: Text(errorMessage.toString()));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
+      throw errorMessage;
+    } catch (e) {
+      if (kDebugMode) print(e);
+      throw e.toString();
+    }
+  }
+
+  Future<CommonResponse?> addBet(BuildContext? context, AddBet addBetModel) async {
+    try {
+      final response = await _dio.post(Endpoints.addBet, data: addBetModel.toJson());
+      return CommonResponse.fromJson(response.data);
     } on DioException catch (err) {
       final errorMessage = DioExceptionHandler.fromDioError(err).toString();
       if (context != null) {

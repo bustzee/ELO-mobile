@@ -74,7 +74,11 @@ class UserDashboardPageState extends State<UserDashboardPage> {
           selectedIndex: _selectedIndex,
               onTabChange: (index) {
                 setState(() {
-                 _selectedIndex = index;
+                  if(_selectedIndex == 3) {
+                    _selectedIndex = 0;
+                  } else {
+ _selectedIndex = index;
+                  }
                 });
           },
         ),

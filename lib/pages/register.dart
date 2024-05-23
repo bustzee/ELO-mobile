@@ -146,7 +146,43 @@ class RegisterPageState extends State<RegisterPage> {
                   const SizedBox(height: 10,),
                   InputField(label: 'Username', controller: usernameController),
                   const SizedBox(height: 10,),
-                  InputField(label: 'Phone Number', controller: phoneNumberController),
+                  // InputField(label: 'Phone Number', controller: phoneNumberController),
+                  Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Phone Number',
+          style: GoogleFonts.getFont(
+            'Open Sans',
+            fontWeight: FontWeight.w500,
+            fontSize: 14,
+            letterSpacing: -0.4,
+            color: Colors.white,
+          ),
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
+        ),
+        SizedBox(
+          height: 60,
+          child: TextField(
+            controller: phoneNumberController,
+            keyboardType: TextInputType.number,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 12,
+            ),
+            decoration: const InputDecoration(
+              contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+              fillColor: Color(0xff262657),
+              filled: true,
+              hintStyle: TextStyle(
+                fontSize: 10,
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
                   const SizedBox(height: 10,),
                   InputField(label: 'Password', controller: passwordController),
                   const SizedBox(height: 10,),
@@ -173,14 +209,14 @@ class RegisterPageState extends State<RegisterPage> {
                     },
                   ),
                   const SizedBox(height: 10,),
-                  Row(
+                  Column(
                     children: [
                       SizedBox(
                         height: 100,
                         width: 100,
                         child:  Image.memory(base64Decode(thumbnail)),
                       ),
-                      const SizedBox(width: 20,),
+                      const SizedBox(height: 10,),
                       SizedBox(
                         height: 40,
                         width: 150,
@@ -201,7 +237,7 @@ class RegisterPageState extends State<RegisterPage> {
                           onPressed: () {
                               pickImage();
                           },
-                          child: const Text('Profile image'),
+                          child: Text(thumbnail == '' ? 'Profile image' : 'Change image'),
                         ),
                       ),
                     ],
