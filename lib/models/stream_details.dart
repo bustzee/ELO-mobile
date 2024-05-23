@@ -124,12 +124,12 @@ class Data extends Equatable {
     
 
     @JsonKey(name: 'user_room_names') 
-    final String? userRoomNames;
+    final dynamic userRoomNames;
     static const String userRoomNamesKey = "user_room_names";
     
 
     @JsonKey(name: 'current_room_names') 
-    final String? currentRoomNames;
+    final dynamic currentRoomNames;
     static const String currentRoomNamesKey = "current_room_names";
     
 
@@ -158,17 +158,17 @@ class Data extends Equatable {
         int? potAmount,
         Setting? setting,
         String? gameName,
-        dynamic playerStats,
+        dynamic? playerStats,
         List<ActiveBet>? activeBets,
         List<Master>? bettingMasters,
         Conversion? conversion,
         int? countLabel,
         List<ChkLabel>? chkLabel,
-        dynamic labelName,
+        dynamic? labelName,
         int? countBet,
         String? email,
-        String? userRoomNames,
-        String? currentRoomNames,
+        List<RoomName>? userRoomNames,
+        List<RoomName>? currentRoomNames,
         String? rmName,
         bool? isUserBetted,
         int? likeCount,
@@ -343,10 +343,10 @@ class ActiveBet extends Equatable {
         DateTime? createdAt,
         DateTime? updatedAt,
         String? wonSide,
-        dynamic declarationDate,
-        dynamic declarationBy,
+        dynamic? declarationDate,
+        dynamic? declarationBy,
         int? isDeclaredResult,
-        dynamic streamerFee,
+        dynamic? streamerFee,
         int? total,
         int? isAddBet,
         int? isClaimBet,
@@ -498,7 +498,7 @@ class Bet extends Equatable {
         DateTime? claimedDate,
         int? isClaimed,
         int? isWin,
-        dynamic winAmount,
+        dynamic? winAmount,
         String? betOn,
         String? vigAmount,
     }) {
@@ -691,7 +691,7 @@ class User extends Equatable {
     
 
     @JsonKey(name: 'user_type') 
-    final dynamic userType;
+    final String? userType;
     static const String userTypeKey = "user_type";
     
     final int? status;
@@ -709,12 +709,12 @@ class User extends Equatable {
     
 
     @JsonKey(name: 'date_of_birth') 
-    final DateTime? dateOfBirth;
+    final dynamic dateOfBirth;
     static const String dateOfBirthKey = "date_of_birth";
     
 
     @JsonKey(name: 'user_age') 
-    final String? userAge;
+    final dynamic userAge;
     static const String userAgeKey = "user_age";
     
     final dynamic agree;
@@ -734,20 +734,20 @@ class User extends Equatable {
         String? lastName,
         String? username,
         String? phone,
-        dynamic businessInfo,
+        dynamic? businessInfo,
         String? profile,
         String? address,
-        dynamic rememberToken,
+        dynamic? rememberToken,
         int? eloBalance,
         DateTime? createdAt,
         DateTime? updatedAt,
-        dynamic userType,
+        String? userType,
         int? status,
-        dynamic paypalEmail,
+        dynamic? paypalEmail,
         String? streamKey,
-        DateTime? dateOfBirth,
-        String? userAge,
-        dynamic agree,
+        dynamic? dateOfBirth,
+        dynamic? userAge,
+        dynamic? agree,
         String? imageLink,
         String? name,
     }) {
@@ -838,7 +838,7 @@ class ChkLabel extends Equatable {
     ChkLabel copyWith({
         int? id,
         String? username,
-        dynamic lableGame,
+        dynamic? lableGame,
         DateTime? createdAt,
         DateTime? updatedAt,
         int? userId,
@@ -905,8 +905,8 @@ class Conversion extends Equatable {
         int? cid,
         int? elo,
         int? usdAmt,
-        dynamic createdAt,
-        dynamic updatedAt,
+        dynamic? createdAt,
+        dynamic? updatedAt,
     }) {
         return Conversion(
             cid: cid ?? this.cid,
@@ -929,6 +929,76 @@ class Conversion extends Equatable {
     @override
     List<Object?> get props => [
     cid, elo, usdAmt, createdAt, updatedAt, ];
+}
+
+@JsonSerializable()
+class RoomName extends Equatable {
+    RoomName({
+        required this.id,
+        required this.userId,
+        required this.roomName,
+        required this.username,
+        required this.createdAt,
+        required this.updatedAt,
+    });
+
+    final int? id;
+    static const String idKey = "id";
+    
+
+    @JsonKey(name: 'user_id') 
+    final int? userId;
+    static const String userIdKey = "user_id";
+    
+
+    @JsonKey(name: 'room_name') 
+    final String? roomName;
+    static const String roomNameKey = "room_name";
+    
+    final String? username;
+    static const String usernameKey = "username";
+    
+
+    @JsonKey(name: 'created_at') 
+    final DateTime? createdAt;
+    static const String createdAtKey = "created_at";
+    
+
+    @JsonKey(name: 'updated_at') 
+    final DateTime? updatedAt;
+    static const String updatedAtKey = "updated_at";
+    
+
+    RoomName copyWith({
+        int? id,
+        int? userId,
+        String? roomName,
+        String? username,
+        DateTime? createdAt,
+        DateTime? updatedAt,
+    }) {
+        return RoomName(
+            id: id ?? this.id,
+            userId: userId ?? this.userId,
+            roomName: roomName ?? this.roomName,
+            username: username ?? this.username,
+            createdAt: createdAt ?? this.createdAt,
+            updatedAt: updatedAt ?? this.updatedAt,
+        );
+    }
+
+    factory RoomName.fromJson(Map<String, dynamic> json) => _$RoomNameFromJson(json);
+
+    Map<String, dynamic> toJson() => _$RoomNameToJson(this);
+
+    @override
+    String toString(){
+        return "$id, $userId, $roomName, $username, $createdAt, $updatedAt, ";
+    }
+
+    @override
+    List<Object?> get props => [
+    id, userId, roomName, username, createdAt, updatedAt, ];
 }
 
 @JsonSerializable()
@@ -1012,8 +1082,8 @@ class Livestream extends Equatable {
         String? image,
         String? description,
         String? delayTime,
-        dynamic viewCounter,
-        dynamic type,
+        dynamic? viewCounter,
+        dynamic? type,
         bool? fileLink,
     }) {
         return Livestream(

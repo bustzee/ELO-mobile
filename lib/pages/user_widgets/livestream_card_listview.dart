@@ -1,4 +1,5 @@
 import 'package:elo_esports/models/livestream.dart';
+import 'package:elo_esports/network/dio_client.dart';
 import 'package:elo_esports/network/endpoints.dart';
 import 'package:elo_esports/pages/user_pages/livestream.dart';
 import 'package:flutter/material.dart';

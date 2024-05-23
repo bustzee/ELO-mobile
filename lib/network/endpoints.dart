@@ -16,4 +16,11 @@ class Endpoints {
   static const String createStream = 'CreateStream';
   static const String createUser = 'CreateUser';
   static const String getTutorial = 'getTutorial';
+  static const String getListOfWithdrawals = 'GetListOfWithdrawals';
+  static const String likeStream = 'LikeStream';
+  static const String unlikeStream = 'UnlikeStream';
+  static const String streamReport = 'StreamReport';
+  static const String getStreamDetails = 'GetStreamDetails';
+  static const String getHomeLeaderBoardStreams = 'getHomeLeaderBoardStreams';
+  static const String getTwitchLeaderBoardStreams = 'getTwitchLeaderBoardStreams';
 }
