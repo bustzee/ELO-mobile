@@ -410,9 +410,9 @@ class _AdminAccountState extends State<AdminAccount> {
                       ),
                       child: ExpansionTile(
                         onExpansionChanged: (bool isExpanded) {
-                          UserDetails? resetUserModel;
-                          SharedPreferencesService.setUserDetails(
-                              resetUserModel!);
+                          // UserDetails? resetUserModel;
+                          // SharedPreferencesService.setUserDetails(
+                          //     resetUserModel!);
                           Navigator.pushNamed(context, WelcomePage.id);
                         },
                         collapsedIconColor: Colors.white,
