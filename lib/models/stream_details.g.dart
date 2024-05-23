@@ -46,8 +46,8 @@ Data _$DataFromJson(Map<String, dynamic> json) => Data(
       labelName: json['label_name'],
       countBet: (json['count_bet'] as num?)?.toInt(),
       email: json['email'] as String?,
-      userRoomNames: json['user_room_names'] as String?,
-      currentRoomNames: json['current_room_names'] as String?,
+      userRoomNames: json['user_room_names'],
+      currentRoomNames: json['current_room_names'],
       rmName: json['rm_name'] as String?,
       isUserBetted: json['is_user_betted'] as bool?,
       likeCount: (json['like_count'] as num?)?.toInt(),
@@ -218,14 +218,12 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       updatedAt: json['updated_at'] == null
           ? null
           : DateTime.parse(json['updated_at'] as String),
-      userType: json['user_type'],
+      userType: json['user_type'] as String?,
       status: (json['status'] as num?)?.toInt(),
       paypalEmail: json['paypal_email'],
       streamKey: json['stream_key'] as String?,
-      dateOfBirth: json['date_of_birth'] == null
-          ? null
-          : DateTime.parse(json['date_of_birth'] as String),
-      userAge: json['user_age'] as String?,
+      dateOfBirth: json['date_of_birth'],
+      userAge: json['user_age'],
       agree: json['agree'],
       imageLink: json['imageLink'] as String?,
       name: json['name'] as String?,
@@ -249,7 +247,7 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'status': instance.status,
       'paypal_email': instance.paypalEmail,
       'stream_key': instance.streamKey,
-      'date_of_birth': instance.dateOfBirth?.toIso8601String(),
+      'date_of_birth': instance.dateOfBirth,
       'user_age': instance.userAge,
       'agree': instance.agree,
       'imageLink': instance.imageLink,
@@ -295,6 +293,28 @@ Map<String, dynamic> _$ConversionToJson(Conversion instance) =>
       'usd_amt': instance.usdAmt,
       'created_at': instance.createdAt,
       'updated_at': instance.updatedAt,
+    };
+
+RoomName _$RoomNameFromJson(Map<String, dynamic> json) => RoomName(
+      id: (json['id'] as num?)?.toInt(),
+      userId: (json['user_id'] as num?)?.toInt(),
+      roomName: json['room_name'] as String?,
+      username: json['username'] as String?,
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
+      updatedAt: json['updated_at'] == null
+          ? null
+          : DateTime.parse(json['updated_at'] as String),
+    );
+
+Map<String, dynamic> _$RoomNameToJson(RoomName instance) => <String, dynamic>{
+      'id': instance.id,
+      'user_id': instance.userId,
+      'room_name': instance.roomName,
+      'username': instance.username,
+      'created_at': instance.createdAt?.toIso8601String(),
+      'updated_at': instance.updatedAt?.toIso8601String(),
     };
 
 Livestream _$LivestreamFromJson(Map<String, dynamic> json) => Livestream(

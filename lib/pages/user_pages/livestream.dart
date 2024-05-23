@@ -1,4 +1,6 @@
 import 'package:elo_esports/models/livestream.dart';
+import 'package:elo_esports/models/stream_details.dart';
+import 'package:elo_esports/network/dio_client.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lecle_yoyo_player/lecle_yoyo_player.dart';
@@ -16,6 +18,27 @@ class LivestreamPage extends StatefulWidget {
 }
 
 class LivestreamPageState extends State<LivestreamPage> {
+
+  final DioClient dioClient = DioClient();
+  StreamDetails? streamDetails;
+
+  getStreamDetails() async {
+    streamDetails = await dioClient.getStreamDetails(context, widget.livestream?.id ?? 0);
+    setState(() {});
+  }
+
+  showMessage(BuildContext context, String message) {
+    final snackBar = SnackBar(content: Text(message));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    getStreamDetails();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    getStreamDetails();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,41 +95,53 @@ class LivestreamPageState extends State<LivestreamPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
-                        children: [
-                          const Icon(LineIcons.thumbsUp),
-                          Text(
-                            '150K',
-                            style: GoogleFonts.getFont(
-                              'Open Sans',
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                              letterSpacing: -0.4,
-                              color: Colors.white,
+                      InkWell(
+                        onTap: () async {
+                          await dioClient.likeStream(context, widget.livestream?.id ?? 0);
+                          showMessage(context, "Liked successfully");
+                        },
+                        child: Column(
+                          children: [
+                            const Icon(LineIcons.thumbsUp),
+                            Text(
+                              (streamDetails?.data?.likeCount ?? 0).toString(),
+                              style: GoogleFonts.getFont(
+                                'Open Sans',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14,
+                                letterSpacing: -0.4,
+                                color: Colors.white,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () async {
+                          await dioClient.unlikeStream(context, widget.livestream?.id ?? 0);
+                          showMessage(context, "Unliked successfully");
+                        },
+                        child: Column(
+                          children: [
+                            const Icon(LineIcons.thumbsDown),
+                            Text(
+                              (streamDetails?.data?.dislikeCount ?? 0).toString(),
+                              style: GoogleFonts.getFont(
+                                'Open Sans',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14,
+                                letterSpacing: -0.4,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                       Column(
-                        children: [
-                          const Icon(LineIcons.thumbsDown),
-                          Text(
-                            '100K',
-                            style: GoogleFonts.getFont(
-                              'Open Sans',
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                              letterSpacing: -0.4,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                          Column(
                         children: [
                           const Icon(LineIcons.coins),
                           Text(
-                            '1050K',
+                            (streamDetails?.data?.potAmount ?? 0).toString(),
                             style: GoogleFonts.getFont(
                               'Open Sans',
                               fontWeight: FontWeight.w500,
@@ -117,20 +152,26 @@ class LivestreamPageState extends State<LivestreamPage> {
                           ),
                         ],
                       ),
-                          Column(
-                        children: [
-                          const Icon(LineIcons.flag),
-                          Text(
-                            'Report',
-                            style: GoogleFonts.getFont(
-                              'Open Sans',
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                              letterSpacing: -0.4,
-                              color: Colors.white,
+                      InkWell(
+                        onTap: () async {
+                          await dioClient.streamReport(context, widget.livestream?.id ?? 0);
+                          showMessage(context, "Reported successfully");
+                        },
+                        child: Column(
+                          children: [
+                            const Icon(LineIcons.flag),
+                            Text(
+                              'Report',
+                              style: GoogleFonts.getFont(
+                                'Open Sans',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14,
+                                letterSpacing: -0.4,
+                                color: Colors.white,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                           Column(
                         children: [

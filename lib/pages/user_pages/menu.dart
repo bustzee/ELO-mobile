@@ -1,6 +1,8 @@
 import 'package:elo_esports/models/user_details.dart';
 import 'package:elo_esports/pages/admin_pages/admin_account_page.dart';
 import 'package:elo_esports/pages/user_pages/create_stream.dart';
+import 'package:elo_esports/pages/user_pages/leaderboard.dart';
+import 'package:elo_esports/pages/user_pages/withdraw_deposit.dart';
 import 'package:elo_esports/utilities/shared_preferences_utility.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -123,48 +125,20 @@ class MenuPageState extends State<MenuPage> {
                     ],
                   ),
                 ),
-                if (_userDetails != null &&
-                    _userDetails?.data?.token != null &&
-                    _userDetails?.data?.user?.userType == 'admin')
-                  InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(context, AdminAccount.id);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Row(
-                        children: [
-                          const Icon(LineIcons.home),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          Text(
-                            'Admin panel',
-                            style: GoogleFonts.getFont(
-                              'Open Sans',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16,
-                              letterSpacing: -0.4,
-                              color: Colors.white,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                if (_userDetails != null && _userDetails?.data?.token != null)
-                  Padding(
+                if(_userDetails != null && _userDetails?.data?.token != null && _userDetails?.data?.user?.userType == 'admin') InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, AdminAccount.id);
+                  },
+                  child: Padding(
                     padding: const EdgeInsets.all(20),
                     child: Row(
                       children: [
-                        const Icon(LineIcons.userCircle),
+                        const Icon(LineIcons.home),
                         const SizedBox(
                           width: 20,
                         ),
                         Text(
-                          'My profile',
+                          'Admin panel',
                           style: GoogleFonts.getFont(
                             'Open Sans',
                             fontWeight: FontWeight.w600,
@@ -178,69 +152,17 @@ class MenuPageState extends State<MenuPage> {
                       ],
                     ),
                   ),
-                if (_userDetails != null && _userDetails?.data?.token != null)
-                  InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(context, CreateStreamPage.id);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Row(
-                        children: [
-                          const Icon(LineIcons.userCircle),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          Text(
-                            'Create stream',
-                            style: GoogleFonts.getFont(
-                              'Open Sans',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16,
-                              letterSpacing: -0.4,
-                              color: Colors.white,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                if (_userDetails != null && _userDetails?.data?.token != null)
-                  Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Row(
-                      children: [
-                        const Icon(LineIcons.gavel),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        Text(
-                          'Betting history',
-                          style: GoogleFonts.getFont(
-                            'Open Sans',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
-                            letterSpacing: -0.4,
-                            color: Colors.white,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                        ),
-                      ],
-                    ),
-                  ),
-                Padding(
+                ),
+                if(_userDetails != null && _userDetails?.data?.token != null) Padding(
                   padding: const EdgeInsets.all(20),
                   child: Row(
                     children: [
-                      const Icon(LineIcons.barChart),
+                      const Icon(LineIcons.userCircle),
                       const SizedBox(
                         width: 20,
                       ),
                       Text(
-                        'Leaderboard',
+                        'My profile',
                         style: GoogleFonts.getFont(
                           'Open Sans',
                           fontWeight: FontWeight.w600,
@@ -254,8 +176,91 @@ class MenuPageState extends State<MenuPage> {
                     ],
                   ),
                 ),
-                if (_userDetails != null && _userDetails?.data?.token != null)
-                  Padding(
+                if(_userDetails != null && _userDetails?.data?.token != null) InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, CreateStreamPage.id);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Row(
+                      children: [
+                        const Icon(LineIcons.userCircle),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Text(
+                          'Create stream',
+                          style: GoogleFonts.getFont(
+                            'Open Sans',
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                            letterSpacing: -0.4,
+                            color: Colors.white,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                if(_userDetails != null && _userDetails?.data?.token != null) Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Row(
+                    children: [
+                      const Icon(LineIcons.gavel),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      Text(
+                        'Betting history',
+                        style: GoogleFonts.getFont(
+                          'Open Sans',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                          letterSpacing: -0.4,
+                          color: Colors.white,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                      ),
+                    ],
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, LeaderboardPage.id);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Row(
+                      children: [
+                        const Icon(LineIcons.barChart),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Text(
+                          'Leaderboard',
+                          style: GoogleFonts.getFont(
+                            'Open Sans',
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                            letterSpacing: -0.4,
+                            color: Colors.white,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                if(_userDetails != null && _userDetails?.data?.token != null) 
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, WithdrawDepositPage.id);
+                  },
+                  child: Padding(
                     padding: const EdgeInsets.all(20),
                     child: Row(
                       children: [
@@ -278,6 +283,7 @@ class MenuPageState extends State<MenuPage> {
                       ],
                     ),
                   ),
+                ),
                 Padding(
                   padding: const EdgeInsets.all(20),
                   child: Row(
