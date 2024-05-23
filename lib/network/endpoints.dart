@@ -12,6 +12,8 @@ class Endpoints {
   static const String getTwitchStreams = 'GetTwitchStreams';
   static const String getUserDetails = 'GetUserDetails';
   static const String getUsersList = 'getUsersList';
+  static const String getAllRoles = 'getAllRoles';
+  static const String showPermission = 'showPermission';
   static const String updateBankDetails = 'UpdateBankDetails';
   static const String createStream = 'CreateStream';
   static const String createUser = 'CreateUser';

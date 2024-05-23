@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:elo_esports/models/admin_role.dart';
+import 'package:elo_esports/models/admin_role_permission.dart';
 import 'package:elo_esports/models/common_response.dart';
 import 'package:elo_esports/models/create_stream_request.dart';
 import 'package:elo_esports/models/create_stream_response.dart';
@@ -146,6 +148,32 @@ class DioClient {
     }
   }
 
+  Future<AdminRole?> getAllRoles() async {
+    try {
+      final response = await _dio.get(Endpoints.getAllRoles);
+      return AdminRole.fromJson(response.data);
+    } on DioException catch (err) {
+      final errorMessage = DioExceptionHandler.fromDioError(err).toString();
+      throw errorMessage;
+    } catch (e) {
+      if (kDebugMode) print(e);
+      throw e.toString();
+    }
+  }
+
+  Future<AdminRolePermission?> showPermission() async {
+    try {
+      final response = await _dio.get(Endpoints.showPermission);
+      return AdminRolePermission.fromJson(response.data);
+    } on DioException catch (err) {
+      final errorMessage = DioExceptionHandler.fromDioError(err).toString();
+      throw errorMessage;
+    } catch (e) {
+      if (kDebugMode) print(e);
+      throw e.toString();
+    }
+  }
+
   Future<Tutorial?> getTutorial() async {
     try {
       final response = await _dio.get(Endpoints.getTutorial);
@@ -175,13 +203,15 @@ class DioClient {
   Future<CommonResponse?> createUser(
       BuildContext? context, CreateUser createUser) async {
     try {
-      final response = await _dio.post(Endpoints.createUser,
-          data: createUser.toJson());
-     return CommonResponse.fromJson(response.data);
+      final response =
+          await _dio.post(Endpoints.createUser, data: createUser.toJson());
+      return CommonResponse.fromJson(response.data);
     } on DioException catch (err) {
       // final errorMessage = DioExceptionHandler.fromDioError(err).toString();
       if (context != null) {
-        final snackBar = SnackBar(content: Text(err.response?.data['message'].toString() ?? 'Please try again with different credentials'));
+        final snackBar = SnackBar(
+            content: Text(err.response?.data['message'].toString() ??
+                'Please try again with different credentials'));
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
       }
       throw err.message ?? 'Something went wrong';

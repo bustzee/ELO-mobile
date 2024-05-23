@@ -1,9 +1,11 @@
-import 'package:elo_esports/pages/admin_pages/admin_admin_list.dart';
-import 'package:elo_esports/pages/admin_pages/admin_completed_stream.dart';
-import 'package:elo_esports/pages/admin_pages/admin_dashboard.dart';
-import 'package:elo_esports/pages/admin_pages/admin_inprogress_stream.dart';
-import 'package:elo_esports/pages/admin_pages/admin_role_list.dart';
-import 'package:elo_esports/pages/admin_pages/admin_users_list.dart';
+import 'package:elo_esports/pages/admin_pages/admin_admin_list_page.dart';
+import 'package:elo_esports/pages/admin_pages/admin_completed_stream_page.dart';
+import 'package:elo_esports/pages/admin_pages/admin_dashboard_page.dart';
+import 'package:elo_esports/pages/admin_pages/admin_inprogress_stream_page.dart';
+import 'package:elo_esports/pages/admin_pages/admin_paypal_setting.dart';
+import 'package:elo_esports/pages/admin_pages/admin_role_list_page.dart';
+import 'package:elo_esports/pages/admin_pages/admin_settings_page.dart';
+import 'package:elo_esports/pages/admin_pages/admin_users_list_page.dart';
 import 'package:elo_esports/pages/user_pages/user_dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,7 +19,7 @@ class AdminAccount extends StatefulWidget {
 }
 
 class _AdminAccountState extends State<AdminAccount> {
-  int _selectedIndex = 5;
+  int _selectedIndex = 6;
 
   final List<Widget> _widgetList = [
     AdminDashboard(),
@@ -26,6 +28,8 @@ class _AdminAccountState extends State<AdminAccount> {
     AdminUsersList(),
     AdminAdminList(),
     AdminRoleList(),
+    AdminSettingsPage(),
+    AdminPaypalSetting(),
     // const MenuPage(),
   ];
 
@@ -237,16 +241,32 @@ class _AdminAccountState extends State<AdminAccount> {
                       data: Theme.of(context).copyWith(
                         dividerColor: Colors.transparent, // Remove the border
                       ),
-                      child: const ExpansionTile(
+                      child: ExpansionTile(
                         collapsedIconColor: Colors.white,
-                        title: Text(
+                        title: const Text(
                           'Setting',
                           style: TextStyle(color: Colors.white),
                         ),
-                        leading: Icon(Icons.settings),
+                        leading: const Icon(Icons.settings),
                         iconColor: Colors.white,
-                        textColor: Color.fromARGB(255, 255, 255, 255),
-                        trailing: SizedBox.shrink(),
+                        textColor: const Color.fromARGB(255, 255, 255, 255),
+                        // trailing: Icon(Icons.arrow_drop_down),
+                        children: <Widget>[
+                          ListTile(
+                            title: const Text('Settings'),
+                            onTap: () {
+                              NavigateToTapMenu(6);
+                              Navigator.pop(context);
+                            },
+                          ),
+                          ListTile(
+                            title: const Text('Paypal Settings'),
+                            onTap: () {
+                              NavigateToTapMenu(7);
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ],
                       ),
                     ),
                     Theme(

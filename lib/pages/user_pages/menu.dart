@@ -1,5 +1,5 @@
 import 'package:elo_esports/models/user_details.dart';
-import 'package:elo_esports/pages/admin_pages/admin_account.dart';
+import 'package:elo_esports/pages/admin_pages/admin_account_page.dart';
 import 'package:elo_esports/pages/user_pages/create_stream.dart';
 import 'package:elo_esports/pages/user_pages/leaderboard.dart';
 import 'package:elo_esports/pages/user_pages/withdraw_deposit.dart';
@@ -17,7 +17,6 @@ class MenuPage extends StatefulWidget {
 }
 
 class MenuPageState extends State<MenuPage> {
-
   UserDetails? _userDetails;
 
   @override
@@ -30,7 +29,7 @@ class MenuPageState extends State<MenuPage> {
     _userDetails = await SharedPreferencesService.getUserDetails();
     setState(() {});
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,10 +52,12 @@ class MenuPageState extends State<MenuPage> {
                           height: 100,
                           width: 100,
                           decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: NetworkImage(_userDetails?.data?.user?.imageLink ?? '--'), fit: BoxFit.cover),
-                                borderRadius: BorderRadius.circular(5)
-                          ),
+                              image: DecorationImage(
+                                  image: NetworkImage(
+                                      _userDetails?.data?.user?.imageLink ??
+                                          '--'),
+                                  fit: BoxFit.cover),
+                              borderRadius: BorderRadius.circular(5)),
                         ),
                         const SizedBox(
                           width: 20,
