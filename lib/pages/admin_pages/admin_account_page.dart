@@ -1,4 +1,9 @@
+import 'package:elo_esports/models/admin_betting_master_list.dart';
+import 'package:elo_esports/pages/admin_pages/Admin_create_betting_view_master_page.dart';
 import 'package:elo_esports/pages/admin_pages/admin_admin_list_page.dart';
+import 'package:elo_esports/pages/admin_pages/admin_betting_amount_master_page.dart';
+import 'package:elo_esports/pages/admin_pages/admin_betting_master_page.dart';
+import 'package:elo_esports/pages/admin_pages/admin_betting_view_master_page.dart';
 import 'package:elo_esports/pages/admin_pages/admin_completed_stream_page.dart';
 import 'package:elo_esports/pages/admin_pages/admin_dashboard_page.dart';
 import 'package:elo_esports/pages/admin_pages/admin_inprogress_stream_page.dart';
@@ -19,7 +24,7 @@ class AdminAccount extends StatefulWidget {
 }
 
 class _AdminAccountState extends State<AdminAccount> {
-  int _selectedIndex = 6;
+  int _selectedIndex = 10;
 
   final List<Widget> _widgetList = [
     AdminDashboard(),
@@ -29,7 +34,10 @@ class _AdminAccountState extends State<AdminAccount> {
     AdminAdminList(),
     AdminRoleList(),
     AdminSettingsPage(),
-    AdminPaypalSetting(),
+    AdminBettingAmountMasterPage(),
+    AdminBettingMasterPage(),
+    AdminCreateBettingViewMasterPage(),
+    AdminBettingViewMasterPage()
     // const MenuPage(),
   ];
 
@@ -242,31 +250,19 @@ class _AdminAccountState extends State<AdminAccount> {
                         dividerColor: Colors.transparent, // Remove the border
                       ),
                       child: ExpansionTile(
+                        onExpansionChanged: (bool isExpanded) {
+                          NavigateToTapMenu(6);
+                          Navigator.pop(context);
+                        },
                         collapsedIconColor: Colors.white,
                         title: const Text(
-                          'Setting',
+                          'Settings',
                           style: TextStyle(color: Colors.white),
                         ),
                         leading: const Icon(Icons.settings),
                         iconColor: Colors.white,
-                        textColor: const Color.fromARGB(255, 255, 255, 255),
-                        // trailing: Icon(Icons.arrow_drop_down),
-                        children: <Widget>[
-                          ListTile(
-                            title: const Text('Settings'),
-                            onTap: () {
-                              NavigateToTapMenu(6);
-                              Navigator.pop(context);
-                            },
-                          ),
-                          ListTile(
-                            title: const Text('Paypal Settings'),
-                            onTap: () {
-                              NavigateToTapMenu(7);
-                              Navigator.pop(context);
-                            },
-                          ),
-                        ],
+                        textColor: Color.fromARGB(255, 255, 255, 255),
+                        trailing: SizedBox.shrink(),
                       ),
                     ),
                     Theme(
@@ -286,11 +282,17 @@ class _AdminAccountState extends State<AdminAccount> {
                         children: <Widget>[
                           ListTile(
                             title: const Text('Add New'),
-                            onTap: () {},
+                            onTap: () {
+                              NavigateToTapMenu(7);
+                              Navigator.pop(context);
+                            },
                           ),
                           ListTile(
                             title: const Text('List'),
-                            onTap: () {},
+                            onTap: () {
+                              NavigateToTapMenu(8);
+                              Navigator.pop(context);
+                            },
                           ),
                         ],
                       ),
@@ -312,11 +314,17 @@ class _AdminAccountState extends State<AdminAccount> {
                         children: <Widget>[
                           ListTile(
                             title: const Text('Add New'),
-                            onTap: () {},
+                            onTap: () {
+                              NavigateToTapMenu(9);
+                              Navigator.pop(context);
+                            },
                           ),
                           ListTile(
                             title: const Text('List'),
-                            onTap: () {},
+                            onTap: () {
+                              NavigateToTapMenu(10);
+                              Navigator.pop(context);
+                            },
                           ),
                         ],
                       ),

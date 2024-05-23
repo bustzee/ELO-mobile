@@ -1,7 +1,13 @@
 import 'package:dio/dio.dart';
+import 'package:elo_esports/models/admin_betting_master_list.dart';
 import 'package:elo_esports/models/admin_role.dart';
 import 'package:elo_esports/models/admin_role_permission.dart';
+import 'package:elo_esports/models/admin_update_settings.dart';
+import 'package:elo_esports/models/betting_view_master.dart';
 import 'package:elo_esports/models/common_response.dart';
+import 'package:elo_esports/models/create_betting_master.dart';
+import 'package:elo_esports/models/create_betting_view_master.dart';
+import 'package:elo_esports/models/create_betting_view_master.dart';
 import 'package:elo_esports/models/create_stream_request.dart';
 import 'package:elo_esports/models/create_stream_response.dart';
 import 'package:elo_esports/models/admin_userdetails.dart';
@@ -199,6 +205,127 @@ class DioClient {
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
       }
       throw err.message ?? 'Something went wrong';
+    } catch (e) {
+      if (kDebugMode) print(e);
+      throw e.toString();
+    }
+  }
+
+  Future<CommonResponse?> updateSettings(
+      BuildContext? context, AdminUpdateSettings updateSettings) async {
+    try {
+      final response = await _dio.post(Endpoints.updateSettings,
+          data: updateSettings.toJson());
+      return CommonResponse.fromJson(response.data);
+    } on DioException catch (err) {
+      final errorMessage = DioExceptionHandler.fromDioError(err).toString();
+      if (context != null) {
+        final snackBar = SnackBar(content: Text(errorMessage.toString()));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
+      throw errorMessage;
+    } catch (e) {
+      if (kDebugMode) print(e);
+      throw e.toString();
+    }
+  }
+
+  Future<CommonResponse?> createBettingMaster(
+      BuildContext? context, CreateBettingMaster createBettingMaster) async {
+    try {
+      final response = await _dio.post(Endpoints.createBettingMaster,
+          data: createBettingMaster.toJson());
+      return CommonResponse.fromJson(response.data);
+    } on DioException catch (err) {
+      final errorMessage = DioExceptionHandler.fromDioError(err).toString();
+      if (context != null) {
+        final snackBar = SnackBar(content: Text(errorMessage.toString()));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
+      throw errorMessage;
+    } catch (e) {
+      if (kDebugMode) print(e);
+      throw e.toString();
+    }
+  }
+
+  Future<AdminBettingMasterList?> getListOfBettingMaster() async {
+    try {
+      final response = await _dio.get(Endpoints.getListOfBettingMaster);
+      return AdminBettingMasterList.fromJson(response.data);
+    } on DioException catch (err) {
+      final errorMessage = DioExceptionHandler.fromDioError(err).toString();
+      throw errorMessage;
+    } catch (e) {
+      if (kDebugMode) print(e);
+      throw e.toString();
+    }
+  }
+
+  Future<CommonResponse?> deleteBettingMasterRecord(
+      BuildContext? context, int id) async {
+    try {
+      final response = await _dio
+          .delete(Endpoints.deleteBettingMasterRecord, data: {'id': id});
+      return CommonResponse.fromJson(response.data);
+    } on DioException catch (err) {
+      final errorMessage = DioExceptionHandler.fromDioError(err).toString();
+      if (context != null) {
+        final snackBar = SnackBar(content: Text(errorMessage.toString()));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
+      throw errorMessage;
+    } catch (e) {
+      if (kDebugMode) print(e);
+      throw e.toString();
+    }
+  }
+
+  Future<CommonResponse?> CreateBettingView(BuildContext? context,
+      CreateBettingViewMaster createBettingViewMaster) async {
+    try {
+      final response = await _dio.post(Endpoints.createBettingViewMaster,
+          data: createBettingViewMaster.toJson());
+      return CommonResponse.fromJson(response.data);
+    } on DioException catch (err) {
+      final errorMessage = DioExceptionHandler.fromDioError(err).toString();
+      if (context != null) {
+        final snackBar = SnackBar(content: Text(errorMessage.toString()));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
+      throw errorMessage;
+    } catch (e) {
+      if (kDebugMode) print(e);
+      throw e.toString();
+    }
+  }
+
+  Future<BettingViewMaster?> GetListOfBettingViewMaster() async {
+    try {
+      final response = await _dio.get(Endpoints.getListOfBettingViewMaster);
+      return BettingViewMaster.fromJson(response.data);
+    } on DioException catch (err) {
+      final errorMessage = DioExceptionHandler.fromDioError(err).toString();
+      throw errorMessage;
+    } catch (e) {
+      if (kDebugMode) print(e);
+      throw e.toString();
+    }
+  }
+
+  Future<CommonResponse?> DeleteBettingViewMasterRecord(
+      BuildContext? context, int id) async {
+    try {
+      final response = await _dio
+          .delete(Endpoints.deleteBettingViewMasterRecord, data: {'id': id});
+      return CommonResponse.fromJson(response.data);
+    } on DioException catch (err) {
+      final errorMessage = DioExceptionHandler.fromDioError(err).toString();
+      if (context != null) {
+        final snackBar = SnackBar(content: Text(errorMessage.toString()));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
+      throw errorMessage;
     } catch (e) {
       if (kDebugMode) print(e);
       throw e.toString();
