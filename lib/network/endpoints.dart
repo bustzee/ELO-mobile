@@ -26,5 +26,14 @@ class Endpoints {
   static const String streamReport = 'StreamReport';
   static const String getStreamDetails = 'GetStreamDetails';
   static const String getHomeLeaderBoardStreams = 'getHomeLeaderBoardStreams';
-  static const String getTwitchLeaderBoardStreams = 'getTwitchLeaderBoardStreams';
+  static const String getTwitchLeaderBoardStreams =
+      'getTwitchLeaderBoardStreams';
+  static const String updateSettings = 'UpdateSettings';
+  static const String createBettingMaster = 'CreateBettingMaster';
+  static const String getListOfBettingMaster = 'GetListOfBettingMaster';
+  static const String deleteBettingMasterRecord = 'DeleteBettingMasterRecord';
+  static const String createBettingViewMaster = 'createBettingViewMaster';
+  static const String getListOfBettingViewMaster = 'getListOfBettingViewMaster';
+  static const String deleteBettingViewMasterRecord =
+      'deleteBettingViewMasterRecord';
 }
