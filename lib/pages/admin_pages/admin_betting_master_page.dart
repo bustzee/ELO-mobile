@@ -22,6 +22,8 @@ class _AdminBettingMasterPageState extends State<AdminBettingMasterPage> {
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text('Betting details deleted successfully'),
     ));
+
+    setState(() {});
   }
 
   @override

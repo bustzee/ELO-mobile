@@ -100,6 +100,7 @@ class _AdminCreateBettingViewMasterPageState
                       height: 15,
                     ),
                     CommonBtn(
+                      icon: Icon(Icons.save, color: Colors.white),
                       btnName: 'Save',
                       callback: () {
                         if (validate()) {

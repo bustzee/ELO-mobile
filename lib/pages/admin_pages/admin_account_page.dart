@@ -1,5 +1,5 @@
-import 'package:elo_esports/models/admin_betting_master_list.dart';
-import 'package:elo_esports/pages/admin_pages/Admin_create_betting_view_master_page.dart';
+import 'package:elo_esports/models/user_details.dart';
+import 'package:elo_esports/pages/admin_pages/admin_create_betting_view_master_page.dart';
 import 'package:elo_esports/pages/admin_pages/admin_admin_list_page.dart';
 import 'package:elo_esports/pages/admin_pages/admin_betting_amount_master_page.dart';
 import 'package:elo_esports/pages/admin_pages/admin_betting_master_page.dart';
@@ -7,11 +7,13 @@ import 'package:elo_esports/pages/admin_pages/admin_betting_view_master_page.dar
 import 'package:elo_esports/pages/admin_pages/admin_completed_stream_page.dart';
 import 'package:elo_esports/pages/admin_pages/admin_dashboard_page.dart';
 import 'package:elo_esports/pages/admin_pages/admin_inprogress_stream_page.dart';
-import 'package:elo_esports/pages/admin_pages/admin_paypal_setting.dart';
+import 'package:elo_esports/pages/admin_pages/admin_reported_stream_page.dart';
 import 'package:elo_esports/pages/admin_pages/admin_role_list_page.dart';
 import 'package:elo_esports/pages/admin_pages/admin_settings_page.dart';
+import 'package:elo_esports/pages/admin_pages/admin_tutorials_page.dart';
 import 'package:elo_esports/pages/admin_pages/admin_users_list_page.dart';
 import 'package:elo_esports/pages/user_pages/user_dashboard.dart';
+import 'package:elo_esports/utilities/shared_preferences_utility.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -24,7 +26,19 @@ class AdminAccount extends StatefulWidget {
 }
 
 class _AdminAccountState extends State<AdminAccount> {
-  int _selectedIndex = 10;
+  UserDetails? _userDetails;
+  @override
+  void initState() {
+    super.initState();
+    getUser();
+  }
+
+  getUser() async {
+    _userDetails = await SharedPreferencesService.getUserDetails();
+    setState(() {});
+  }
+
+  int _selectedIndex = 0;
 
   final List<Widget> _widgetList = [
     AdminDashboard(),
@@ -37,7 +51,9 @@ class _AdminAccountState extends State<AdminAccount> {
     AdminBettingAmountMasterPage(),
     AdminBettingMasterPage(),
     AdminCreateBettingViewMasterPage(),
-    AdminBettingViewMasterPage()
+    AdminBettingViewMasterPage(),
+    AdminTutorialsPage(),
+    AdminReportedStreamPage()
     // const MenuPage(),
   ];
 
@@ -70,24 +86,24 @@ class _AdminAccountState extends State<AdminAccount> {
                 child: Row(
                   children: [
                     Container(
-                      height: 80,
-                      width: 80,
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                            image:
-                                AssetImage('assets/images/profile_dummy.png'),
-                            fit: BoxFit.cover),
-                      ),
+                      height: 100,
+                      width: 100,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: NetworkImage(
+                                  _userDetails?.data?.user?.imageLink ?? '--'),
+                              fit: BoxFit.cover),
+                          borderRadius: BorderRadius.circular(5)),
                     ),
                     const SizedBox(
-                      width: 10,
+                      width: 20,
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Amit Bodke',
+                          _userDetails?.data?.user?.username ?? '--',
                           style: GoogleFonts.getFont(
                             'Open Sans',
                             fontWeight: FontWeight.w600,
@@ -102,7 +118,7 @@ class _AdminAccountState extends State<AdminAccount> {
                           height: 10,
                         ),
                         Text(
-                          'Stream key :\n12313465467894545131346',
+                          'Stream key :\n${_userDetails?.data?.user?.streamKey ?? '--'}',
                           style: GoogleFonts.getFont(
                             'Open Sans',
                             fontWeight: FontWeight.w400,
@@ -333,7 +349,11 @@ class _AdminAccountState extends State<AdminAccount> {
                       data: Theme.of(context).copyWith(
                         dividerColor: Colors.transparent, // Remove the border
                       ),
-                      child: const ExpansionTile(
+                      child: ExpansionTile(
+                        onExpansionChanged: (bool isExpanded) {
+                          NavigateToTapMenu(11);
+                          Navigator.pop(context);
+                        },
                         collapsedIconColor: Colors.white,
                         title: Text(
                           'Tutorials',
@@ -366,7 +386,10 @@ class _AdminAccountState extends State<AdminAccount> {
                           ),
                           ListTile(
                             title: const Text('Reported Streams'),
-                            onTap: () {},
+                            onTap: () {
+                              NavigateToTapMenu(12);
+                              Navigator.pop(context);
+                            },
                           ),
                           ListTile(
                             title: const Text('Betting Disputes'),
