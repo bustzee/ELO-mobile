@@ -6,6 +6,7 @@ import 'package:elo_esports/models/create_stream_request.dart';
 import 'package:elo_esports/models/create_stream_response.dart';
 import 'package:elo_esports/models/admin_userdetails.dart';
 import 'package:elo_esports/models/create_user.dart';
+import 'package:elo_esports/models/deposit.dart';
 import 'package:elo_esports/models/leaderboard.dart';
 import 'package:elo_esports/models/stream_details.dart' as stream_details;
 import 'package:elo_esports/models/tutorial.dart';
@@ -191,6 +192,19 @@ class DioClient {
     try {
       final response = await _dio.get(Endpoints.getListOfWithdrawals);
       return Withdrawal.fromJson(response.data);
+    } on DioException catch (err) {
+      final errorMessage = DioExceptionHandler.fromDioError(err).toString();
+      throw errorMessage;
+    } catch (e) {
+      if (kDebugMode) print(e);
+      throw e.toString();
+    }
+  }
+
+  Future<Deposit?> getListOfDeposits() async {
+    try {
+      final response = await _dio.get(Endpoints.getListOfDeposits);
+      return Deposit.fromJson(response.data);
     } on DioException catch (err) {
       final errorMessage = DioExceptionHandler.fromDioError(err).toString();
       throw errorMessage;

@@ -118,13 +118,13 @@ class LeaderboardList extends StatelessWidget {
                        decoration: BoxDecoration(
                          image: DecorationImage(
                            image: NetworkImage(
-                             Endpoints.baseURL + (leaderboard?.data?[index].image ?? '--'),
+                             '${Endpoints.domain}/images/${(leaderboard?.data?[index].image ?? '--')}',
                            ),
                            fit: BoxFit.cover,
                          ),
                        ),
                        child: Image.network(
-                         Endpoints.baseURL + (leaderboard?.data?[index].image ?? '--'),
+                         '${Endpoints.domain}/images/${(leaderboard?.data?[index].image ?? '--')}',
                          fit: BoxFit.cover,
                          errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
                            return Image.asset(

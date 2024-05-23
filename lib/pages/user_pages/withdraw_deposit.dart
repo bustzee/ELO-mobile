@@ -1,3 +1,4 @@
+import 'package:elo_esports/models/deposit.dart';
 import 'package:elo_esports/models/user_details.dart';
 import 'package:elo_esports/models/withdrawal.dart';
 import 'package:elo_esports/network/dio_client.dart';
@@ -187,6 +188,131 @@ class WithdrawList extends StatelessWidget {
                               ),
                               Text(
                                 withdraws?.withdrawals?[index].onDate ?? '--',
+                                style: GoogleFonts.getFont(
+                                  'Open Sans',
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14,
+                                  letterSpacing: -0.4,
+                                  color: Colors.white,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              ),
+                            ],
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            );
+          }),
+    );
+  }
+}
+
+
+// ignore: must_be_immutable
+class DepositList extends StatelessWidget {
+  DepositList({super.key, this.deposit});
+
+  Deposit? deposit;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+      child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: deposit?.deposits?.length,
+          itemBuilder: (BuildContext context, int index) {
+            return SizedBox(
+              width: 150,
+              child: Card(
+                color: const Color(0xFF322B59),
+                shape: const RoundedRectangleBorder(),
+                child: Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Transaction Id / Email id',
+                        style: GoogleFonts.getFont(
+                          'Open Sans',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12,
+                          letterSpacing: -0.4,
+                          color: Colors.white,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                      Text(
+                        deposit?.deposits?[index].transactionId ?? '--',
+                        style: GoogleFonts.getFont(
+                          'Open Sans',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14,
+                          letterSpacing: -0.4,
+                          color: Colors.white,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Deposited amount',
+                                style: GoogleFonts.getFont(
+                                  'Open Sans',
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 12,
+                                  letterSpacing: -0.4,
+                                  color: Colors.white,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              ),
+                              Text(
+                                deposit?.deposits?[index].depositedAmount ?? '--',
+                                style: GoogleFonts.getFont(
+                                  'Open Sans',
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14,
+                                  letterSpacing: -0.4,
+                                  color: Colors.white,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              ),
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Date',
+                                style: GoogleFonts.getFont(
+                                  'Open Sans',
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 12,
+                                  letterSpacing: -0.4,
+                                  color: Colors.white,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              ),
+                              Text(
+                                (deposit?.deposits?[index].date.toString() ?? '--'),
                                 style: GoogleFonts.getFont(
                                   'Open Sans',
                                   fontWeight: FontWeight.w400,
