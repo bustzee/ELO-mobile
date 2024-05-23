@@ -44,4 +44,5 @@ class Endpoints {
   static const String getSetting = 'getSetting';
   static const String getBetDetails = 'GetBetDetails';
   static const String addBet = 'AddBet';
+  static const String getBetbyuserId = 'getBetbyuserId';
 }
