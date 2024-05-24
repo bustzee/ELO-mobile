@@ -1,12 +1,14 @@
 import 'package:elo_esports/models/admin_betting_master_list.dart';
 import 'package:elo_esports/models/betting_view_master.dart';
 import 'package:elo_esports/network/dio_client.dart';
+import 'package:elo_esports/pages/admin_pages/admin_create_betting_view_master_page.dart';
 import 'package:elo_esports/pages/admin_widgets/common_btn.dart';
 import 'package:elo_esports/pages/admin_widgets/print_value.dart';
 import 'package:elo_esports/pages/admin_widgets/title_text.dart';
 import 'package:elo_esports/pages/user_widgets/loader.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class AdminBettingViewMasterPage extends StatefulWidget {
   @override
@@ -103,7 +105,21 @@ class _AdminBettingViewMasterState extends State<AdminBettingViewMasterPage> {
                                         SizedBox(
                                             width: 80,
                                             height: 35,
-                                            child: CommonBtn(btnName: 'Edit')),
+                                            child: CommonBtn(
+                                              btnName: 'Edit',
+                                              callback: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          AdminCreateBettingViewMasterPage(
+                                                              viewbetting:
+                                                                  snapshot.data
+                                                                          ?.data?[
+                                                                      index])),
+                                                );
+                                              },
+                                            )),
                                         Container(
                                           height: 10,
                                         ),
@@ -126,9 +142,10 @@ class _AdminBettingViewMasterState extends State<AdminBettingViewMasterPage> {
                                 ),
                                 TitleText(printtext: 'Created Date'),
                                 PrintValue(
-                                    printtext: snapshot
-                                            .data?.data?[index].createdAt
-                                            .toString() ??
+                                    printtext: DateFormat('yyyy-MM-dd hh:mm a')
+                                            .format(snapshot.data?.data?[index]
+                                                    .createdAt ??
+                                                DateTime.now()) ??
                                         '--'),
                               ],
                             ),

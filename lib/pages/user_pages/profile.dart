@@ -2,6 +2,8 @@ import 'package:elo_esports/models/user_details.dart';
 import 'package:elo_esports/network/dio_client.dart';
 import 'package:elo_esports/utilities/shared_preferences_utility.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_paypal_payment/flutter_paypal_payment.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -25,6 +27,14 @@ class ProfilePageState extends State<ProfilePage> {
   getUser() async {
     _userDetails = await SharedPreferencesService.getUserDetails();
     setState(() {});
+  }
+
+  copy() {
+    Clipboard.setData(ClipboardData(text: _userDetails?.data?.user?.streamKey ?? '--'));
+    ScaffoldMessenger.of(context).showSnackBar(const  SnackBar(
+        content: Text(
+            'Stream key copied to clipboard'),
+      ));
   }
   
   @override
@@ -137,6 +147,42 @@ class ProfilePageState extends State<ProfilePage> {
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                     ),
+                    SizedBox(
+                      width: 120,
+                      height: 30,
+                      child: ElevatedButton(
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          const Color(0xffB70018)),
+                                  foregroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Colors.white),
+                                  minimumSize: MaterialStateProperty.all(
+                                      const Size.fromHeight(50)),
+                                  padding: MaterialStateProperty.all(
+                                      const EdgeInsets.all(0)),
+                                  elevation: MaterialStateProperty.all(20),
+                                  overlayColor: MaterialStateProperty.all(
+                                      Colors.blue.shade900),
+                                  shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                      const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5)),
+                                  ))),
+                              onPressed: () {
+                                copy();
+                              },
+                              child: const Text(
+                                'Copy stream key',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                    )
                   ],
                 )
               ],
@@ -233,7 +279,34 @@ class ProfilePageState extends State<ProfilePage> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5)),
                                 ))),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (BuildContext context) => PaypalCheckoutView(
+                                  sandboxMode: true,
+                                  clientId: "ARQ7TmB3SWu9GI3T5gLw5qT6nSQ6o39rokLlyWNPVZCukIFpOX-2-aPNGTz38OYRbPn2co1Dt0M-MRLY",
+                                  secretKey: "5RUJG8JDF9TVDHVB",
+                                  transactions: const [
+                                    {
+                                      "amount": {
+                                        "total": '10',
+                                        "currency": "USD",
+                                        "details": {
+                                          "subtotal": '10',
+                                          "shipping": '0',
+                                          "shipping_discount": 0
+                                        }
+                                      },
+                                    }
+                                  ],
+                                  note: "Contact us for any questions on your order.",
+                                  onSuccess: (Map params) async {},
+                                  onError: (error) {},
+                                  onCancel: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ));
+                            },
                             child: const Text(
                               'Purchase ELO',
                               style: TextStyle(

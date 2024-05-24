@@ -139,7 +139,7 @@ class TwitchstreamPageState extends State<TwitchstreamPage> {
                         onTap: () => showDialog<String>(
                           context: context,
                           builder: (BuildContext context) => Dialog(
-                              child: ReportStreamPage(streamId: widget.twitchlivestream?.id, streamName: widget.twitchlivestream?.title, streamType: 'twitch',)),
+                              child: ReportStreamPage(streamId: widget.twitchlivestream?.id, streamName: widget.twitchlivestream?.title, streamType: 'twi',)),
                         ),
                         child: Column(
                           children: [

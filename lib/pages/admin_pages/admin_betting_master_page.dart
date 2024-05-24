@@ -1,13 +1,19 @@
 import 'package:elo_esports/models/admin_betting_master_list.dart';
 import 'package:elo_esports/network/dio_client.dart';
+import 'package:elo_esports/pages/admin_pages/admin_betting_amount_master_page.dart';
 import 'package:elo_esports/pages/admin_widgets/common_btn.dart';
 import 'package:elo_esports/pages/admin_widgets/print_value.dart';
 import 'package:elo_esports/pages/admin_widgets/title_text.dart';
 import 'package:elo_esports/pages/user_widgets/loader.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class AdminBettingMasterPage extends StatefulWidget {
+  AdminBettingMasterPage({
+    super.key,
+  });
+
   @override
   State<StatefulWidget> createState() => _AdminBettingMasterPageState();
 }
@@ -106,7 +112,21 @@ class _AdminBettingMasterPageState extends State<AdminBettingMasterPage> {
                                         SizedBox(
                                             width: 80,
                                             height: 35,
-                                            child: CommonBtn(btnName: 'Edit')),
+                                            child: CommonBtn(
+                                              btnName: 'Edit',
+                                              callback: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          AdminBettingAmountMasterPage(
+                                                              bettingRecord:
+                                                                  snapshot.data
+                                                                          ?.bettings?[
+                                                                      index])),
+                                                );
+                                              },
+                                            )),
                                         Container(
                                           height: 10,
                                         ),
@@ -129,9 +149,12 @@ class _AdminBettingMasterPageState extends State<AdminBettingMasterPage> {
                                 ),
                                 TitleText(printtext: 'Created Date'),
                                 PrintValue(
-                                    printtext: snapshot
-                                            .data?.bettings?[index].createdAt
-                                            .toString() ??
+                                    printtext: DateFormat('yyyy-MM-dd hh:mm a')
+                                            .format(snapshot
+                                                    .data
+                                                    ?.bettings?[index]
+                                                    .createdAt ??
+                                                DateTime.now()) ??
                                         '--'),
                               ],
                             ),

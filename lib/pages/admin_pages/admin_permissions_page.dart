@@ -16,6 +16,8 @@ class AdminPermissions extends StatefulWidget {
 class _AdminPermissionsListState extends State<AdminPermissions> {
   final DioClient dioClient = DioClient();
 
+  final TextEditingController _name = TextEditingController();
+
   final TextEditingController _controller = TextEditingController();
   bool light = true;
 

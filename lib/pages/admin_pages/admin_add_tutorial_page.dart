@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:elo_esports/models/create_betting_master.dart';
 import 'package:elo_esports/models/create_betting_view_master.dart';
 import 'package:elo_esports/models/create_tutorial.dart';
+import 'package:elo_esports/models/tutorial.dart';
 import 'package:elo_esports/network/dio_client.dart';
 import 'package:elo_esports/pages/admin_widgets/common_btn.dart';
 import 'package:elo_esports/pages/admin_widgets/common_text_filed.dart';
@@ -14,12 +15,30 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../models/update_tutorial.dart';
+
 class AdminAddTutorialPage extends StatefulWidget {
+  AdminAddTutorialPage({super.key, this.updateTutorial});
+
+  Datum? updateTutorial;
   @override
   State<StatefulWidget> createState() => _AdminAddTutorialState();
 }
 
 class _AdminAddTutorialState extends State<AdminAddTutorialPage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.updateTutorial != null) {
+      _type = widget.updateTutorial!.type ?? '';
+      _name.text = widget.updateTutorial!.name ?? '';
+      _description.text = widget.updateTutorial!.description ?? '';
+      _tutorial_url.text = widget.updateTutorial!.tutorialUrl ?? '';
+      _document_attachment = widget.updateTutorial!.documentAttachment ?? '';
+    }
+  }
+
   final DioClient dioClient = DioClient();
 
   List<String> list = <String>['Document', 'Video'];
@@ -79,6 +98,22 @@ class _AdminAddTutorialState extends State<AdminAddTutorialPage> {
 
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text('Tutorial details add successfully'),
+    ));
+  }
+
+  updateTutorial() async {
+    UpdateTutorial updateTutorial = UpdateTutorial(
+      id: widget.updateTutorial?.id.toString(),
+      type: _type,
+      name: _name.text,
+      description: _description.text,
+      tutorialUrl: _tutorial_url.text,
+      documentAttachment: _document_attachment,
+    );
+    await dioClient.updateTutorial(context, updateTutorial);
+
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text('Tutorial details updated successfully'),
     ));
   }
 

@@ -114,40 +114,40 @@ class _LandingPageState extends State<LandingPage> {
                             const SizedBox(
                               width: 10,
                             ),
-                            SizedBox(
-                              width: 110,
-                              height: 30,
-                              child: ElevatedButton(
-                                style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all<Color>(
-                                            const Color(0xffB70018)),
-                                    foregroundColor:
-                                        MaterialStateProperty.all<Color>(
-                                            Colors.white),
-                                    minimumSize: MaterialStateProperty.all(
-                                        const Size.fromHeight(50)),
-                                    padding: MaterialStateProperty.all(
-                                        const EdgeInsets.all(0)),
-                                    elevation: MaterialStateProperty.all(20),
-                                    overlayColor: MaterialStateProperty.all(
-                                        Colors.blue.shade900),
-                                    shape: MaterialStateProperty.all<
-                                            RoundedRectangleBorder>(
-                                        const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(5)),
-                                    ))),
-                                onPressed: () {},
-                                child: const Text(
-                                  'Purchase ELO',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                            ),
+                            // SizedBox(
+                            //   width: 110,
+                            //   height: 30,
+                            //   child: ElevatedButton(
+                            //     style: ButtonStyle(
+                            //         backgroundColor:
+                            //             MaterialStateProperty.all<Color>(
+                            //                 const Color(0xffB70018)),
+                            //         foregroundColor:
+                            //             MaterialStateProperty.all<Color>(
+                            //                 Colors.white),
+                            //         minimumSize: MaterialStateProperty.all(
+                            //             const Size.fromHeight(50)),
+                            //         padding: MaterialStateProperty.all(
+                            //             const EdgeInsets.all(0)),
+                            //         elevation: MaterialStateProperty.all(20),
+                            //         overlayColor: MaterialStateProperty.all(
+                            //             Colors.blue.shade900),
+                            //         shape: MaterialStateProperty.all<
+                            //                 RoundedRectangleBorder>(
+                            //             const RoundedRectangleBorder(
+                            //           borderRadius: BorderRadius.all(
+                            //               Radius.circular(5)),
+                            //         ))),
+                            //     onPressed: () {},
+                            //     child: const Text(
+                            //       'Purchase ELO',
+                            //       style: TextStyle(
+                            //         fontSize: 14,
+                            //         fontWeight: FontWeight.w500,
+                            //       ),
+                            //     ),
+                            //   ),
+                            // ),
                           ],
                         ),
                       ],

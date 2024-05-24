@@ -4,8 +4,12 @@ import 'package:google_fonts/google_fonts.dart';
 class CommonTextFiled extends StatelessWidget {
   final TextEditingController? controller;
   final String? hintText;
+  final TextInputType? keyboardType;
 
-  CommonTextFiled({this.controller, this.hintText = ''});
+  CommonTextFiled(
+      {this.controller,
+      this.hintText = '',
+      this.keyboardType = TextInputType.text});
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +28,7 @@ class CommonTextFiled extends StatelessWidget {
           fontSize: 10,
         ),
       ),
+      keyboardType: keyboardType!,
     ));
   }
 }

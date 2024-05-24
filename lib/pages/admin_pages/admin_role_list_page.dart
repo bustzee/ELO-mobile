@@ -16,6 +16,17 @@ class AdminRoleList extends StatefulWidget {
 
 class _AdminRoleListState extends State<AdminRoleList> {
   final DioClient dioClient = DioClient();
+  int masterId = 0;
+
+  deleteRole() async {
+    await dioClient.deleteRole(context, masterId!);
+
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text('Role deleted successfully'),
+    ));
+
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -130,6 +141,12 @@ class _AdminRoleListState extends State<AdminRoleList> {
                                           child: CommonBtn(
                                             btnName: 'Delete Role',
                                             backgroundColor: Colors.red,
+                                            callback: () {
+                                              masterId = snapshot
+                                                      .data?.data?[index].id ??
+                                                  0;
+                                              _dialogBuilder(context);
+                                            },
                                           )),
                                     ],
                                   ),
@@ -150,6 +167,49 @@ class _AdminRoleListState extends State<AdminRoleList> {
           ),
         ],
       ),
+    );
+  }
+
+  Future<void> _dialogBuilder(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Color(0xFF322B59),
+          title: PrintValue(printtext: 'Delete Role'),
+          content: Container(
+            height: 20,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                TitleText(printtext: 'Do you want to delete this record.')
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Close'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            SizedBox(
+                width: 100,
+                height: 35,
+                child: CommonBtn(
+                    btnName: 'Yes Delete',
+                    backgroundColor: Colors.red,
+                    callback: () {
+                      deleteRole();
+                      Navigator.of(context).pop();
+                    })),
+          ],
+        );
+      },
     );
   }
 }

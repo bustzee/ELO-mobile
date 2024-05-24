@@ -66,7 +66,43 @@ class ReportStreamPage extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            InputField(label: 'Mobile', controller: mobileEditingController),
+            // InputField(label: 'Mobile', controller: mobileEditingController),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Mobile',
+                  style: GoogleFonts.getFont(
+                    'Open Sans',
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                    letterSpacing: -0.4,
+                    color: Colors.white,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+                SizedBox(
+                  height: 60,
+                  child: TextField(
+                    controller: mobileEditingController,
+                    keyboardType: TextInputType.number,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                    ),
+                    decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                      fillColor: Color(0xff262657),
+                      filled: true,
+                      hintStyle: TextStyle(
+                        fontSize: 10,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
             const SizedBox(
               height: 10,
             ),

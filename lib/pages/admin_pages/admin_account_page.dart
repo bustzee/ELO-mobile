@@ -11,6 +11,7 @@ import 'package:elo_esports/pages/admin_pages/admin_inprogress_stream_page.dart'
 import 'package:elo_esports/pages/admin_pages/admin_reported_stream_page.dart';
 import 'package:elo_esports/pages/admin_pages/admin_role_list_page.dart';
 import 'package:elo_esports/pages/admin_pages/admin_settings_page.dart';
+import 'package:elo_esports/pages/admin_pages/admin_streaming_report_page.dart';
 import 'package:elo_esports/pages/admin_pages/admin_tutorials_page.dart';
 import 'package:elo_esports/pages/admin_pages/admin_users_list_page.dart';
 import 'package:elo_esports/pages/user_pages/user_dashboard.dart';
@@ -56,7 +57,8 @@ class _AdminAccountState extends State<AdminAccount> {
     AdminBettingViewMasterPage(),
     AdminTutorialsPage(),
     AdminReportedStreamPage(),
-    AdminDisputesBettingStreamPage()
+    AdminDisputesBettingStreamPage(),
+    AdminStreamingReportPage()
     // const MenuPage(),
   ];
 
@@ -385,7 +387,10 @@ class _AdminAccountState extends State<AdminAccount> {
                         children: <Widget>[
                           ListTile(
                             title: const Text('Streaming Report'),
-                            onTap: () {},
+                            onTap: () {
+                              NavigateToTapMenu(14);
+                              Navigator.pop(context);
+                            },
                           ),
                           ListTile(
                             title: const Text('Reported Streams'),

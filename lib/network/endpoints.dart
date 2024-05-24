@@ -45,5 +45,9 @@ class Endpoints {
   static const String getBetDetails = 'GetBetDetails';
   static const String addBet = 'AddBet';
   static const String getBetbyuserId = 'getBetbyuserId';
+  static const String getStreamingReport = 'GetStreamingReport';
+  static const String updateBettingMaster = 'UpdateBettingMaster';
+  static const String deleteRole = 'DeleteRole';
+  static const String updateTutorial = 'updateTutorial';
   static const String claimBet = 'ClaimBet';
 }

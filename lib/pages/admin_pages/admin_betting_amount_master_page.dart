@@ -1,4 +1,6 @@
+import 'package:elo_esports/models/admin_betting_master_list.dart';
 import 'package:elo_esports/models/create_betting_master.dart';
+import 'package:elo_esports/models/update_betting_master.dart';
 import 'package:elo_esports/network/dio_client.dart';
 import 'package:elo_esports/pages/admin_pages/admin_betting_master_page.dart';
 import 'package:elo_esports/pages/admin_widgets/common_btn.dart';
@@ -9,17 +11,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class AdminBettingAmountMasterPage extends StatefulWidget {
+  AdminBettingAmountMasterPage({super.key, this.bettingRecord});
+
+  Betting? bettingRecord;
+
   @override
   State<StatefulWidget> createState() => _AdminBettingAmountMasterPage();
 }
 
 class _AdminBettingAmountMasterPage
     extends State<AdminBettingAmountMasterPage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.bettingRecord != null) {
+      _betting_amount.text = widget.bettingRecord!.bettingAmount ?? '';
+      _description.text = widget.bettingRecord!.description ?? '';
+      id = widget.bettingRecord!.id ?? 0;
+    }
+  }
+
   final DioClient dioClient = DioClient();
 
   final TextEditingController _betting_amount = TextEditingController();
   final TextEditingController _description = TextEditingController();
   bool _addedBy = true;
+  int id = 0;
 
   bool validate() {
     return _betting_amount.text.isNotEmpty && _description.text.isNotEmpty;
@@ -39,6 +57,23 @@ class _AdminBettingAmountMasterPage
 
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text('Betting details add successfully'),
+    ));
+
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => AdminBettingMasterPage()));
+  }
+
+  upadteBettingMaster() async {
+    UpdateBettingMaster updateBettingMaster = UpdateBettingMaster(
+      id: widget.bettingRecord!.id ?? 0,
+      bettingAmount: parseTodouble(_betting_amount.text),
+      description: _description.text,
+      addedBy: _addedBy,
+    );
+    await dioClient.updatedBettingMaster(context, updateBettingMaster);
+
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text('Betting details update successfully'),
     ));
 
     Navigator.push(context,
@@ -109,10 +144,14 @@ class _AdminBettingAmountMasterPage
                     ),
                     CommonBtn(
                       icon: Icon(Icons.save, color: Colors.white),
-                      btnName: 'Save',
+                      btnName: widget.bettingRecord == null ? 'Save' : 'Update',
                       callback: () {
                         if (validate()) {
-                          createBettingMaster();
+                          if (widget.bettingRecord == null) {
+                            createBettingMaster();
+                          } else {
+                            upadteBettingMaster();
+                          }
                         } else {
                           // Show error message
                           showDialog(

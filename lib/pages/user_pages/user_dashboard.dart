@@ -19,6 +19,14 @@ class UserDashboardPage extends StatefulWidget {
 class UserDashboardPageState extends State<UserDashboardPage> {
 
   UserDetails? _userDetails;
+  int _selectedIndex = 0;
+
+  List<Widget> _tabs = [
+    LandingPage(),
+    const MyBetsPage(),
+    const ProfilePage(),
+    const MenuPage(),
+  ];
 
   @override
   void initState() {
@@ -28,17 +36,16 @@ class UserDashboardPageState extends State<UserDashboardPage> {
 
   getUser() async {
     _userDetails = await SharedPreferencesService.getUserDetails();
+
+    if(_userDetails == null || _userDetails?.data?.token == null) {
+          _tabs = [
+          LandingPage(),
+          const MenuPage(),
+        ];
+    }
+
     setState(() {});
   }
-
-  int _selectedIndex = 0;
-
-  final List<Widget> _tabs = [
-    LandingPage(),
-    const MyBetsPage(),
-    const ProfilePage(),
-    const MenuPage(),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +84,7 @@ class UserDashboardPageState extends State<UserDashboardPage> {
                   if(_selectedIndex == 3) {
                     _selectedIndex = 0;
                   } else {
- _selectedIndex = index;
+                    _selectedIndex = index;
                   }
                 });
           },
