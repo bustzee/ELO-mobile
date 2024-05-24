@@ -39,6 +39,7 @@ Bet _$BetFromJson(Map<String, dynamic> json) => Bet(
       betType: json['bet_type'] as String?,
       description: json['description'] as String?,
       betFor: json['bet_for'] as String?,
+      gameId: json['game_id'] as String?,
       betAgainst: json['bet_against'] as String?,
       winningAmount: json['winning_amount'] as String?,
       noOfBets: json['no_of_bets'] as String?,
@@ -53,6 +54,7 @@ Map<String, dynamic> _$BetToJson(Bet instance) => <String, dynamic>{
       'bet_type': instance.betType,
       'description': instance.description,
       'bet_for': instance.betFor,
+      'game_id': instance.gameId,
       'bet_against': instance.betAgainst,
       'winning_amount': instance.winningAmount,
       'no_of_bets': instance.noOfBets,
@@ -71,6 +73,9 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
           ? null
           : DateTime.parse(json['created_on'] as String),
       winningAmount: json['winning_amount'],
+      isBetted: json['is_betted'] as bool?,
+      isWon: json['is_won'],
+      isClaimed: json['is_claimed'],
     );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
@@ -81,4 +86,7 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'total': instance.total,
       'created_on': instance.createdOn?.toIso8601String(),
       'winning_amount': instance.winningAmount,
+      'is_betted': instance.isBetted,
+      'is_won': instance.isWon,
+      'is_claimed': instance.isClaimed,
     };

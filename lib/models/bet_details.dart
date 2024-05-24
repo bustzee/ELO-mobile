@@ -100,6 +100,7 @@ class Bet extends Equatable {
         required this.betType,
         required this.description,
         required this.betFor,
+        required this.gameId,
         required this.betAgainst,
         required this.winningAmount,
         required this.noOfBets,
@@ -119,6 +120,11 @@ class Bet extends Equatable {
     @JsonKey(name: 'bet_for') 
     final String? betFor;
     static const String betForKey = "bet_for";
+    
+
+    @JsonKey(name: 'game_id') 
+    final String? gameId;
+    static const String gameIdKey = "game_id";
     
 
     @JsonKey(name: 'bet_against') 
@@ -151,6 +157,7 @@ class Bet extends Equatable {
         String? betType,
         String? description,
         String? betFor,
+        String? gameId,
         String? betAgainst,
         String? winningAmount,
         String? noOfBets,
@@ -162,6 +169,7 @@ class Bet extends Equatable {
             betType: betType ?? this.betType,
             description: description ?? this.description,
             betFor: betFor ?? this.betFor,
+            gameId: gameId ?? this.gameId,
             betAgainst: betAgainst ?? this.betAgainst,
             winningAmount: winningAmount ?? this.winningAmount,
             noOfBets: noOfBets ?? this.noOfBets,
@@ -177,12 +185,12 @@ class Bet extends Equatable {
 
     @override
     String toString(){
-        return "$betType, $description, $betFor, $betAgainst, $winningAmount, $noOfBets, $activeHours, $status, $user, ";
+        return "$betType, $description, $betFor, $gameId, $betAgainst, $winningAmount, $noOfBets, $activeHours, $status, $user, ";
     }
 
     @override
     List<Object?> get props => [
-    betType, description, betFor, betAgainst, winningAmount, noOfBets, activeHours, status, user, ];
+    betType, description, betFor, gameId, betAgainst, winningAmount, noOfBets, activeHours, status, user, ];
 }
 
 @JsonSerializable()
@@ -195,6 +203,9 @@ class User extends Equatable {
         required this.total,
         required this.createdOn,
         required this.winningAmount,
+        required this.isBetted,
+        required this.isWon,
+        required this.isClaimed,
     });
 
     final String? username;
@@ -227,6 +238,21 @@ class User extends Equatable {
     static const String winningAmountKey = "winning_amount";
     
 
+    @JsonKey(name: 'is_betted') 
+    final bool? isBetted;
+    static const String isBettedKey = "is_betted";
+    
+
+    @JsonKey(name: 'is_won') 
+    final dynamic? isWon;
+    static const String isWonKey = "is_won";
+    
+
+    @JsonKey(name: 'is_claimed') 
+    final dynamic? isClaimed;
+    static const String isClaimedKey = "is_claimed";
+    
+
     User copyWith({
         String? username,
         String? betOn,
@@ -235,6 +261,9 @@ class User extends Equatable {
         int? total,
         DateTime? createdOn,
         dynamic? winningAmount,
+        bool? isBetted,
+        dynamic? isWon,
+        dynamic? isClaimed,
     }) {
         return User(
             username: username ?? this.username,
@@ -244,6 +273,9 @@ class User extends Equatable {
             total: total ?? this.total,
             createdOn: createdOn ?? this.createdOn,
             winningAmount: winningAmount ?? this.winningAmount,
+            isBetted: isBetted ?? this.isBetted,
+            isWon: isWon ?? this.isWon,
+            isClaimed: isClaimed ?? this.isClaimed,
         );
     }
 
@@ -253,10 +285,10 @@ class User extends Equatable {
 
     @override
     String toString(){
-        return "$username, $betOn, $betAmount, $vig, $total, $createdOn, $winningAmount, ";
+        return "$username, $betOn, $betAmount, $vig, $total, $createdOn, $winningAmount, $isBetted, $isWon, $isClaimed, ";
     }
 
     @override
     List<Object?> get props => [
-    username, betOn, betAmount, vig, total, createdOn, winningAmount, ];
+    username, betOn, betAmount, vig, total, createdOn, winningAmount, isBetted, isWon, isClaimed, ];
 }

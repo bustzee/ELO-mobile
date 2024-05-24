@@ -3,12 +3,17 @@ import 'package:elo_esports/models/bet_details.dart';
 import 'package:elo_esports/models/common_response.dart';
 import 'package:elo_esports/models/livestream.dart';
 import 'package:elo_esports/models/stream_details.dart';
+import 'package:elo_esports/models/user_details.dart';
 import 'package:elo_esports/network/dio_client.dart';
+import 'package:elo_esports/network/endpoints.dart';
+import 'package:elo_esports/pages/user_pages/report_stream.dart';
 import 'package:elo_esports/pages/user_widgets/loader.dart';
+import 'package:elo_esports/utilities/shared_preferences_utility.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lecle_yoyo_player/lecle_yoyo_player.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:share_plus/share_plus.dart';
 
 // ignore: must_be_immutable
 class LivestreamPage extends StatefulWidget {
@@ -24,6 +29,12 @@ class LivestreamPage extends StatefulWidget {
 class LivestreamPageState extends State<LivestreamPage> {
   final DioClient dioClient = DioClient();
   StreamDetails? streamDetails;
+  UserDetails? _userDetails;
+
+  getUser() async {
+    _userDetails = await SharedPreferencesService.getUserDetails();
+    setState(() {});
+  }
 
   getStreamDetails() async {
     streamDetails =
@@ -37,10 +48,16 @@ class LivestreamPageState extends State<LivestreamPage> {
     getStreamDetails();
   }
 
+  shareStream() {
+    String url = '${Endpoints.domain}/stream/${widget.livestream?.id}';
+    Share.share(url);
+  }
+
   @override
   void initState() {
     super.initState();
 
+    getUser();
     getStreamDetails();
   }
 
@@ -161,11 +178,11 @@ class LivestreamPageState extends State<LivestreamPage> {
                       ],
                     ),
                     InkWell(
-                      onTap: () async {
-                        await dioClient.streamReport(
-                            context, widget.livestream?.id ?? 0);
-                        showMessage(context, "Reported successfully");
-                      },
+                      onTap: () => showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => Dialog(
+                            child: ReportStreamPage(streamId: widget.livestream?.id.toString(), streamName: widget.livestream?.name, streamType: 'livestream',)),
+                      ),
                       child: Column(
                         children: [
                           const Icon(LineIcons.flag),
@@ -182,25 +199,30 @@ class LivestreamPageState extends State<LivestreamPage> {
                         ],
                       ),
                     ),
-                    Column(
-                      children: [
-                        const Icon(LineIcons.shareSquare),
-                        Text(
-                          'Share',
-                          style: GoogleFonts.getFont(
-                            'Open Sans',
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14,
-                            letterSpacing: -0.4,
-                            color: Colors.white,
+                    InkWell(
+                      onTap: () {
+                        shareStream();
+                      },
+                      child: Column(
+                        children: [
+                          const Icon(LineIcons.shareSquare),
+                          Text(
+                            'Share',
+                            style: GoogleFonts.getFont(
+                              'Open Sans',
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14,
+                              letterSpacing: -0.4,
+                              color: Colors.white,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     )
                   ],
                 )),
 
-            Padding(
+            if(_userDetails != null && _userDetails?.data?.token != null) Padding(
               padding: EdgeInsets.all(15),
               child: SizedBox(
                 width: 110,
@@ -239,7 +261,7 @@ class LivestreamPageState extends State<LivestreamPage> {
             ),
 
             // BETS
-            FutureBuilder<BetDetails?>(
+            if(_userDetails != null && _userDetails?.data?.token != null) FutureBuilder<BetDetails?>(
               future:
                   dioClient.getBetDetails(context, widget.livestream?.id ?? 0),
               builder: (context, snapshot) {
@@ -415,13 +437,12 @@ class BetList extends StatelessWidget {
                             ],
                           ),
                           SizedBox(
-                            width: 100,
+                            width: 150,
                             height: 40,
                             child: ElevatedButton(
                               style: ButtonStyle(
                                   backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          const Color(0xff125900)),
+                                      MaterialStateProperty.all<Color>(((bets?.data?.bets?[index].user?.isClaimed is int && bets?.data?.bets?[index].user?.isClaimed == 1) || (bets?.data?.bets?[index].user?.isClaimed is bool && bets?.data?.bets?[index].user?.isClaimed)) ? Color(0xffB70018) : Color(0xff125900)),
                                   foregroundColor:
                                       MaterialStateProperty.all<Color>(
                                           Colors.white),
@@ -439,9 +460,9 @@ class BetList extends StatelessWidget {
                                         BorderRadius.all(Radius.circular(5)),
                                   ))),
                               onPressed: () {},
-                              child: const Text(
-                                'Claim bet',
-                                style: TextStyle(
+                              child: Text(
+                                ((bets?.data?.bets?[index].user?.isClaimed is int && bets?.data?.bets?[index].user?.isClaimed == 1) || (bets?.data?.bets?[index].user?.isClaimed is bool && bets?.data?.bets?[index].user?.isClaimed)) ? 'Already claimed' : 'Claim bet',
+                                style: const TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w500,
                                 ),

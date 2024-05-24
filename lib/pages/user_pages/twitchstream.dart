@@ -1,7 +1,10 @@
 import 'package:elo_esports/models/twitchstream.dart';
+import 'package:elo_esports/network/endpoints.dart';
+import 'package:elo_esports/pages/user_pages/report_stream.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 // ignore: must_be_immutable
@@ -16,6 +19,11 @@ class TwitchstreamPage extends StatefulWidget {
 }
 
 class TwitchstreamPageState extends State<TwitchstreamPage> {
+
+   shareStream() {
+    String url = '${Endpoints.domain}/streams/${widget.twitchlivestream?.id}';
+    Share.share(url);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -127,35 +135,47 @@ class TwitchstreamPageState extends State<TwitchstreamPage> {
                           ),
                         ],
                       ),
-                          Column(
-                        children: [
-                          const Icon(LineIcons.flag),
-                          Text(
-                            'Report',
-                            style: GoogleFonts.getFont(
-                              'Open Sans',
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                              letterSpacing: -0.4,
-                              color: Colors.white,
+                      InkWell(
+                        onTap: () => showDialog<String>(
+                          context: context,
+                          builder: (BuildContext context) => Dialog(
+                              child: ReportStreamPage(streamId: widget.twitchlivestream?.id, streamName: widget.twitchlivestream?.title, streamType: 'twitch',)),
+                        ),
+                        child: Column(
+                          children: [
+                            const Icon(LineIcons.flag),
+                            Text(
+                              'Report',
+                              style: GoogleFonts.getFont(
+                                'Open Sans',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14,
+                                letterSpacing: -0.4,
+                                color: Colors.white,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                          Column(
-                        children: [
-                          const Icon(LineIcons.shareSquare),
-                          Text(
-                            'Share',
-                            style: GoogleFonts.getFont(
-                              'Open Sans',
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                              letterSpacing: -0.4,
-                              color: Colors.white,
+                      InkWell(
+                        onTap: () {
+                          shareStream();
+                        },
+                        child: Column(
+                          children: [
+                            const Icon(LineIcons.shareSquare),
+                            Text(
+                              'Share',
+                              style: GoogleFonts.getFont(
+                                'Open Sans',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14,
+                                letterSpacing: -0.4,
+                                color: Colors.white,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       )
                     ],
                   )

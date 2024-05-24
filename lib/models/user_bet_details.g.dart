@@ -32,6 +32,7 @@ Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{
 
 UserBet _$UserBetFromJson(Map<String, dynamic> json) => UserBet(
       betMainId: (json['bet_main_id'] as num?)?.toInt(),
+      gameId: json['game_id'] as String?,
       amount: json['amount'] as String?,
       isClaimed: (json['is_claimed'] as num?)?.toInt(),
       claimedDate: json['claimed_date'] == null
@@ -44,6 +45,7 @@ UserBet _$UserBetFromJson(Map<String, dynamic> json) => UserBet(
 
 Map<String, dynamic> _$UserBetToJson(UserBet instance) => <String, dynamic>{
       'bet_main_id': instance.betMainId,
+      'game_id': instance.gameId,
       'amount': instance.amount,
       'is_claimed': instance.isClaimed,
       'claimed_date': instance.claimedDate?.toIso8601String(),

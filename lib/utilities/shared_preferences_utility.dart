@@ -25,4 +25,9 @@ class SharedPreferencesService {
     }
     return null;
   }
+
+  static Future<void> clearUserDetails() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('user_details');
+  }
 }

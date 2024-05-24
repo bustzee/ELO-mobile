@@ -4,7 +4,7 @@ import 'package:elo_esports/models/admin_betting_master_list.dart';
 import 'package:elo_esports/models/admin_role.dart';
 import 'package:elo_esports/models/admin_role_permission.dart';
 import 'package:elo_esports/models/admin_update_settings.dart';
-import 'package:elo_esports/models/bet_details.dart';
+import 'package:elo_esports/models/bet_details.dart' as bet_details;
 import 'package:elo_esports/models/betting_disputes.dart';
 import 'package:elo_esports/models/betting_view_master.dart';
 import 'package:elo_esports/models/common_response.dart';
@@ -22,12 +22,14 @@ import 'package:elo_esports/models/deposit.dart';
 import 'package:elo_esports/models/get_setting.dart';
 
 import 'package:elo_esports/models/leaderboard.dart';
+import 'package:elo_esports/models/report_stream.dart';
 import 'package:elo_esports/models/reported_streams.dart';
 
 import 'package:elo_esports/models/stream_details.dart' as stream_details;
 import 'package:elo_esports/models/tutorial.dart';
 import 'package:elo_esports/models/twitch_leaderboard.dart';
 import 'package:elo_esports/models/twitchstream.dart';
+import 'package:elo_esports/models/user_bet_details.dart';
 import 'package:elo_esports/models/user_details.dart';
 import 'package:elo_esports/models/withdrawal.dart';
 import 'package:elo_esports/network/dio_exception_handler.dart';
@@ -102,6 +104,40 @@ class DioClient {
       final response = await _dio.post(Endpoints.getUserDetails,
           data: {'username': username, 'password': password});
       return UserDetails.fromJson(response.data);
+    } on DioException catch (err) {
+      final errorMessage = DioExceptionHandler.fromDioError(err).toString();
+      if (context != null) {
+        final snackBar = SnackBar(content: Text(errorMessage.toString()));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
+      throw errorMessage;
+    } catch (e) {
+      if (kDebugMode) print(e);
+      throw e.toString();
+    }
+  }
+
+  Future<CommonResponse?> claimBet(BuildContext? context, int? betMainId, String? gameId) async {
+    try {
+      final response = await _dio.post(Endpoints.claimBet, data: {'bet_main_id': betMainId, 'game_id': gameId});
+      return CommonResponse.fromJson(response.data);
+    } on DioException catch (err) {
+      final errorMessage = DioExceptionHandler.fromDioError(err).toString();
+      if (context != null) {
+        final snackBar = SnackBar(content: Text(errorMessage.toString()));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
+      throw errorMessage;
+    } catch (e) {
+      if (kDebugMode) print(e);
+      throw e.toString();
+    }
+  }
+
+  Future<UserBetDetails?> getBetbyuserId(BuildContext? context) async {
+    try {
+      final response = await _dio.post(Endpoints.getBetbyuserId);
+      return UserBetDetails.fromJson(response.data);
     } on DioException catch (err) {
       final errorMessage = DioExceptionHandler.fromDioError(err).toString();
       if (context != null) {
@@ -292,11 +328,9 @@ class DioClient {
     }
   }
 
-  Future<CommonResponse?> streamReport(
-      BuildContext? context, int livestreamId) async {
+  Future<CommonResponse?> streamReport(BuildContext? context, ReportStream reportStream) async {
     try {
-      final response = await _dio
-          .post(Endpoints.streamReport, data: {'livestream_id': livestreamId});
+      final response = await _dio.post(Endpoints.streamReport, data: reportStream.toJson());
       return CommonResponse.fromJson(response.data);
     } on DioException catch (err) {
       if (context != null) {
@@ -568,11 +602,11 @@ class DioClient {
     }
   }
 
-  Future<BetDetails?> getBetDetails(BuildContext? context, int id) async {
+  Future<bet_details.BetDetails?> getBetDetails(BuildContext? context, int id) async {
     try {
       final response =
           await _dio.post(Endpoints.getBetDetails, data: {'livestream_id': id});
-      return BetDetails.fromJson(response.data);
+      return bet_details.BetDetails.fromJson(response.data);
     } on DioException catch (err) {
       final errorMessage = DioExceptionHandler.fromDioError(err).toString();
       if (context != null) {

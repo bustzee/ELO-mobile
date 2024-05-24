@@ -5,6 +5,7 @@ import 'package:elo_esports/pages/user_pages/landing.dart';
 import 'package:elo_esports/pages/user_pages/leaderboard.dart';
 import 'package:elo_esports/pages/user_pages/profile.dart';
 import 'package:elo_esports/pages/user_pages/withdraw_deposit.dart';
+import 'package:elo_esports/pages/welcome.dart';
 import 'package:elo_esports/utilities/shared_preferences_utility.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -376,6 +377,37 @@ class MenuPageState extends State<MenuPage> {
                         ),
                         Text(
                           'Tutorials',
+                          style: GoogleFonts.getFont(
+                            'Open Sans',
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                            letterSpacing: -0.4,
+                            color: Colors.white,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+                if(_userDetails != null && _userDetails?.data?.token != null) 
+                InkWell(
+                  onTap: () {
+                    SharedPreferencesService.clearUserDetails();
+                    Navigator.pushNamed(context, WelcomePage.id);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Row(
+                      children: [
+                        const Icon(LineIcons.alternateSignOut),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Text(
+                          'Logout',
                           style: GoogleFonts.getFont(
                             'Open Sans',
                             fontWeight: FontWeight.w600,
