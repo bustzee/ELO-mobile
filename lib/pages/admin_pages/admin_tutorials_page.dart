@@ -129,6 +129,17 @@ class _AdminTutorialsState extends State<AdminTutorialsPage> {
                                           height: 35,
                                           child: CommonBtn(
                                             btnName: 'Edit Tutorial',
+                                            callback: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          AdminAddTutorialPage(
+                                                              updateTutorial:
+                                                                  snapshot.data
+                                                                          ?.data?[
+                                                                      index])));
+                                            },
                                           )),
                                       Container(
                                         height: 10,

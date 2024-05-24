@@ -1,5 +1,7 @@
+import 'package:elo_esports/models/betting_view_master.dart';
 import 'package:elo_esports/models/create_betting_master.dart';
 import 'package:elo_esports/models/create_betting_view_master.dart';
+import 'package:elo_esports/models/update_betting_view.dart';
 import 'package:elo_esports/network/dio_client.dart';
 import 'package:elo_esports/pages/admin_widgets/common_btn.dart';
 import 'package:elo_esports/pages/admin_widgets/common_text_filed.dart';
@@ -9,6 +11,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class AdminCreateBettingViewMasterPage extends StatefulWidget {
+  AdminCreateBettingViewMasterPage({super.key, this.viewbetting});
+
+  Datum? viewbetting;
+
   @override
   State<StatefulWidget> createState() =>
       _AdminCreateBettingViewMasterPageState();
@@ -16,13 +22,28 @@ class AdminCreateBettingViewMasterPage extends StatefulWidget {
 
 class _AdminCreateBettingViewMasterPageState
     extends State<AdminCreateBettingViewMasterPage> {
-  final DioClient dioClient = DioClient();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.viewbetting != null) {
+      id = widget.viewbetting!.id ?? 0;
+      _no_of_views.text = widget.viewbetting!.noOfViews.toString() ?? '';
+      _no_of_bet.text = widget.viewbetting!.noOfBet.toString() ?? '';
+    }
+  }
 
+  final DioClient dioClient = DioClient();
+  int id = 0;
   final TextEditingController _no_of_views = TextEditingController();
   final TextEditingController _no_of_bet = TextEditingController();
 
   bool validate() {
     return _no_of_views.text.isNotEmpty && _no_of_bet.text.isNotEmpty;
+  }
+
+  int? parseToint(String value) {
+    return int.tryParse(value);
   }
 
   createBettingViewMaster() async {
@@ -34,6 +55,19 @@ class _AdminCreateBettingViewMasterPageState
 
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text('Betting view details add successfully'),
+    ));
+  }
+
+  updateBettingViewMaster() async {
+    UpdateBettingViewMaster updateBettingViewMaster = UpdateBettingViewMaster(
+      id: widget.viewbetting!.id.toString(),
+      noOfViews: _no_of_views.text,
+      noOfBet: _no_of_bet.text,
+    );
+    await dioClient.updatedBettingViewMaster(context, updateBettingViewMaster);
+
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text('Betting view details update successfully'),
     ));
   }
 
@@ -101,10 +135,14 @@ class _AdminCreateBettingViewMasterPageState
                     ),
                     CommonBtn(
                       icon: Icon(Icons.save, color: Colors.white),
-                      btnName: 'Save',
+                      btnName: widget.viewbetting == null ? 'Save' : 'Update',
                       callback: () {
                         if (validate()) {
-                          createBettingViewMaster();
+                          if (widget.viewbetting == null) {
+                            createBettingViewMaster();
+                          } else {
+                            updateBettingViewMaster();
+                          }
                         } else {
                           // Show error message
                           showDialog(
