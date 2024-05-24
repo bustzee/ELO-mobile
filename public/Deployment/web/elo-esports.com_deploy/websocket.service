@@ -1,0 +1,14 @@
+[Unit]
+Description=Laravel websockets Server
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/php artisan websockets:serve
+WorkingDirectory=/var/www/elo-sports
+Restart=always
+User=root
+Group=root
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target

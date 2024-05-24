@@ -1,0 +1,5 @@
+"user_id";"livestreams_id";"avatar_username";"avatar_image";"created_at";"updated_at"
+1;111;"";"http://localhost:8000/avatar/1661785646.jpg";"2023-03-02 03:20:13";"2023-03-02 03:20:13"
+1;117;"";"http://localhost:8000/avatar-images/1677759830.jpg";"2023-03-02 11:31:35";"2023-03-02 12:23:50"
+9;123;"";"http://localhost:8000/avatar/1661785646.jpg";"2023-03-11 06:34:33";"2023-03-11 06:34:33"
+9;111;"";"http://localhost:8000/avatar-images/1679894344.jpg";"2023-03-27 01:46:28";"2023-03-27 05:19:04"
